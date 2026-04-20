@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- top bar -->
+    <header class="navbar">
+        <div class="logo">Trev</div>
+        <nav>
+            <input type="text" placeholder="Search destinations...">
+            <a href="#">Home</a>
+            <a href="#">Discover</a>
+            <a href="#">Trip Planner</a>
+            <a href="#" class="login-btn">Login</a>
+        </nav>
+    </header>
+
+    <!-- main content -->
+
+    <main class="login-container">
+        <div class="login-card">
+            <h2>Welcome Back</h2>
+            <p class="subtitle">Sign in to continue your adventure</p>
+
+            <form id="loginForm">
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="you@example.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" placeholder="Enter your password" required>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms">
+                    <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                </div>
+
+                <button type="submit" class="btn-main">Login</button>
+            </form>
+
+            <p class="register-text">Don't have an account? <a href="#">Register here</a></p>
+
+            <div class="divider">Or continue with</div>
+
+            <button class="btn-google">
+                <img src="../Image/Asian-skyline.jpg" alt="Google">
+                Google
+            </button>
+        </div>
+    </main>
+</body>
+</html>
