@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trev</title>
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+
+    <nav class="navbar">
+      <div class="logo">
+  <img src="../image/trev.png" alt="Trev" />
+</div>
+
+      <div class="search-container">
+        <input type="text" placeholder="Search destinations..." />
+      </div>
+
+      <ul class="nav-links">
+        <li>Home</li>
+        <li>Discover</li>
+        <li>Trip Planner</li>
+        <li>My Trips</li>
+        <li>Reviews</li>
+        <li class="active">Profile</li>
+      </ul>
+    </nav>
+
+    <div class="breadcrumb">
+  <span>Home</span>
+  <span>›</span>
+  <span class="active">Profile</span>
+</div>
+
+<div class="profile-section">
+  <div class="profile-pic-container">
+    <img src="black.png" alt="Profile Picture" class="profile-pic" id="profilePic"/>
+    <label for="uploadPic" class="upload-btn">Change Photo 📷</label>
+    <input type="file" id="uploadPic" accept="image/*" hidden />
+  </div>
+  <p class="profile-name">Heng Tao</p>
+</div>
+
+<div class="profile-form">
+  <div class="form-group">
+    <label>Username</label>
+    <input type="text" id="username" placeholder="Enter username" disabled />
+  </div>
+
+  <div class="form-group">
+    <label>Password</label>
+    <input type="password" id="password" placeholder="Enter password" disabled />
+  </div>
+
+  <div class="form-group">
+    <label>Email</label>
+    <input type="email" id="email" placeholder="Enter email" disabled />
+  </div>
+
+  <div class="form-buttons">
+    <button class="edit-btn" id="editBtn">Edit Profile</button>
+    <button class="logout-btn">Logout</button>
+  </div>
+</div>
+
+
+<div class="trips-section">
+  <h2 class="trips-title">Trip Completed</h2>
+
+  <div class="trips-grid">
+
+    <div class="trip-card">
+      <div class="trip-image-container">
+        <img src="../image/italy.png" alt="Venice" class="trip-image" />
+        <div class="trip-rating">⭐ 4.9</div>
+      </div>
+      <div class="trip-info">
+        <p class="trip-location">📍 Venice, Italy</p>
+        <p class="trip-reviews">5,621 reviews</p>
+        <p class="trip-desc">Historic canals, Renaissance architecture, and authentic Italian cuisine.</p>
+        <button class="view-btn">View Details</button>
+      </div>
+    </div>
+
+<div class="trip-card">
+  <div class="trip-image-container">
+    <img src="../image/paris.png" alt="Paris" class="trip-image" />
+    <div class="trip-rating">⭐ 4.8</div>
+  </div>
+  <div class="trip-info">
+    <p class="trip-location">📍 Paris, France</p>
+    <p class="trip-reviews">4,210 reviews</p>
+    <p class="trip-desc">Iconic landmarks, world-class art, and exquisite French cuisine.</p>
+    <button class="view-btn">View Details</button>
+  </div>
+</div>
+
+<div class="trip-card">
+  <div class="trip-image-container">
+    <img src="../image/tokyo.png" alt="Tokyo" class="trip-image" />
+    <div class="trip-rating">⭐ 4.7</div>
+  </div>
+  <div class="trip-info">
+    <p class="trip-location">📍 Tokyo, Japan</p>
+    <p class="trip-reviews">3,850 reviews</p>
+    <p class="trip-desc">Futuristic cityscape, ancient temples, and world-renowned Japanese cuisine.</p>
+    <button class="view-btn">View Details</button>
+  </div>
+</div>
+
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-content">
+
+    <div class="footer-brand">
+      <img src="../image/trev.png" alt="Trev" class="footer-logo" />
+      <p>Your trusted companion for discovering amazing destinations around the world.</p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Explore</h4>
+      <ul>
+        <li>Destinations</li>
+        <li>Travel Guides</li>
+        <li>Trip Planner</li>
+        <li>Reviews</li>
+      </ul>
+    </div>
+
+    <div class="footer-links">
+      <h4>Company</h4>
+      <ul>
+        <li>About Us</li>
+        <li>Careers</li>
+        <li>Blog</li>
+        <li>Contact</li>
+      </ul>
+    </div>
+
+    <div class="footer-links">
+      <h4>Support</h4>
+      <ul>
+        <li>Help Center</li>
+        <li>Safety</li>
+        <li>Terms of Service</li>
+        <li>Privacy Policy</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026 Trev. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>
