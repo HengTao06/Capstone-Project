@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trev</title>
     <link rel="stylesheet" href="profile.css">
-    <script src="profile.js"></script>
 </head>
 <body>
 
@@ -65,6 +64,15 @@
   </div>
 </div>
 
+<!-- LOGOUT MODAL -->
+<div class="modal-overlay" id="logoutModal">
+  <div class="modal-box">
+    <div class="modal-icon">👋</div>
+    <h2>Logged Out!</h2>
+    <p>You have been successfully logged out. See you again soon!</p>
+    <button class="modal-btn" onclick="window.location.href='../login/login.html'">Go to Login</button>
+  </div>
+</div>
 
 <div class="trips-section">
   <h2 class="trips-title">Trip Completed</h2>
@@ -157,6 +165,8 @@
     <p>© 2026 Trev. All rights reserved.</p>
   </div>
 </footer>
+
+<script src="profile.js"></script>
 
 </body>
 </html>
