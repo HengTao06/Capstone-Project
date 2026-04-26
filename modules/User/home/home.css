@@ -1,0 +1,580 @@
+/* ================================
+   HOME PAGE BASE
+================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #ffffff;
+  color: #111827;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ================================
+   HERO SECTION
+================================ */
+
+.hero {
+  height: 670px;
+  background: url("../../../assets/images/mountain background.jpg") center center / cover no-repeat;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.45),
+    rgba(0, 0, 0, 0.25)
+  );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #ffffff;
+  margin-top: -40px;
+  animation: heroFadeUp 0.9s ease both;
+}
+
+.hero-content h1 {
+  font-size: 62px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin-bottom: 92px;
+}
+
+.hero-content p {
+  font-size: 18px;
+  margin-bottom: 40px;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 50px;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.btn-orange,
+.btn-white {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 205px;
+  height: 64px;
+  border-radius: 13px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  transition: 0.3s ease;
+}
+
+.btn-orange {
+  background: #ff790f;
+  color: #ffffff;
+  box-shadow: 0 8px 18px rgba(249, 115, 22, 0.25);
+}
+
+.btn-orange:hover {
+  background: #ea580c;
+  transform: translateY(-4px);
+  box-shadow: 0 12px 26px rgba(249, 115, 22, 0.38);
+}
+
+.btn-white {
+  background: #ffffff;
+  color: #111827;
+}
+
+.btn-white:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 26px rgba(255, 255, 255, 0.25);
+}
+
+/* ================================
+   VIDEO SECTION
+================================ */
+
+/* FULL WIDTH BACKGROUND */
+.video-section {
+  width: 100%;
+  padding: 40px 0; /* creates space around */
+}
+
+/* THIS creates the rounded effect */
+.video-container {
+  width: 92%;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  border-radius: 20px;
+  overflow: hidden;
+
+  height: 600px;
+
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+/* VIDEO STILL FULL INSIDE */
+.video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* ================================
+   COMMON SECTION
+================================ */
+
+.home-section {
+  width: 94%;
+  max-width: 1400px;
+  margin: 95px auto 0;
+}
+
+.section-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 38px;
+}
+
+.section-title-row h2 {
+  font-size: 27px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.section-title-row a {
+  text-decoration: none;
+  color: #f97316;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.section-title-row a span {
+  font-size: 24px;
+  vertical-align: middle;
+}
+
+/* ================================
+   RECOMMENDED DESTINATIONS
+================================ */
+
+.recommended-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 58px;
+}
+
+.recommended-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 55px;
+}
+
+.destination-card {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 13px rgba(0, 0, 0, 0.16);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.destination-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 18px 28px rgba(0, 0, 0, 0.18);
+}
+
+.destination-image {
+  height: 220px;
+  position: relative;
+  overflow: hidden;
+}
+
+.destination-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s ease;
+}
+
+.destination-card:hover .destination-image img {
+  transform: scale(1.08);
+}
+
+.rating-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: #ffffff;
+  border-radius: 999px;
+  padding: 7px 14px;
+  color: #111827;
+  font-size: 14px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.rating-badge span {
+  color: #facc15;
+}
+
+.destination-info {
+  padding: 18px 24px 24px;
+}
+
+.destination-info h3 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 18px;
+}
+
+.destination-info p {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 20px;
+}
+
+.destination-info button {
+  width: 100%;
+  height: 48px;
+  border: 2px solid #ff790f;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #ff790f;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.destination-info button:hover {
+  background: #ff790f;
+  color: #ffffff;
+}
+
+.slider-arrow {
+  border: none;
+  background: transparent;
+  color: #ff790f;
+  font-size: 60px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.slider-arrow:hover {
+  transform: translateX(6px);
+}
+
+/* ================================
+   POPULAR TRAVEL COMBOS
+================================ */
+
+.combo-section {
+  margin-top: 130px;
+}
+
+.combo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 34px;
+}
+
+.combo-card {
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 13px rgba(0, 0, 0, 0.16);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.combo-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 18px 28px rgba(0, 0, 0, 0.18);
+}
+
+.combo-image {
+  height: 245px;
+  position: relative;
+  overflow: hidden;
+}
+
+.combo-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s ease;
+}
+
+.combo-card:hover .combo-image img {
+  transform: scale(1.08);
+}
+
+.combo-badge {
+  position: absolute;
+  top: 15px;
+  left: 16px;
+  background: #ffbd70;
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 9px 19px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.combo-badge.normal {
+  background: #ffc178;
+}
+
+.combo-info {
+  padding: 24px 28px 28px;
+}
+
+.combo-info h3 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 22px;
+}
+
+.combo-price {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.combo-price strong {
+  color: #ff3b1f;
+  font-size: 16px;
+}
+
+.combo-price small {
+  color: #6b7280;
+}
+
+.combo-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.combo-tags span {
+  background: #fff0a8;
+  color: #f97316;
+  padding: 7px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.combo-info button {
+  width: 100%;
+  height: 52px;
+  border: none;
+  border-radius: 9px;
+  background: #ff790f;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.combo-info button:hover {
+  background: #ea580c;
+  transform: translateY(-3px);
+}
+
+/* ================================
+   TRENDING DESTINATIONS
+================================ */
+
+.trending-section {
+  margin-top: 118px;
+  margin-bottom: 90px;
+}
+
+.trending-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 26px;
+}
+
+.trend-card {
+  height: 315px;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 13px rgba(0, 0, 0, 0.16);
+  cursor: pointer;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.trend-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 18px 28px rgba(0, 0, 0, 0.22);
+}
+
+.trend-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s ease;
+}
+
+.trend-card:hover img {
+  transform: scale(1.1);
+}
+
+.trend-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.68),
+    rgba(0, 0, 0, 0.05)
+  );
+}
+
+.trend-badge {
+  position: absolute;
+  top: 14px;
+  right: 15px;
+  background: #ffbd70;
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 7px 16px;
+  font-size: 13px;
+}
+
+.trend-text {
+  position: absolute;
+  left: 22px;
+  bottom: 22px;
+  color: #ffffff;
+}
+
+.trend-text h3 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 7px;
+}
+
+.trend-text p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+/* ================================
+   ANIMATION
+================================ */
+
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(38px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: 0.7s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ================================
+   RESPONSIVE 900PX
+================================ */
+
+@media (max-width: 900px) {
+  .hero {
+    height: 560px;
+  }
+
+  .hero-content h1 {
+    font-size: 42px;
+    margin-bottom: 40px;
+  }
+
+  .hero-content p {
+    font-size: 16px;
+    padding: 0 24px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .video-section {
+    height: 330px;
+  }
+
+  .video-section h2 {
+    font-size: 38px;
+  }
+
+  .home-section {
+    width: 90%;
+    margin-top: 60px;
+  }
+
+  .section-title-row h2 {
+    font-size: 22px;
+  }
+
+  .recommended-wrapper {
+    display: block;
+  }
+
+  .recommended-grid,
+  .combo-grid,
+  .trending-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .slider-arrow {
+    display: none;
+  }
+
+  .destination-image,
+  .combo-image {
+    height: 220px;
+  }
+
+  .trend-card {
+    height: 300px;
+  }
+
+  .combo-section,
+  .trending-section {
+    margin-top: 70px;
+  }
+}
