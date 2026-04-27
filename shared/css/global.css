@@ -3,7 +3,7 @@
    Applies to every page across the site.
 ============================================= */
 
-/* ── Google Fonts Import ── */
+
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
 
 /* ── Box-sizing Reset ── */
@@ -15,20 +15,12 @@
   padding: 0;
 }
 
+
+
 /* ── Base HTML / Body ── */
 html {
   scroll-behavior: smooth;
   font-size: 16px;
-}
-
-body {
-  font-family: var(--font-body);
-  font-size: var(--text-base);
-  color: var(--color-text-primary);
-  background-color: var(--color-white);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 /* ── Links ── */
@@ -55,12 +47,51 @@ ul, ol {
 }
 
 /* ── Headings ── */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display);
-  line-height: 1.2;
+body {
+  font-family: var(--font-main);
+  font-size: var(--text-base);
   color: var(--color-text-primary);
+  line-height: 1.6;
 }
 
+/* ===== HEADINGS ===== */
+
+h1 {
+  font-size: var(--text-xxl);
+  font-weight: var(--font-bold);
+}
+
+h2 {
+  font-size: var(--text-xl);
+  font-weight: var(--font-semibold);
+}
+
+h3 {
+  font-size: var(--text-lg);
+  font-weight: var(--font-medium);
+}
+
+h4 {
+  font-size: var(--text-md);
+  font-weight: var(--font-medium);
+}
+
+h5 {
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+}
+
+h6 {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+}
+
+/* ===== PARAGRAPH ===== */
+
+p {
+  font-size: var(--text-base);
+  color: #6b7280;
+}
 /* ── Container ── */
 .container {
   max-width: var(--container-max);

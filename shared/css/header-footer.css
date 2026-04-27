@@ -81,6 +81,7 @@
   padding: 34px 0 24px;
   position: relative;
   transition: 0.25s ease;
+  font-family: 'Inter', sans-serif;
 }
 
 .header-nav a:hover,
