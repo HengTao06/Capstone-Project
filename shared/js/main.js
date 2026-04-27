@@ -1,34 +1,30 @@
 document.addEventListener("DOMContentLoaded", async function () {
+    const headerBox = document.getElementById("header");
+    const footerBox = document.getElementById("footer");
+    const projectRoot = window.location.pathname.split("/modules/")[0];
 
-  const header = document.getElementById("header");
-  const footer = document.getElementById("footer");
+    try {
+        if (headerBox) {
+            const headerResponse = await fetch(`${projectRoot}/shared/partials/header.html`);
+            const headerHTML = await headerResponse.text();
+            headerBox.innerHTML = headerHTML;
+        }
 
-  try {
-    // Load header
-    if (header) {
-      const headerRes = await fetch("../../../shared/partials/header.html");
-      const headerHTML = await headerRes.text();
-      header.innerHTML = headerHTML;
+        if (footerBox) {
+            const footerResponse = await fetch(`${projectRoot}/shared/partials/footer.html`);
+            const footerHTML = await footerResponse.text();
+            footerBox.innerHTML = footerHTML;
+        }
+
+        const currentPage = document.body.dataset.page;
+
+        document.querySelectorAll(".header-nav a").forEach(link => {
+            if (link.dataset.link === currentPage) {
+                link.classList.add("active");
+            }
+        });
+
+    } catch (error) {
+        console.error("Header/Footer loading error:", error);
     }
-
-    // Load footer
-    if (footer) {
-      const footerRes = await fetch("../../../shared/partials/footer.html");
-      const footerHTML = await footerRes.text();
-      footer.innerHTML = footerHTML;
-    }
-
-    // Set active nav
-    const currentPage = document.body.dataset.page;
-
-    document.querySelectorAll(".header-nav a").forEach(link => {
-      if (link.dataset.link === currentPage) {
-        link.classList.add("active");
-      }
-    });
-
-  } catch (error) {
-    console.error("Error loading header/footer:", error);
-  }
-
-}); 
+});

@@ -6,6 +6,8 @@
 
 :root {
 
+  --font-main: 'Poppins', sans-serif;
+  --font-nav: 'Inter', sans-serif;
   /* ── Brand Colors ── */
   --color-primary:        #f97316;   /* Orange — CTA / accent */
   --color-primary-dark:   #ea6c0a;   /* Hover state */
