@@ -54,10 +54,8 @@ body {
   line-height: 1.6;
 }
 
-/* ===== HEADINGS ===== */
-
 h1 {
-  font-size: var(--text-xxl);
+  font-size: var(--text-xl);
   font-weight: var(--font-bold);
 }
 
@@ -89,6 +87,7 @@ h6 {
 /* ===== PARAGRAPH ===== */
 
 p {
+  font-family: var(--font-nav);
   font-size: var(--text-base);
   color: #6b7280;
 }
@@ -119,7 +118,7 @@ p {
   font-size: var(--text-xl);
   font-weight: var(--font-bold);
   color: var(--color-text-primary);
-  font-family: var(--font-body);
+  font-family: var(--font-main);
 }
 
 .section-see-all {

@@ -7,9 +7,12 @@
     <link rel="stylesheet" href="../../../shared/css/variables.css">
     <link rel="stylesheet" href="../../../shared/css/global.css">
     <link rel="stylesheet" href="../../../shared/css/header-footer.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="tripPlanner.css">
 </head>
-
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <body data-page="trip-planner">
 
     <div id="header"></div>
@@ -19,11 +22,11 @@
         <div class="breadcrumb">
             <a href="../home/home.html">Home</a>
             <span>›</span>
-            <span>Trip Planner</span>
+            <a href="../tripPlanner/tripPlanner.html">Trip Planner</a>
         </div>
 
         <section class="planner-title-section">
-            <h1>Plan Your Perfect Trip</h1>
+            <h2 class="section-title">Plan Your Perfect Trip</h2>
 
             <div class="planner-tabs">
                 <button class="tab-btn active" data-tab="createTrip">Create My Trip</button>
@@ -38,7 +41,7 @@
                 <div class="tab-content active" id="createTrip">
 
                     <div class="planner-card">
-                        <h2>Trip Details</h2>
+                        <h3>Trip Details</h3>
 
                         <div class="form-group">
                             <label>Trip Name</label>
@@ -53,19 +56,19 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Start Date</label>
-                                <input type="date" id="startDate">
+                                <input type="date" id="startDate" placeholder="Select date">
                             </div>
 
                             <div class="form-group">
                                 <label>End Date</label>
-                                <input type="date" id="endDate">
+                                <input type="date" id="endDate" placeholder="Select date">
                             </div>
                         </div>
                     </div>
 
                     <div class="planner-card selected-card">
                         <div class="card-title-row">
-                            <h2>Selected Attractions</h2>
+                            <h3>Selected Attractions</h3>
                             <button class="orange-small-btn" id="openAttractionList">+ Add Attraction</button>
                         </div>
 
@@ -149,7 +152,7 @@
             <div class="planner-right">
 
                 <div class="itinerary-card">
-                    <h2>Trip Itinerary</h2>
+                    <h3>Trip Itinerary</h3>
 
                     <div class="empty-itinerary" id="emptyItinerary">
                         <div class="calendar-icon"></div>
@@ -172,7 +175,7 @@
         <div class="modal-box attraction-modal-box">
             <button class="modal-close" data-close="attractionModal">×</button>
 
-            <h2>Add Attractions</h2>
+            <h3>Add Attractions</h3>
             <p class="modal-subtitle">Choose attractions available for Osaka, Japan.</p>
 
             <div class="search-attraction">
@@ -246,7 +249,7 @@
 
             <div class="form-group">
                 <label>Select Time</label>
-                <input type="time" id="scheduleTime" value="09:00">
+                <input type="text" id="scheduleTime" placeholder="Select time">
             </div>
 
             <div class="modal-actions">
@@ -310,7 +313,7 @@
     </div>
 
     <script src="../../../shared/js/main.js"></script>
-    <script src="tripPlanner.js "></script>
+    <script src="tripPlanner.js"></script>
 
 </body>
 </html>

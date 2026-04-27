@@ -3,6 +3,12 @@ body {
     color: #111827;
 }
 
+input {
+  font-family: var(--font-nav);
+  font-size: var(--text-s);
+  color: #6b7280;
+}
+
 .planner-page {
     width: 94%;
     max-width: 1400px;
@@ -28,9 +34,8 @@ body {
     color: #6b7280;
 }
 
-.planner-title-section h1 {
-    font-size: 26px;
-    margin-bottom: 28px;
+.planner-title-section h2 {
+    margin-bottom: 40px;
 }
 
 .planner-tabs {
@@ -86,8 +91,8 @@ body {
     margin-bottom: 28px;
 }
 
-.planner-card h2,
-.itinerary-card h2 {
+.planner-card h3, 
+.itinerary-card h3 {
     margin-bottom: 20px;
 }
 
@@ -116,6 +121,21 @@ body {
 .form-group input:focus {
     border-color: #f97316;
     box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.13);
+}
+
+.flatpickr-day.selected {
+  background: #f97316;
+  border-color: #f97316;
+}
+
+.flatpickr-day:hover {
+  background: #fff7ed;
+  color: #f97316;
+}
+
+.flatpickr-calendar {
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
 .form-row {
@@ -281,6 +301,138 @@ body {
     font-size: 12px;
     color: #6b7280;
 }
+/* ================================
+   ITINERARY TIMELINE DESIGN
+================================ */
+
+.itinerary-list {
+    display: grid;
+    gap: 26px;
+}
+
+.itinerary-day-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+
+.itinerary-day-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.day-number {
+    width: 42px;
+    height: 42px;
+    background: #f97316;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-family: var(--font-nav);
+}
+
+.itinerary-day-header h3 {
+    margin: 0;
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: #111827;
+}
+
+.itinerary-divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 18px 0;
+}
+
+.timeline-list {
+    display: grid;
+    gap: 18px;
+}
+
+.timeline-row {
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    gap: 16px;
+    position: relative;
+}
+
+.timeline-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.timeline-index {
+    width: 30px;
+    height: 30px;
+    background: #e5e7eb;
+    color: #64748b;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    font-family: var(--font-nav);
+    z-index: 2;
+}
+
+.timeline-line {
+    width: 2px;
+    flex: 1;
+    min-height: 48px;
+    background: #e5e7eb;
+    margin-top: 6px;
+}
+
+.timeline-row:last-child .timeline-line {
+    display: none;
+}
+
+.timeline-attraction-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 18px 20px;
+    cursor: pointer;
+    transition: 0.25s ease;
+    background: #ffffff;
+}
+
+.timeline-attraction-card:hover {
+    border-color: #f97316;
+    box-shadow: 0 10px 24px rgba(249, 115, 22, 0.12);
+    transform: translateY(-3px);
+}
+
+.timeline-attraction-card h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+.timeline-attraction-card p {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 10px;
+}
+
+.timeline-attraction-card span {
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+.no-day-attraction {
+    font-size: 14px;
+    color: #9ca3af;
+    font-style: italic;
+}
 
 .tab-content {
     display: none;
@@ -370,6 +522,7 @@ body {
     border-radius: 8px;
     background: #f97316;
     color: #ffffff;
+    font-size: var(--text-base);
     font-weight: 700;
     cursor: pointer;
     transition: 0.25s;

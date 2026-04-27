@@ -1,13 +1,6 @@
 /* ================================
    HOME PAGE BASE
 ================================ */
-
-/* * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-} */
-
 body {
   background: #ffffff;
   color: #111827;
@@ -47,6 +40,7 @@ body {
 }
 
 .hero-content h1 {
+  font-size: 64px;
   font-weight: 700;
   letter-spacing: -1px;
   margin-bottom: 92px;
@@ -144,12 +138,6 @@ body {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 38px;
-}
-
-.section-title-row h2 {
-  font-size: 27px;
-  font-weight: 800;
-  color: #111827;
 }
 
 .section-title-row a {
