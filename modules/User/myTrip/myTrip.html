@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trev - My Trips</title>
+
+    <link rel="stylesheet" href="/Trev/shared/css/variables.css">
+    <link rel="stylesheet" href="/Trev/shared/css/global.css">
+    <link rel="stylesheet" href="/Trev/shared/css/header-footer.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="myTrip.css">
+</head>
+
+<body data-page="my-trips">
+
+    <div id="header"></div>
+
+    <main class="my-trips-page">
+
+        <div class="breadcrumb">
+            <a href="../home/home.html">Home</a>
+            <a>›</a>
+            <a href="../myTrip/myTrip.html">My Trips</a>
+        </div>
+
+        <section class="page-title-section">
+            <h2 class="section-title">My Trips</h2>
+        </section>
+
+        <section class="trip-summary-grid">
+            <div class="summary-card">
+                <p>Total Trips</p>
+                <h3 id="totalTripsCount">4</h3>
+            </div>
+
+            <div class="summary-card">
+                <p>Planned</p>
+                <h3 class="orange-text" id="plannedTripsCount">2</h3>
+            </div>
+
+            <div class="summary-card">
+                <p>Completed</p>
+                <h3 id="completedTripsCount">2</h3>
+            </div>
+        </section>
+
+        <section class="trip-section">
+            <h3 class="section-title">Planned Trips</h3>
+
+            <div class="trip-grid" id="plannedTripsContainer"></div>
+        </section>
+
+        <section class="trip-section">
+            <h3 class="section-title">Completed Trips</h3>
+
+            <div class="trip-grid" id="completedTripsContainer"></div>
+        </section>
+
+    </main>
+
+    <div id="footer"></div>
+
+    <!-- VIEW TRIP MODAL -->
+    <div class="modal-overlay" id="viewTripModal">
+        <div class="modal-box view-trip-modal">
+            <button class="modal-close" data-close="viewTripModal">×</button>
+
+            <div class="modal-trip-header">
+                <div>
+                    <h3 id="viewTripTitle">Weekend Getaway</h3>
+                    <p id="viewTripDate">Aug 1, 2026 - Aug 3, 2026</p>
+                </div>
+
+                <span class="status-badge planned" id="viewTripStatus">Planned</span>
+            </div>
+
+            <div class="modal-itinerary" id="viewTripItinerary"></div>
+        </div>
+    </div>
+
+    <!-- MARK COMPLETED CONFIRMATION MODAL -->
+    <div class="modal-overlay" id="completeConfirmModal">
+        <div class="modal-box confirm-modal">
+            <button class="modal-close" data-close="completeConfirmModal">×</button>
+
+            <div class="confirm-icon complete-icon">
+                <i class="bi bi-check-circle-fill"></i>
+            </div>
+
+            <h3>Mark Trip as Completed?</h3>
+            <p>
+                This trip will be moved from Planned Trips to Completed Trips.
+            </p>
+
+            <div class="confirm-actions">
+                <button class="cancel-btn" data-close="completeConfirmModal">Cancel</button>
+                <button class="complete-confirm-btn" id="confirmCompleteBtn">Mark Completed</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- DELETE CONFIRMATION MODAL -->
+    <div class="modal-overlay" id="deleteConfirmModal">
+        <div class="modal-box confirm-modal">
+            <button class="modal-close" data-close="deleteConfirmModal">×</button>
+
+            <div class="confirm-icon delete-icon">
+                <i class="bi bi-trash-fill"></i>
+            </div>
+
+            <h3>Delete This Trip?</h3>
+            <p>
+                This trip will be permanently removed from your saved trips.
+            </p>
+
+            <div class="confirm-actions">
+                <button class="cancel-btn" data-close="deleteConfirmModal">Cancel</button>
+                <button class="delete-confirm-btn" id="confirmDeleteBtn">Delete Trip</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/Trev/shared/js/main.js"></script>
+    <script src="myTrip.js"></script>
+
+</body>
+</html>

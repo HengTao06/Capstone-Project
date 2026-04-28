@@ -638,6 +638,29 @@ input {
     color: #ffffff;
 }
 
+.selected-item {
+  position: relative;
+}
+
+.remove-selected-btn {
+  margin-left: auto;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: #fee2e2;
+  color: #dc2626;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.remove-selected-btn:hover {
+  background: #dc2626;
+  color: #ffffff;
+}
+
 .schedule-box {
     max-width: 520px;
 }

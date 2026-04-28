@@ -1,0 +1,551 @@
+/* ================================
+   MY TRIPS PAGE
+================================ */
+
+body {
+    background: #ffffff;
+    color: #111827;
+}
+
+/* Page layout */
+.my-trips-page {
+    width: 94%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px 0 80px;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 13px;
+    margin-bottom: 24px;
+}
+
+.breadcrumb a {
+    color: #111827;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.breadcrumb span {
+    color: #6b7280;
+}
+
+/* Page title */
+.page-title-section {
+    margin-bottom: 26px;
+}
+
+/* Summary cards */
+.trip-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin-bottom: 42px;
+}
+
+.summary-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px 26px;
+    background: #ffffff;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+
+.summary-card p {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 10px;
+}
+
+.summary-card h3 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.orange-text {
+    color: #f97316 !important;
+}
+
+/* Trip sections */
+.section-title {
+    margin-bottom: 30px;
+}
+
+.trip-section {
+    margin-bottom: 46px; 
+}
+
+/* Trip cards */
+.trip-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+
+.trip-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #ffffff;
+    padding: 22px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+    transition: 0.25s ease;
+}
+
+.trip-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
+}
+
+.trip-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.trip-card-header h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.status-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 6px 10px;
+    border-radius: 6px;
+    color: #ffffff;
+}
+
+.status-badge.planned {
+    background: #f97316;
+}
+
+.status-badge.completed {
+    background: #22c55e;
+}
+
+.trip-meta {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.trip-meta p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.trip-meta i {
+    font-size: 13px;
+    color: #64748b;
+}
+
+.trip-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding-top: 16px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.trip-actions button,
+.trip-actions a {
+    height: 34px;
+    padding: 0 14px;
+    border-radius: 7px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    color: #374151;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    transition: 0.25s ease;
+}
+
+.trip-actions .view-btn {
+    background: #f97316;
+    color: #ffffff;
+    border-color: #f97316;
+}
+
+.trip-actions .view-btn:hover {
+    background: #ea580c;
+}
+
+.trip-actions .edit-btn:hover {
+    border-color: #0ea5e9;
+    color: #0ea5e9;
+}
+
+.trip-actions .complete-btn {
+    background: #22c55e;
+    color: #ffffff;
+    border-color: #22c55e;
+}
+
+.trip-actions .complete-btn:hover {
+    background: #16a34a;
+}
+
+.trip-actions .delete-btn {
+    background: #ef4444;
+    color: #ffffff;
+    border-color: #ef4444;
+}
+
+.trip-actions .delete-btn:hover {
+    background: #dc2626;
+}
+
+/* Empty state */
+.empty-section {
+    border: 1px dashed #d1d5db;
+    border-radius: 12px;
+    padding: 32px;
+    text-align: center;
+    color: #9ca3af;
+    font-size: 14px;
+}
+
+/* ================================
+   MODAL BASE
+================================ */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    padding: 24px;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-box {
+    background: #ffffff;
+    border-radius: 14px;
+    width: 100%;
+    position: relative;
+    animation: modalPop 0.25s ease;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-close {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    border: none;
+    background: transparent;
+    font-size: 28px;
+    color: #6b7280;
+    cursor: pointer;
+}
+
+/* ================================
+   VIEW TRIP MODAL
+================================ */
+
+.view-trip-modal {
+    max-width: 760px;
+    padding: 30px;
+}
+
+.modal-trip-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-right: 36px;
+    margin-bottom: 28px;
+}
+
+.modal-trip-header h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.modal-trip-header p {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+/* Timeline itinerary design */
+.modal-itinerary {
+    display: grid;
+    gap: 24px;
+}
+
+.itinerary-day-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.itinerary-day-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.day-number {
+    width: 42px;
+    height: 42px;
+    background: #f97316;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-family: var(--font-nav);
+}
+
+.itinerary-day-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.itinerary-divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 18px 0;
+}
+
+.timeline-list {
+    display: grid;
+    gap: 18px;
+}
+
+.timeline-row {
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    gap: 16px;
+}
+
+.timeline-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.timeline-index {
+    width: 30px;
+    height: 30px;
+    background: #e5e7eb;
+    color: #64748b;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    font-family: var(--font-nav);
+    z-index: 2;
+}
+
+.timeline-line {
+    width: 2px;
+    flex: 1;
+    min-height: 48px;
+    background: #e5e7eb;
+    margin-top: 6px;
+}
+
+.timeline-row:last-child .timeline-line {
+    display: none;
+}
+
+.timeline-attraction-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 18px 20px;
+    background: #ffffff;
+    transition: 0.25s ease;
+}
+
+.timeline-attraction-card:hover {
+    border-color: #f97316;
+    box-shadow: 0 10px 24px rgba(249, 115, 22, 0.12);
+    transform: translateY(-3px);
+}
+
+.timeline-attraction-card h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+.timeline-attraction-card h4 i {
+    color: #f97316;
+    margin-right: 6px;
+}
+
+.timeline-attraction-card p {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 10px;
+}
+
+.timeline-attraction-card span {
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+/* ================================
+   CONFIRM MODALS
+================================ */
+
+.confirm-modal {
+    max-width: 430px;
+    padding: 34px 30px;
+    text-align: center;
+}
+
+.confirm-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.confirm-icon i {
+    font-size: 32px;
+}
+
+.complete-icon {
+    background: #dcfce7;
+    color: #22c55e;
+}
+
+.delete-icon {
+    background: #fee2e2;
+    color: #ef4444;
+}
+
+.confirm-modal h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.confirm-modal p {
+    font-size: 14px;
+    color: #6b7280;
+    line-height: 1.7;
+    margin-bottom: 26px;
+}
+
+.confirm-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.cancel-btn,
+.complete-confirm-btn,
+.delete-confirm-btn {
+    height: 40px;
+    padding: 0 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.cancel-btn {
+    border: 1px solid #d1d5db;
+    background: #ffffff;
+    color: #374151;
+}
+
+.complete-confirm-btn {
+    border: none;
+    background: #22c55e;
+    color: #ffffff;
+}
+
+.delete-confirm-btn {
+    border: none;
+    background: #ef4444;
+    color: #ffffff;
+}
+
+.complete-confirm-btn:hover {
+    background: #16a34a;
+}
+
+.delete-confirm-btn:hover {
+    background: #dc2626;
+}
+
+/* ================================
+   ANIMATION
+================================ */
+
+@keyframes modalPop {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ================================
+   RESPONSIVE 900PX
+================================ */
+
+@media (max-width: 900px) {
+    .trip-summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .trip-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-trip-header {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .confirm-actions {
+        flex-direction: column;
+    }
+
+    .cancel-btn,
+    .complete-confirm-btn,
+    .delete-confirm-btn {
+        width: 100%;
+    }
+}
