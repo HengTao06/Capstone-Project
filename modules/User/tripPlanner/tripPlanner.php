@@ -7,11 +7,47 @@ header("Content-Type: application/json");
 $method = $_SERVER['REQUEST_METHOD'];
 
 /* =============================
-   1. GET ATTRACTIONS (for modal)
-   Only load attractions for selected city/country
+   1. POPULAR COMBO
+============================= */
+if ($method === "GET" && isset($_GET['combo'])) {
+    $sql = "
+        SELECT 
+            td.trip_id,
+            t.trip_name,
+            c.city_id,
+            c.city_name,
+            co.country_name,
+            COUNT(td.attraction_id) AS total_attractions,
+            GROUP_CONCAT(a.attraction_id ORDER BY td.sequence_no SEPARATOR '|') AS attraction_ids,
+            GROUP_CONCAT(a.attraction_name ORDER BY td.sequence_no SEPARATOR '|') AS attraction_names,
+            GROUP_CONCAT(a.attraction_category ORDER BY td.sequence_no SEPARATOR '|') AS categories,
+            GROUP_CONCAT(a.attraction_image ORDER BY td.sequence_no SEPARATOR '|') AS images
+        FROM trip_details td
+        JOIN trip t ON td.trip_id = t.trip_id
+        JOIN city c ON t.city_id = c.city_id
+        JOIN country co ON c.country_id = co.country_id
+        JOIN attraction a ON td.attraction_id = a.attraction_id
+        GROUP BY td.trip_id, t.trip_name, c.city_id, c.city_name, co.country_name
+        HAVING total_attractions >= 2
+        ORDER BY total_attractions DESC
+        LIMIT 3
+    ";
+
+    $result = $conn->query($sql);
+    $data = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $data[] = $row;
+    }
+
+    echo json_encode(["status" => "success", "combos" => $data]);
+    exit();
+}
+
+/* =============================
+   2. GET ATTRACTIONS
 ============================= */
 if ($method === "GET") {
-
     $cityName = $_GET["city"] ?? "Osaka";
     $countryName = $_GET["country"] ?? "Japan";
 
@@ -36,16 +72,9 @@ if ($method === "GET") {
         WHERE c.city_name = ?
         AND co.country_name = ?
         GROUP BY
-            a.attraction_id,
-            a.attraction_name,
-            a.attraction_description,
-            a.attraction_category,
-            a.estimated_price,
-            a.best_season,
-            a.attraction_image,
-            c.city_id,
-            c.city_name,
-            co.country_name
+            a.attraction_id, a.attraction_name, a.attraction_description,
+            a.attraction_category, a.estimated_price, a.best_season,
+            a.attraction_image, c.city_id, c.city_name, co.country_name
         ORDER BY a.attraction_name ASC
     ");
 
@@ -53,7 +82,6 @@ if ($method === "GET") {
     $stmt->execute();
 
     $result = $stmt->get_result();
-
     $data = [];
 
     while ($row = $result->fetch_assoc()) {
@@ -66,15 +94,13 @@ if ($method === "GET") {
         "country" => $countryName,
         "attractions" => $data
     ]);
-
     exit();
 }
 
 /* =============================
-   2. SAVE TRIP
+   3. SAVE TRIP
 ============================= */
 if ($method === "POST") {
-
     $input = json_decode(file_get_contents("php://input"), true);
 
     $tripName = $input['tripName'];
@@ -85,17 +111,19 @@ if ($method === "POST") {
 
     $user_id = $_SESSION['user_id'] ?? 1;
 
-    // Insert trip
     $stmt = $conn->prepare("
         INSERT INTO trip (user_id, city_id, trip_name, start_date, end_date, trip_status)
         VALUES (?, ?, ?, ?, ?, 'Planned')
     ");
     $stmt->bind_param("iisss", $user_id, $city_id, $tripName, $startDate, $endDate);
-    $stmt->execute();
+
+    if (!$stmt->execute()) {
+        echo json_encode(["status" => "error", "message" => $stmt->error]);
+        exit();
+    }
 
     $trip_id = $conn->insert_id;
 
-    // Insert trip details
     $detailStmt = $conn->prepare("
         INSERT INTO trip_details (trip_id, attraction_id, day_number, sequence_no)
         VALUES (?, ?, ?, ?)
@@ -105,46 +133,26 @@ if ($method === "POST") {
         $sequence = 1;
 
         foreach ($items as $item) {
-            $detailStmt->bind_param("iiii", $trip_id, $item['id'], $day, $sequence);
-            $detailStmt->execute();
+            if (!isset($item['id']) || (int)$item['id'] <= 0) {
+                echo json_encode(["status" => "error", "message" => "Invalid attraction ID found."]);
+                exit();
+            }
+
+            $attractionId = (int)$item['id'];
+            $dayNumber = (int)$day;
+
+            $detailStmt->bind_param("iiii", $trip_id, $attractionId, $dayNumber, $sequence);
+
+            if (!$detailStmt->execute()) {
+                echo json_encode(["status" => "error", "message" => $detailStmt->error]);
+                exit();
+            }
+
             $sequence++;
         }
     }
 
     echo json_encode(["status" => "success"]);
-    exit();
-}
-
-/* =============================
-    3. Popular Combo
-============================= */
-
-if (isset($_GET['combo'])) {
-
-    $sql = "
-        SELECT 
-            td.trip_id,
-            t.trip_name,
-            GROUP_CONCAT(a.attraction_name SEPARATOR ' + ') AS combo_name,
-            GROUP_CONCAT(a.attraction_image) AS images
-        FROM trip_details td
-        JOIN trip t ON td.trip_id = t.trip_id
-        JOIN attraction a ON td.attraction_id = a.attraction_id
-        GROUP BY td.trip_id
-        HAVING COUNT(td.attraction_id) >= 2
-        ORDER BY COUNT(td.attraction_id) DESC
-        LIMIT 3
-    ";
-
-    $result = $conn->query($sql);
-
-    $data = [];
-
-    while ($row = $result->fetch_assoc()) {
-        $data[] = $row;
-    }
-
-    echo json_encode($data);
     exit();
 }
 ?>

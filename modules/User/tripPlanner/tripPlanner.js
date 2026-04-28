@@ -555,16 +555,60 @@ document.addEventListener('DOMContentLoaded', function () {
     const startDate = document.getElementById('startDate').value;
     const endDate = document.getElementById('endDate').value;
 
-    const hasItinerary = Object.values(itineraryData).some(day => day.length > 0);
+    hasItinerary = Object.values(itineraryData).some(day => day.length > 0);
 
-    if (!tripName || !startDate || !endDate) {
-      alert('Please fill in trip name, start date and end date before saving.');
+    /* =============================
+   VALIDATION SECTION
+============================= */
+
+    // 1. Trip Name
+    if (!tripName || tripName.length < 3) {
+      alert('Trip name must be at least 3 characters.');
       return;
     }
 
-    if (!hasItinerary) {
-      alert('Please add attractions or use a popular combo before saving.');
+    // 2. Destination (optional but recommended)
+    const destinationInput = document.getElementById('destination')?.value?.trim();
+    if (!destinationInput || !destinationInput.includes(',')) {
+      alert('Please enter destination in format: City, Country (e.g. Osaka, Japan)');
       return;
+    }
+
+    // 3. Dates
+    if (!startDate || !endDate) {
+      alert('Please select both start date and end date.');
+      return;
+    }
+
+    if (new Date(endDate) < new Date(startDate)) {
+      alert('End date cannot be before start date.');
+      return;
+    }
+
+    // 4. Itinerary must exist
+    const hasItinerary = Object.values(itineraryData).some(day => day.length > 0);
+
+    if (!hasItinerary) {
+      alert('Please add at least one attraction before saving.');
+      return;
+    }
+
+    // 5. Validate each attraction
+    for (const day in itineraryData) {
+      for (const item of itineraryData[day]) {
+
+        // invalid ID (important for your current bug)
+        if (!item.id || Number(item.id) <= 0) {
+          alert('Some attractions are invalid. Please add attractions from the list.');
+          return;
+        }
+
+        //  invalid day
+        if (Number(day) <= 0) {
+          alert('Invalid itinerary day detected.');
+          return;
+        }
+      }
     }
 
     const payload = {
@@ -588,7 +632,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (result.status === 'success') {
         alert('Trip saved successfully!');
-        window.location.href = '../myTrips/myTrips.html';
+        window.location.href = '../myTrip/myTrip.html';
       } else {
         alert(result.message || 'Failed to save trip.');
       }
