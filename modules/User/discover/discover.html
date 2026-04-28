@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Trev - Discover</title>
+        <link rel="stylesheet" href="../../../shared/css/variables.css">
+        <link rel="stylesheet" href="../../../shared/css/global.css">
+        <link rel="stylesheet" href="../../../shared/css/header-footer.css">
+        <link rel="stylesheet" href="discover.css">
+    </head>
+
+    <body data-page="discover">
+        <div id="header"></div>
+        <!-- SEARCH / FILTER -->
+        <section class="filter-box">
+            <h2>Find Your Perfect Trip</h2>
+
+            <div class="filters">
+                <div class="selects">
+                    <p>Budget Range</p>
+                    <select>
+                        <option>Select Budget</option>
+                    </select>
+
+                    <p>Country</p>
+                    <select>
+
+                        <option>Select country</option>
+                    </select>
+                </div>
+
+                <div class="tags">
+                    <p>Travel Interests</p>
+                    <button>Culture</button>
+                    <button>Adventure</button>
+                    <button>Food</button>
+                    <button>Nature</button>
+                    <button>Shopping</button>
+                </div>
+
+                <div class="buttons">
+                    <button class="clear">Clear All Filters</button>
+                    <button class="apply">Apply Filters</button>
+                </div>
+            </div>
+        </section>
+
+<!-- DESTINATIONS -->
+        <section class="destinations">
+            <h3>Destinations</h3>
+            <div class="filter-buttons">
+                <button class="active" onclick="filterSelection('recommended')">
+                Recommended
+                </button>
+                <button onclick="filterSelection('popular')">
+                Popular Combo
+                </button>
+            </div>
+
+            <div class="cards">
+    <!-- CARD -->
+                <div class="card">
+                    <img src="bali.jpg">
+                    <div class="card-body">
+                        <h4>Bali, Indonesia</h4>
+                        <p>Tropical paradise with beaches and culture</p>
+                        <button>View Details</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="venice.jpg">
+                    <div class="card-body">
+                        <h4>Venice, Italy</h4>
+                        <p>Romantic canals and architecture</p>
+                        <button>View Details</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="alps.jpg">
+                    <div class="card-body">
+                        <h4>Swiss Alps</h4>
+                        <p>Mountains, hiking, and skiing</p>
+                        <button>View Details</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <div id="footer"></div>
+
+        <script src="../../../shared/js/main.js"></script>
+        <script src="discover.js"></script>
+
+    </body>
+</html>
