@@ -36,8 +36,36 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
     valid = false;
   }
 
-  // Success
-  if (valid) {
-    alert("Login successful!");
-  }
+  // 🚫 Stop if validation fails
+  if (!valid) return;
+
+  // ✅ Send to backend only if valid
+  fetch("login.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+  })
+  .then(res => res.json())
+  .then(data => {
+
+    console.log("Response:", data);
+
+    if (data.status === "success") {
+
+      if (data.role === "user") {
+        window.location.href = "../User/home/home.html";
+      } else {
+        window.location.href = "../Admin/M_destination.html";
+      }
+
+    } else {
+      alert(data.message);
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    alert("Something went wrong.");
+  });
 });

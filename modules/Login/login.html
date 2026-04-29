@@ -18,7 +18,7 @@
                 <div class="login-card">
                     <h2>Welcome Back</h2>
                     <p>Sign in to continue your adventure</p>
-                    <form id="loginForm">
+                    <form id="loginForm" method="POST">
                         <label>Email Address</label>
                         <input type="email" id="email"
                             placeholder="you@example.com">
@@ -34,7 +34,7 @@
                         </div>
 
                         <div class="terms">
-                            <input type="checkbox">
+                            <input type="checkbox" id="terms">
                             <span>I agree to the <a href="#">Terms of
                                     Service</a> and <a href="#">Privacy
                                     Policy</a></span>
