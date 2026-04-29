@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trev - Discover</title>
+  <link rel="stylesheet" href="../../../shared/css/variables.css">
+  <link rel="stylesheet" href="../../../shared/css/global.css">
+  <link rel="stylesheet" href="../../../shared/css/header-footer.css">
+  <link rel="stylesheet" href="discover.css">
+  <script src="../../../shared/js/main.js"></script>
+  <script src="discover.js"></script>
+</head>
+<body data-page="discover">
+
+  <div id="header"></div>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <span>Home</span>
+    <span class="sep">›</span>
+    <span class="current">Discover</span>
+  </div>
+
+  <!-- FILTER BOX -->
+  <section class="filter-box">
+    <h2>Find Your Perfect Trip</h2>
+
+    <div class="filter-grid">
+
+      <div class="filter-group">
+        <label>Budget Range</label>
+        <select id="budget-select">
+          <option value="">Select budget</option>
+          <option value="low">Budget (Under RM200)</option>
+          <option value="mid">Mid-range (RM200 – RM500)</option>
+          <option value="high">Premium (RM500+)</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>Country</label>
+        <select id="country-select">
+          <option value="">Select country</option>
+          <!-- Populated via PHP/JS -->
+        </select>
+      </div>
+
+      <div class="filter-group full-width">
+        <label>Travel Interests <small>(Select multiple)</small></label>
+        <div class="interest-tags" id="interest-tags">
+          <!-- Populated dynamically from DB categories -->
+        </div>
+      </div>
+
+      <div class="filter-group rating-group">
+        <label>Rating</label>
+        <div class="star-filter" id="star-filter">
+          <span class="star" data-val="1">★</span>
+          <span class="star" data-val="2">★</span>
+          <span class="star" data-val="3">★</span>
+          <span class="star" data-val="4">★</span>
+          <span class="star" data-val="5">★</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="filter-actions">
+      <button class="btn-clear" id="btn-clear">Clear All Filters</button>
+      <button class="btn-apply" id="btn-apply">Apply Filters</button>
+    </div>
+  </section>
+
+  <!-- DESTINATIONS -->
+  <section class="destinations">
+    <h3>Destinations</h3>
+
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="recommended">Recommended</button>
+      <button class="tab-btn" data-tab="popular">Popular Combo</button>
+    </div>
+
+    <!-- RECOMMENDED PANEL -->
+    <div id="panel-recommended" class="tab-panel active">
+      <div class="cards" id="recommended-cards">
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+      </div>
+      <p class="no-results hidden" id="no-rec">No destinations match your filters.</p>
+    </div>
+
+    <!-- POPULAR COMBO PANEL -->
+    <div id="panel-popular" class="tab-panel hidden">
+      <div class="combo-cards" id="combo-cards">
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+      </div>
+      <p class="no-results hidden" id="no-combo">No combos available.</p>
+    </div>
+
+  </section>
+
+  <div id="footer"></div>
+
+</body>
+</html>
