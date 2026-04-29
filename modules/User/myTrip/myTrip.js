@@ -20,90 +20,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let selectedTripId = null
 
-    let trips = [
-        {
-            id: 1,
-            name: 'Paris Summer Vacation',
-            startDate: 'Jul 15, 2026',
-            endDate: 'Jul 20, 2026',
-            attractions: 8,
-            status: 'Planned',
-            itinerary: {
-                1: [
-                    { name: 'Eiffel Tower', category: 'Landmark' },
-                    { name: 'Louvre Museum', category: 'Museum' }
-                ],
-                2: [
-                    { name: 'Arc de Triomphe', category: 'Landmark' },
-                    { name: 'Champs-Élysées', category: 'Shopping' }
-                ],
-                3: []
+    let trips = [];
+
+    async function loadTrips() {
+        try {
+            const response = await fetch('myTrip.php');
+            const text = await response.text();
+            console.log('MYTRIP RESPONSE:', text);
+            const data = JSON.parse(text);
+
+            if (data.status === 'success') {
+                trips = data.trips;
+                renderTrips();
+            } else {
+                console.error(data.message);
             }
-        },
-        {
-            id: 2,
-            name: 'Weekend Getaway',
-            startDate: 'Aug 1, 2026',
-            endDate: 'Aug 3, 2026',
-            attractions: 4,
-            status: 'Planned',
-            itinerary: {
-                1: [
-                    { name: 'Eiffel Tower', category: 'Landmark' },
-                    { name: 'Louvre Museum', category: 'Museum' }
-                ],
-                2: [
-                    { name: 'Arc de Triomphe', category: 'Landmark' },
-                    { name: 'Champs-Élysées', category: 'Shopping' }
-                ],
-                3: []
-            }
-        },
-        {
-            id: 3,
-            name: 'Art & Culture Tour',
-            startDate: 'May 10, 2026',
-            endDate: 'May 14, 2026',
-            attractions: 6,
-            status: 'Completed',
-            itinerary: {
-                1: [
-                    { name: 'Louvre Museum', category: 'Museum' },
-                    { name: "Musée d'Orsay", category: 'Museum' }
-                ],
-                2: [
-                    { name: 'Notre-Dame Cathedral', category: 'Landmark' },
-                    { name: 'Sacré-Cœur', category: 'Landmark' }
-                ],
-                3: []
-            }
-        },
-        {
-            id: 4,
-            name: 'Complete Paris Experience',
-            startDate: 'Mar 20, 2026',
-            endDate: 'Mar 25, 2026',
-            attractions: 10,
-            status: 'Completed',
-            itinerary: {
-                1: [
-                    { name: 'Eiffel Tower', category: 'Landmark' },
-                    { name: 'Louvre Museum', category: 'Museum' }
-                ],
-                2: [
-                    { name: 'Versailles Palace', category: 'Historical Site' },
-                    { name: 'Arc de Triomphe', category: 'Landmark' }
-                ],
-                3: [
-                    { name: "Musée d'Orsay", category: 'Museum' }
-                ]
-            }
+
+        } catch (error) {
+            console.error('Failed to load trips:', error);
         }
-    ]
+    }
 
-    renderTrips()
+    loadTrips()
 
-    function renderTrips () {
+    function renderTrips() {
         plannedTripsContainer.innerHTML = ''
         completedTripsContainer.innerHTML = ''
 
@@ -133,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
         attachTripButtonEvents()
     }
 
-    function createTripCard (trip) {
+    function createTripCard(trip) {
         const card = document.createElement('article')
         card.className = 'trip-card'
 
@@ -168,16 +108,15 @@ document.addEventListener('DOMContentLoaded', function () {
                     Edit
                 </a>
 
-                ${
-                    trip.status === 'Planned'
-                    ? `
+                ${trip.status === 'Planned'
+                ? `
                     <button class="complete-btn" data-id="${trip.id}">
                         <i class="bi bi-check-circle-fill"></i>
                         Mark Completed
                     </button>
                     `
-                    : ''
-                }
+                : ''
+            }
 
                 <button class="delete-btn" data-id="${trip.id}">
                     <i class="bi bi-trash-fill"></i>
@@ -189,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return card
     }
 
-    function attachTripButtonEvents () {
+    function attachTripButtonEvents() {
         document.querySelectorAll('.view-btn').forEach(button => {
             button.addEventListener('click', function () {
                 const tripId = Number(this.dataset.id)
@@ -216,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
     }
 
-    function openViewTripModal (trip) {
+    function openViewTripModal(trip) {
         viewTripTitle.textContent = trip.name
         viewTripDate.textContent = `${trip.startDate} - ${trip.endDate}`
         viewTripStatus.textContent = trip.status
@@ -229,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function () {
         openModal(viewTripModal)
     }
 
-    function renderItineraryHTML (itinerary) {
+    function renderItineraryHTML(itinerary) {
         let html = ''
 
         Object.keys(itinerary).forEach(day => {
@@ -282,20 +221,20 @@ document.addEventListener('DOMContentLoaded', function () {
         return html
     }
 
-    confirmCompleteBtn.addEventListener('click', function () {
+    confirmCompleteBtn.addEventListener('click', async function () {
         const trip = trips.find(item => item.id === selectedTripId)
 
         if (trip) {
-            trip.status = 'Completed'
-            closeModal(completeConfirmModal)
-            renderTrips()
+            await updateTripStatus(selectedTripId, 'Completed');
+            closeModal(completeConfirmModal);
+            loadTrips();
         }
     })
 
-    confirmDeleteBtn.addEventListener('click', function () {
-        trips = trips.filter(item => item.id !== selectedTripId)
-        closeModal(deleteConfirmModal)
-        renderTrips()
+    confirmDeleteBtn.addEventListener('click', async function () {
+        await deleteTrip(selectedTripId);
+        closeModal(deleteConfirmModal);
+        loadTrips();
     })
 
     document.querySelectorAll('[data-close]').forEach(button => {
@@ -313,13 +252,36 @@ document.addEventListener('DOMContentLoaded', function () {
         })
     })
 
-    function openModal (modal) {
+    function openModal(modal) {
         modal.classList.add('active')
         document.body.style.overflow = 'hidden'
     }
 
-    function closeModal (modal) {
+    function closeModal(modal) {
         modal.classList.remove('active')
         document.body.style.overflow = ''
     }
-})  
+})
+
+async function updateTripStatus(tripId, status) {
+    await fetch('myTrip.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            action: 'updateStatus',
+            trip_id: tripId,
+            status: status
+        })
+    });
+}
+
+async function deleteTrip(tripId) {
+    await fetch('myTrip.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            action: 'delete',
+            trip_id: tripId
+        })
+    });
+}

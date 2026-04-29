@@ -1,314 +1,250 @@
-    <!DOCTYPE html>
-    <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Trev - Trip Planner</title>
-            <link rel="stylesheet" href="../../../shared/css/variables.css">
-            <link rel="stylesheet" href="../../../shared/css/global.css">
-            <link rel="stylesheet" href="../../../shared/css/header-footer.css">
-            <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-            <link rel="stylesheet"
-                href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-            <link rel="stylesheet" href="tripPlanner.css">
-        </head>
-        <body data-page="trip-planner">
+ <!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Trev - Trip Planner</title>
+        <link rel="stylesheet" href="../../../shared/css/variables.css">
+        <link rel="stylesheet" href="../../../shared/css/global.css">
+        <link rel="stylesheet" href="../../../shared/css/header-footer.css">
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <link rel="stylesheet" href="tripPlanner.css">
+    </head>
+    <body data-page="trip-planner">
 
-            <div id="header"></div>
+        <div id="header"></div>
 
-            <main class="planner-page">
+        <main class="planner-page">
 
-                <div class="breadcrumb">
-                    <a href="../home/home.html">Home</a>
-                    <a>›</a>
-                    <a href="../tripPlanner/tripPlanner.html">Trip Planner</a>
+            <div class="breadcrumb">
+                <a href="../home/home.html">Home</a>
+                <a>›</a>
+                <a href="../tripPlanner/tripPlanner.html">Trip Planner</a>
+            </div>
+
+            <section class="planner-title-section">
+                <h2 class="section-title">Plan Your Perfect Trip</h2>
+
+                <div class="planner-tabs">
+                    <button class="tab-btn active" data-tab="createTrip">Create
+                        My Trip</button>
+                    <button class="tab-btn" data-tab="comboTrip">Use Popular
+                        Combo</button>
                 </div>
+            </section>
 
-                <section class="planner-title-section">
-                    <h2 class="section-title">Plan Your Perfect Trip</h2>
+            <section class="planner-layout">
 
-                    <div class="planner-tabs">
-                        <button class="tab-btn active" data-tab="createTrip">Create
-                            My Trip</button>
-                        <button class="tab-btn" data-tab="comboTrip">Use Popular
-                            Combo</button>
-                    </div>
-                </section>
+                <div class="planner-left">
 
-                <section class="planner-layout">
+                    <div class="tab-content active" id="createTrip">
 
-                    <div class="planner-left">
+                        <div class="planner-card">
+                            <h3>Trip Details</h3>
 
-                        <div class="tab-content active" id="createTrip">
+                            <div class="form-group">
+                                <label>Trip Name</label>
+                                <input type="text" id="tripName"
+                                    placeholder="e.g. Osaka Adventure">
+                            </div>
 
-                            <div class="planner-card">
-                                <h3>Trip Details</h3>
+                            <div class="form-group">
+                                <label>Destination</label>
+                                <select id="destination">
+                                    <option value="">Select destination</option>
+                                </select>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Start Date</label>
+                                    <input type="text" id="startDate"
+                                        placeholder="Select date">
+                                </div>
 
                                 <div class="form-group">
-                                    <label>Trip Name</label>
-                                    <input type="text" id="tripName"
-                                        placeholder="e.g. Osaka Adventure">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Destination</label>
-                                    <input type="text" id="destination"
-                                        value="Osaka, Japan">
-                                </div>
-
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label>Start Date</label>
-                                        <input type="text" id="startDate"
-                                            placeholder="Select date">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>End Date</label>
-                                        <input type="text" id="endDate"
-                                            placeholder="Select date">
-                                    </div>
+                                    <label>End Date</label>
+                                    <input type="text" id="endDate"
+                                        placeholder="Select date">
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="planner-card selected-card">
-                                <div class="card-title-row">
-                                    <h3>Selected Attractions</h3>
-                                    <button class="orange-small-btn"
-                                        id="openAttractionList">+ Add
-                                        Attraction</button>
-                                </div>
-
-                                <div class="selected-attractions"
-                                    id="selectedAttractions">
-                                    <p class="empty-text">No attractions selected
-                                        yet. Click “Add Attraction” to get
-                                        started.</p>
-                                </div>
+                        <div class="planner-card selected-card">
+                            <div class="card-title-row">
+                                <h3>Selected Attractions</h3>
+                                <button class="orange-small-btn"
+                                    id="openAttractionList">+ Add
+                                    Attraction</button>
                             </div>
 
-                        </div>
-
-                        <div class="tab-content" id="comboTrip">
-
-                            <div class="combo-list">
-
-                                <article class="combo-card">
-                                    <div class="combo-top">
-                                        <div>
-                                            <h3>Weekend Getaway</h3>
-                                            <p>3 days · RM 1,250 travelers</p>
-                                        </div>
-                                        <button class="use-combo-btn"
-                                            data-combo="weekend">Use This
-                                            Combo</button>
-                                    </div>
-
-                                    <p class="combo-label">Includes:</p>
-
-                                    <div class="combo-tags">
-                                        <span>Eiffel Tower</span>
-                                        <span>Louvre Museum</span>
-                                        <span>Arc de Triomphe</span>
-                                        <span>Champs-Élysées</span>
-                                    </div>
-                                </article>
-
-                                <article class="combo-card">
-                                    <div class="combo-top">
-                                        <div>
-                                            <h3>Art & Culture Tour</h3>
-                                            <p>4 days · RM 980 travelers</p>
-                                        </div>
-                                        <button class="use-combo-btn"
-                                            data-combo="culture">Use This
-                                            Combo</button>
-                                    </div>
-
-                                    <p class="combo-label">Includes:</p>
-
-                                    <div class="combo-tags">
-                                        <span>Louvre Museum</span>
-                                        <span>Musée d'Orsay</span>
-                                        <span>Notre-Dame Cathedral</span>
-                                        <span>Sacré-Cœur</span>
-                                    </div>
-                                </article>
-
-                                <article class="combo-card">
-                                    <div class="combo-top">
-                                        <div>
-                                            <h3>Complete Paris Experience</h3>
-                                            <p>5 days · RM 2,100 travelers</p>
-                                        </div>
-                                        <button class="use-combo-btn"
-                                            data-combo="complete">Use This
-                                            Combo</button>
-                                    </div>
-
-                                    <p class="combo-label">Includes:</p>
-
-                                    <div class="combo-tags">
-                                        <span>Eiffel Tower</span>
-                                        <span>Louvre Museum</span>
-                                        <span>Versailles Palace</span>
-                                        <span>Arc de Triomphe</span>
-                                        <span>Musée d'Orsay</span>
-                                    </div>
-                                </article>
-
+                            <div class="selected-attractions"
+                                id="selectedAttractions">
+                                <p class="empty-text">No attractions selected
+                                    yet. Click “Add Attraction” to get
+                                    started.</p>
                             </div>
-
-                        </div>
-
-                        <button class="save-trip-btn" id="saveTripBtn">Save
-                            Trip</button>
-
-                    </div>
-
-                    <div class="planner-right">
-
-                        <div class="itinerary-card">
-                            <h3>Trip Itinerary</h3>
-
-                            <div class="empty-itinerary" id="emptyItinerary">
-                                <div class="calendar-icon"></div>
-                                <h3>No itinerary yet</h3>
-                                <p>Add attractions to your trip or use a popular
-                                    combo to get started.</p>
-                            </div>
-
-                            <div class="itinerary-list" id="itineraryList"></div>
                         </div>
 
                     </div>
 
-                </section>
+                    <div class="tab-content" id="comboTrip">
 
-            </main>
+                        <div class="combo-list" id="comboList"></div>
 
-            <div id="footer"></div>
-
-            <div class="modal-overlay" id="attractionModal">
-                <div class="modal-box attraction-modal-box">
-                    <button class="modal-close"
-                        data-close="attractionModal">×</button>
-
-                    <h3>Add Attractions</h3>
-                    <p class="modal-subtitle" id="attractionModalSubtitle">
-                        Choose attractions available for your selected destination.
-                    </p>
-
-                    <div class="search-attraction">
-                        <input type="text" id="attractionSearchInput"
-                            placeholder="Search attractions...">
                     </div>
 
-                    <div class="attraction-list" id="attractionList"></div>
+                    <button class="save-trip-btn" id="saveTripBtn">Save
+                        Trip</button>
+
                 </div>
+
+                <div class="planner-right">
+
+                    <div class="itinerary-card">
+                        <h3>Trip Itinerary</h3>
+
+                        <div class="empty-itinerary" id="emptyItinerary">
+                            <div class="calendar-icon"></div>
+                            <h3>No itinerary yet</h3>
+                            <p>Add attractions to your trip or use a popular
+                                combo to get started.</p>
+                        </div>
+
+                        <div class="itinerary-list" id="itineraryList"></div>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+        <div id="footer"></div>
+
+        <div class="modal-overlay" id="attractionModal">
+            <div class="modal-box attraction-modal-box">
+                <button class="modal-close"
+                    data-close="attractionModal">×</button>
+
+                <h3>Add Attractions</h3>
+                <p class="modal-subtitle" id="attractionModalSubtitle">
+                    Choose attractions available for your selected destination.
+                </p>
+
+                <div class="search-attraction">
+                    <input type="text" id="attractionSearchInput"
+                        placeholder="Search attractions...">
+                </div>
+
+                <div class="attraction-list" id="attractionList"></div>
             </div>
+        </div>
 
-            <div class="modal-overlay" id="scheduleModal">
-                <div class="modal-box schedule-box">
-                    <button class="modal-close"
-                        data-close="scheduleModal">×</button>
+        <div class="modal-overlay" id="scheduleModal">
+            <div class="modal-box schedule-box">
+                <button class="modal-close"
+                    data-close="scheduleModal">×</button>
 
-                    <h2>Schedule Attraction</h2>
+                <h2>Schedule Attraction</h2>
 
-                    <div class="schedule-attraction-preview">
-                        <img id="scheduleImg" src alt>
-                        <div>
-                            <h3 id="scheduleName">Attraction Name</h3>
-                            <p>Osaka, Japan</p>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Select Day</label>
-                        <div class="day-buttons">
-                            <button class="day-btn active" data-day="1">Day
-                                1</button>
-                            <button class="day-btn" data-day="2">Day 2</button>
-                            <button class="day-btn" data-day="3">Day 3</button>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Select Time</label>
-                        <input type="text" id="scheduleTime"
-                            placeholder="Select time">
-                    </div>
-
-                    <div class="modal-actions">
-                        <button class="cancel-btn"
-                            data-close="scheduleModal">Cancel</button>
-                        <button class="confirm-btn" id="confirmSchedule">Add to
-                            Itinerary</button>
+                <div class="schedule-attraction-preview">
+                    <img id="scheduleImg" src alt>
+                    <div>
+                        <h3 id="scheduleName">Attraction Name</h3>
+                        <p>Osaka, Japan</p>
                     </div>
                 </div>
-            </div>
 
-            <div class="modal-overlay" id="comboModal">
-                <div class="modal-box combo-detail-box">
-                    <button class="modal-close" data-close="comboModal">×</button>
-
-                    <h2 id="comboTitle">Weekend Getaway</h2>
-                    <p class="modal-subtitle" id="comboDesc">This combo includes
-                        popular attractions selected by many users.</p>
-
-                    <div class="combo-detail-list" id="comboDetailList"></div>
-
-                    <div class="modal-actions">
-                        <button class="cancel-btn"
-                            data-close="comboModal">Cancel</button>
-                        <button class="confirm-btn" id="confirmCombo">Use This
-                            Combo</button>
+                <div class="form-group">
+                    <label>Select Day</label>
+                    <div class="day-buttons">
+                        <button class="day-btn active" data-day="1">Day
+                            1</button>
+                        <button class="day-btn" data-day="2">Day 2</button>
+                        <button class="day-btn" data-day="3">Day 3</button>
                     </div>
                 </div>
-            </div>
 
-            <div class="modal-overlay" id="detailModal">
-                <div class="modal-box detail-box">
-                    <button class="modal-close" data-close="detailModal">×</button>
+                <div class="form-group">
+                    <label>Select Time</label>
+                    <input type="text" id="scheduleTime"
+                        placeholder="Select time">
+                </div>
 
-                    <img id="detailImg" class="detail-main-img" src alt>
-
-                    <h2 id="detailName">Attraction Name</h2>
-                    <p class="detail-location">Osaka, Japan</p>
-
-                    <div class="detail-info-grid">
-                        <div>
-                            <span>Category</span>
-                            <strong>Culture</strong>
-                        </div>
-                        <div>
-                            <span>Estimated Price</span>
-                            <strong>RM 80</strong>
-                        </div>
-                        <div>
-                            <span>Best Season</span>
-                            <strong>Spring</strong>
-                        </div>
-                        <div>
-                            <span>Rating</span>
-                            <strong>★ 4.8</strong>
-                        </div>
-                    </div>
-
-                    <p class="detail-description">
-                        This attraction is one of the recommended places to visit
-                        during your trip.
-                        It is suitable for sightseeing, photography, and cultural
-                        exploration.
-                    </p>
-
-                    <a href="#" class="view-full-details">View Full Details</a>
+                <div class="modal-actions">
+                    <button class="cancel-btn"
+                        data-close="scheduleModal">Cancel</button>
+                    <button class="confirm-btn" id="confirmSchedule">Add to
+                        Itinerary</button>
                 </div>
             </div>
+        </div>
 
-            <script src="../../../shared/js/main.js"></script>
-            <script src="tripPlanner.js"></script>
+        <div class="modal-overlay" id="comboModal">
+            <div class="modal-box combo-detail-box">
+                <button class="modal-close" data-close="comboModal">×</button>
 
-        </body>
-    </html>
+                <h2 id="comboTitle">Weekend Getaway</h2>
+                <p class="modal-subtitle" id="comboDesc">This combo includes
+                    popular attractions selected by many users.</p>
+
+                <div class="combo-detail-list" id="comboDetailList"></div>
+
+                <div class="modal-actions">
+                    <button class="cancel-btn"
+                        data-close="comboModal">Cancel</button>
+                    <button class="confirm-btn" id="confirmCombo">Use This
+                        Combo</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-overlay" id="detailModal">
+            <div class="modal-box detail-box">
+                <button class="modal-close" data-close="detailModal">×</button>
+
+                <img id="detailImg" class="detail-main-img" src alt>
+
+                <h2 id="detailName">Attraction Name</h2>
+                <p class="detail-location">Osaka, Japan</p>
+
+                <div class="detail-info-grid">
+                    <div>
+                        <span>Category</span>
+                        <strong>Culture</strong>
+                    </div>
+                    <div>
+                        <span>Estimated Price</span>
+                        <strong>RM 80</strong>
+                    </div>
+                    <div>
+                        <span>Best Season</span>
+                        <strong>Spring</strong>
+                    </div>
+                    <div>
+                        <span>Rating</span>
+                        <strong>★ 4.8</strong>
+                    </div>
+                </div>
+
+                <p class="detail-description">
+                    This attraction is one of the recommended places to visit
+                    during your trip.
+                    It is suitable for sightseeing, photography, and cultural
+                    exploration.
+                </p>
+
+                <a href="#" class="view-full-details">View Full Details</a>
+            </div>
+        </div>
+
+        <script src="../../../shared/js/main.js"></script>
+        <script src="tripPlanner.js"></script>
+
+    </body>
+</html>

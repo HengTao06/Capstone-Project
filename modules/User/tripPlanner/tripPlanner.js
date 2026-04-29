@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
+
+  const urlParams = new URLSearchParams(window.location.search);
+  let editingTripId = urlParams.get('trip_id');
+  const comboList = document.getElementById('comboList');
   const tabButtons = document.querySelectorAll('.tab-btn');
   const tabContents = document.querySelectorAll('.tab-content');
 
@@ -28,12 +32,117 @@ document.addEventListener('DOMContentLoaded', function () {
   const detailName = document.getElementById('detailName');
   const detailImg = document.getElementById('detailImg');
 
+  const destinationSelect = document.getElementById('destination');
+  let popularCombos = [];
+  let selectedCityId = null;
   let currentAttraction = null;
   let selectedDay = 1;
   let selectedCombo = null;
   let attractionsData = [];
-
   let itineraryData = {};
+
+  async function loadPopularCombos() {
+    if (!selectedCityId) {
+      comboList.innerHTML = `<div class="empty-section">Please select a destination first.</div>`;
+      return;
+    }
+
+    const response = await fetch(`tripPlanner.php?combo=1&city_id=${selectedCityId}`);
+    const data = await response.json();
+
+    comboList.innerHTML = '';
+
+    if (data.status !== 'success' || data.combos.length === 0) {
+      comboList.innerHTML = `<div class="empty-section">No popular combos available yet.</div>`;
+      return;
+    }
+
+    popularCombos = data.combos;
+
+    data.combos.forEach(combo => {
+      const names = combo.attraction_names.split('|');
+
+      comboList.innerHTML += `
+      <article class="combo-card">
+        <div class="combo-top">
+          <div>
+            <h3>${combo.trip_name}</h3>
+            <p>${combo.city_name}, ${combo.country_name} · ${combo.total_attractions} attractions</p>
+          </div>
+          <button class="use-combo-btn" data-trip-id="${combo.trip_id}">
+            Use This Combo
+          </button>
+        </div>
+
+        <p class="combo-label">Includes:</p>
+
+        <div class="combo-tags">
+          ${names.map(name => `<span>${name}</span>`).join('')}
+        </div>
+      </article>
+    `;
+    });
+
+    attachComboButtonEvents();
+  }
+
+  function attachComboButtonEvents() {
+    document.querySelectorAll('.use-combo-btn').forEach(button => {
+      button.addEventListener('click', function () {
+        const tripId = this.dataset.tripId;
+        const combo = popularCombos.find(item => Number(item.trip_id) === Number(tripId));
+
+        if (!combo) return;
+
+        if (!document.getElementById('startDate').value || !document.getElementById('endDate').value) {
+          alert('Please select start date and end date first.');
+          return;
+        }
+
+        const ids = combo.attraction_ids.split('|');
+        const names = combo.attraction_names.split('|');
+        const categories = combo.categories.split('|');
+        const images = combo.images.split('|');
+
+        selectedCombo = {
+          title: combo.trip_name,
+          desc: `${combo.city_name}, ${combo.country_name} · ${combo.total_attractions} attractions`,
+          attractions: names.map((name, index) => {
+            return {
+              id: Number(ids[index]),
+              name: name,
+              category: categories[index],
+              description: 'This attraction is included in this popular combo.',
+              price: '0',
+              season: 'All Year',
+              img: `../../../assets/images/${images[index]}`,
+              day: index + 1 <= Object.keys(itineraryData).length ? index + 1 : 1,
+              time: index < 2 ? '09:00' : '14:00'
+            };
+          })
+        };
+
+        comboTitle.textContent = selectedCombo.title;
+        comboDesc.textContent = selectedCombo.desc;
+        comboDetailList.innerHTML = '';
+
+        selectedCombo.attractions.forEach(attraction => {
+          comboDetailList.innerHTML += `
+          <div class="combo-detail-item">
+            <img src="${attraction.img}" alt="${attraction.name}">
+            <div>
+              <span class="combo-day-label">Day ${attraction.day} · ${attraction.time}</span>
+              <h3>${attraction.name}</h3>
+              <p>${attraction.description}</p>
+            </div>
+          </div>
+        `;
+        });
+
+        openModal(comboModal);
+      });
+    });
+  }
 
   const startPicker = flatpickr('#startDate', {
     dateFormat: 'Y-m-d',
@@ -185,13 +294,73 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  async function loadAttractions() {
+  async function loadExistingTrip(tripId) {
     try {
-      const response = await fetch('tripPlanner.php');
+      const response = await fetch(`../myTrip/myTrip.php?trip_id=${tripId}`);
       const data = await response.json();
 
-      attractionsData = Array.isArray(data) ? data : data.attractions;
+      if (data.status !== 'success') {
+        alert('Failed to load trip.');
+        return;
+      }
 
+      const trip = data.trip;
+      const itinerary = data.itinerary;
+
+      // Fill form
+      document.getElementById('tripName').value = trip.trip_name;
+      document.getElementById('startDate').value = trip.start_date;
+      document.getElementById('endDate').value = trip.end_date;
+
+      // Set destination (IMPORTANT)
+      selectedCityId = trip.city_id;
+      document.getElementById('destination').value = trip.city_id;
+
+      // Generate days
+      generateTripDays();
+
+      // Load itinerary
+      itineraryData = itinerary;
+      renderItinerary();
+
+      // Show selected attractions
+      Object.keys(itinerary).forEach(day => {
+        itinerary[day].forEach(item => {
+          addAttractionToSelected(item);
+        });
+      });
+
+      loadAttractions();
+
+    } catch (error) {
+      console.error('Edit load failed:', error);
+    }
+  }
+
+  async function loadAttractions() {
+    try {
+      if (!selectedCityId) {
+        attractionList.innerHTML = `<p class="empty-text">Please select a destination first.</p>`;
+        return;
+      }
+
+      const response = await fetch(`tripPlanner.php?city_id=${selectedCityId}`);
+      const text = await response.text();
+
+      console.log('Attraction API response:', text);
+
+      if (!text.trim()) {
+        throw new Error('Empty response from tripPlanner.php');
+      }
+
+      const data = JSON.parse(text);
+
+      if (data.status !== 'success') {
+        attractionList.innerHTML = `<p class="empty-text">${data.message || 'Failed to load attractions.'}</p>`;
+        return;
+      }
+
+      attractionsData = data.attractions;
       renderAttractionList(attractionsData);
     } catch (error) {
       console.error('Failed to load attractions:', error);
@@ -199,7 +368,58 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  async function loadDestinations() {
+    try {
+      const response = await fetch('tripPlanner.php?destinations=1');
+      const data = await response.json();
 
+      if (data.status !== 'success') {
+        alert('Failed to load destinations.');
+        return;
+      }
+
+      destinationSelect.innerHTML = `<option value="">Select destination</option>`;
+
+      if (!data.destinations || !Array.isArray(data.destinations)) {
+        console.error('Invalid destinations data:', data);
+        alert('Failed to load destinations properly.');
+        return;
+      }
+
+      data.destinations.forEach(destination => {
+        destinationSelect.innerHTML += `
+        <option value="${destination.city_id}">
+          ${destination.city_name}, ${destination.country_name}
+        </option>
+      `;
+      });
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const tripId = urlParams.get('trip_id');
+
+      if (tripId) {
+        await loadExistingTrip(tripId);
+      }
+
+    } catch (error) {
+      console.error('Failed to load destinations:', error);
+    }
+  }
+
+  destinationSelect.addEventListener('change', function () {
+    selectedCityId = this.value;
+
+    selectedAttractions.innerHTML = `
+    <p class="empty-text">No attractions selected yet. Click “Add Attraction” to get started.</p>
+  `;
+
+    itineraryData = {};
+    emptyItinerary.style.display = 'flex';
+    itineraryList.innerHTML = '';
+    clearDayButtons();
+    loadAttractions();
+    loadPopularCombos();
+  });
 
   function renderAttractionList(list) {
     attractionList.innerHTML = '';
@@ -554,27 +774,18 @@ document.addEventListener('DOMContentLoaded', function () {
     const tripName = document.getElementById('tripName').value.trim();
     const startDate = document.getElementById('startDate').value;
     const endDate = document.getElementById('endDate').value;
+    const hasItinerary = Object.values(itineraryData).some(day => day.length > 0);
 
-    hasItinerary = Object.values(itineraryData).some(day => day.length > 0);
-
-    /* =============================
-   VALIDATION SECTION
-============================= */
-
-    // 1. Trip Name
     if (!tripName || tripName.length < 3) {
       alert('Trip name must be at least 3 characters.');
       return;
     }
 
-    // 2. Destination (optional but recommended)
-    const destinationInput = document.getElementById('destination')?.value?.trim();
-    if (!destinationInput || !destinationInput.includes(',')) {
-      alert('Please enter destination in format: City, Country (e.g. Osaka, Japan)');
+    if (!selectedCityId) {
+      alert('Please select a destination.');
       return;
     }
 
-    // 3. Dates
     if (!startDate || !endDate) {
       alert('Please select both start date and end date.');
       return;
@@ -585,39 +796,33 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    // 4. Itinerary must exist
-    const hasItinerary = Object.values(itineraryData).some(day => day.length > 0);
-
     if (!hasItinerary) {
       alert('Please add at least one attraction before saving.');
       return;
     }
 
-    // 5. Validate each attraction
     for (const day in itineraryData) {
       for (const item of itineraryData[day]) {
-
-        // invalid ID (important for your current bug)
         if (!item.id || Number(item.id) <= 0) {
           alert('Some attractions are invalid. Please add attractions from the list.');
-          return;
-        }
-
-        //  invalid day
-        if (Number(day) <= 0) {
-          alert('Invalid itinerary day detected.');
           return;
         }
       }
     }
 
     const payload = {
-      tripName: tripName,
-      startDate: startDate,
-      endDate: endDate,
-      city_id: 1,
+      trip_id: editingTripId,
+      tripName,
+      startDate,
+      endDate,
+      city_id: selectedCityId,
       itinerary: itineraryData
     };
+
+    if (!selectedCityId) {
+      alert('Please select a destination.');
+      return;
+    }
 
     try {
       const response = await fetch('tripPlanner.php', {
@@ -628,7 +833,10 @@ document.addEventListener('DOMContentLoaded', function () {
         body: JSON.stringify(payload)
       });
 
-      const result = await response.json();
+      const text = await response.text();
+      console.log("SAVE RESPONSE:", text);
+
+      const result = JSON.parse(text);
 
       if (result.status === 'success') {
         alert('Trip saved successfully!');
@@ -665,5 +873,5 @@ document.addEventListener('DOMContentLoaded', function () {
   emptyItinerary.style.display = 'flex';
   itineraryList.innerHTML = '';
   clearDayButtons();
-  loadAttractions();
+  loadDestinations();
 });
