@@ -10,6 +10,9 @@ $response = [
     "trending" => []
 ];
 
+/* =============================
+   1. RECOMMENDED DESTINATIONS
+============================= */
 $recommendedSql = "
     SELECT 
         a.attraction_id,
@@ -31,8 +34,10 @@ $recommendedSql = "
         c.city_id,
         c.city_name,
         co.country_name
-    ORDER BY average_rating DESC, total_reviews DESC
-    LIMIT 3
+    ORDER BY 
+        average_rating DESC,
+        total_reviews DESC
+    LIMIT 6
 ";
 
 $recommendedResult = $conn->query($recommendedSql);
@@ -43,16 +48,18 @@ if ($recommendedResult) {
     }
 }
 
-
+/* =============================
+   2. POPULAR TRAVEL COMBOS
+============================= */
 $comboSql = "
     SELECT 
         td.trip_id,
         t.trip_name,
         c.city_name,
         co.country_name,
-        COUNT(td.attraction_id) AS total_attractions,
-        GROUP_CONCAT(a.attraction_name SEPARATOR ' + ') AS combo_name,
-        GROUP_CONCAT(DISTINCT a.attraction_category SEPARATOR ', ') AS categories,
+        COUNT(DISTINCT td.attraction_id) AS total_attractions,
+        GROUP_CONCAT(DISTINCT a.attraction_name ORDER BY a.attraction_name SEPARATOR ' + ') AS combo_name,
+        GROUP_CONCAT(DISTINCT a.attraction_category ORDER BY a.attraction_category SEPARATOR ', ') AS categories,
         MIN(a.attraction_image) AS combo_image
     FROM trip_details td
     INNER JOIN trip t ON td.trip_id = t.trip_id
@@ -65,8 +72,10 @@ $comboSql = "
         c.city_name,
         co.country_name
     HAVING total_attractions >= 2
-    ORDER BY total_attractions DESC
-    LIMIT 3
+    ORDER BY 
+        total_attractions DESC,
+        td.trip_id DESC
+    LIMIT 6
 ";
 
 $comboResult = $conn->query($comboSql);
@@ -77,6 +86,9 @@ if ($comboResult) {
     }
 }
 
+/* =============================
+   3. TRENDING DESTINATIONS
+============================= */
 $trendingSql = "
     SELECT 
         c.city_id,
@@ -93,7 +105,9 @@ $trendingSql = "
         c.city_id,
         c.city_name,
         co.country_name
-    ORDER BY completed_trips DESC
+    ORDER BY 
+        completed_trips DESC,
+        c.city_name ASC
     LIMIT 8
 ";
 

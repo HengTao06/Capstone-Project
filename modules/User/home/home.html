@@ -1,79 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trev - Home</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Trev - Home</title>
 
-    <link rel="stylesheet" href="../../../shared/css/variables.css">
-    <link rel="stylesheet" href="../../../shared/css/global.css">
-    <link rel="stylesheet" href="../../../shared/css/header-footer.css">
-    <link rel="stylesheet" href="home.css">
-</head>
+        <link rel="stylesheet" href="../../../shared/css/variables.css">
+        <link rel="stylesheet" href="../../../shared/css/global.css">
+        <link rel="stylesheet" href="../../../shared/css/header-footer.css">
+        <link rel="stylesheet" href="home.css">
+    </head>
 
-<body data-page="home">
+    <body data-page="home">
 
-<div id="header"></div>
+        <div id="header"></div>
 
-<main>
+        <main>
 
-    <!-- HERO -->
-    <section class="hero">
-        <div class="hero-overlay"></div>
+            <!-- HERO -->
+            <section class="hero">
+                <div class="hero-overlay"></div>
 
-        <div class="hero-content">
-            <h1>Discover Your Next Destination</h1>
-            <p>Explore the world's most amazing places and create unforgettable memories</p>
+                <div class="hero-content">
+                    <h1>Discover Your Next Destination</h1>
+                    <p>Explore the world's most amazing places and create
+                        unforgettable memories</p>
 
-            <div class="hero-buttons">
-                <a href="#" class="btn-orange">Start Discovering</a>
-                <a href="#" class="btn-white">Plan Your Trip</a>
-            </div>
-        </div>
-    </section>
+                    <div class="hero-buttons">
+                        <a href="#" class="btn-orange">Start Discovering</a>
+                        <a href="#" class="btn-white">Plan Your Trip</a>
+                    </div>
+                </div>
+            </section>
 
-    <!-- VIDEO -->
-    <section class="video-section">
-        <div class="video-container">
-            <video autoplay muted loop playsinline>
-                <source src="../../../assets/videos/Capstone video.mp4" type="video/mp4">
-            </video>
-        </div>
-    </section>
+            <!-- VIDEO -->
+            <section class="video-section">
+                <div class="video-container">
+                    <video autoplay muted loop playsinline>
+                        <source src="../../../assets/videos/Capstone video.mp4"
+                            type="video/mp4">
+                    </video>
+                </div>
+            </section>
 
-    <!-- RECOMMENDED DESTINATIONS -->
-    <section class="home-section">
-        <div class="section-title-row">
-            <h2 class="section-title">Recommended Destinations</h2>
-        </div>
+            <!-- RECOMMENDED DESTINATIONS -->
+            <section class="home-section">
+                <div class="section-title-row">
+                    <h2 class="section-title">Recommended Destinations</h2>
+                    <a href="../discover/discover.html"
+                        class="see-more-link">See More ›</a>
+                </div>
+                
+                <div class="recommended-wrapper">
+                    <div class="recommended-grid" id="recommendedGrid"></div>
+                </div>
+            </section>
 
-        <div class="recommended-grid" id="recommendedGrid"></div>
-    </section>
+            <!-- POPULAR COMBO -->
+            <section class="home-section combo-section">
+                <div class="section-title-row">
+                    <h2 class="section-title">Popular Travel Combos</h2>
+                    <a href="../tripPlanner/tripPlanner.html"
+                        class="see-more-link">See More ›</a>
+                </div>
 
-    <!-- POPULAR COMBO -->
-    <section class="home-section combo-section">
-        <div class="section-title-row">
-            <h2 class="section-title">Popular Travel Combos</h2>
-        </div>
+                <div class="combo-grid" id="comboGrid"></div>
+            </section>
 
-        <div class="combo-grid" id="comboGrid"></div>
-    </section>
+            <!-- TRENDING -->
+            <section class="home-section trending-section">
+                <div class="section-title-row">
+                    <h2 class="section-title">Trending Destinations</h2>
+                </div>
 
-    <!-- TRENDING -->
-    <section class="home-section trending-section">
-        <div class="section-title-row">
-            <h2 class="section-title">Trending Destinations</h2>
-        </div>
+                <div class="trending-grid" id="trendingGrid"></div>
+            </section>
 
-        <div class="trending-grid" id="trendingGrid"></div>
-    </section>
+        </main>
 
-</main>
+        <div id="footer"></div>
 
-<div id="footer"></div>
+        <script src="../../../shared/js/main.js"></script>
+        <script src="home.js"></script>
 
-<script src="../../../shared/js/main.js"></script>
-<script src="home.js"></script>
-
-</body>
+    </body>
 </html>
