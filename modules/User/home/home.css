@@ -234,7 +234,11 @@ body {
   margin-bottom: 20px;
 }
 
-.destination-info button {
+.view-details-btn,
+.combo-view-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 48px;
   border: 2px solid #ff790f;
@@ -243,11 +247,13 @@ body {
   color: #ff790f;
   font-size: 14px;
   font-weight: 700;
+  text-decoration: none;
   cursor: pointer;
   transition: 0.3s ease;
 }
 
-.destination-info button:hover {
+.view-details-btn:hover,
+.combo-view-btn:hover {
   background: #ff790f;
   color: #ffffff;
 }
@@ -302,24 +308,15 @@ body {
   margin-bottom: 18px;
 }
 
-.combo-info button{
-  width: 100%;
-  height: 48px;
-  justify-content: center;
-  border: 2px solid #ff790f;
-  border-radius: 9px;
-  background: #ffffff;
-  color: #ff790f;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: 0.3s ease;
-  margin-top: auto;
+.scroll-fade {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
 }
 
-.combo-info button:hover{
-  background: #ff790f;
-  color: #ffffff;
+.scroll-fade.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ================================
