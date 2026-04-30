@@ -38,34 +38,34 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
 
   // 🚫 Stop if validation fails
   if (!valid) return;
+});
 
   // ✅ Send to backend only if valid
-  fetch("login.php", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
-    },
-    body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
-  })
-  .then(res => res.json())
-  .then(data => {
+fetch("login.php", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+  },
+  body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+})
+.then(res => res.text()) // 👈 CHANGE THIS
+.then(data => {
+  console.log("RAW RESPONSE:", data);
 
-    console.log("Response:", data);
+  try {
+    let json = JSON.parse(data);
 
-    if (data.status === "success") {
-
-      if (data.role === "user") {
+    if (json.status === "success") {
+      if (json.role === "user") {
         window.location.href = "../User/home/home.html";
       } else {
         window.location.href = "../Admin/M_destination.html";
       }
-
     } else {
-      alert(data.message);
+      alert(json.message);
     }
-  })
-  .catch(err => {
-    console.error(err);
-    alert("Something went wrong.");
-  });
+
+  } catch (e) {
+    console.error("JSON ERROR:", e);
+  }
 });

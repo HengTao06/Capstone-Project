@@ -1,3 +1,8 @@
+/* =============================================
+   discover.js  — Trev Discover Page
+   Handles: tabs, filters, star rating, AJAX loads
+   ============================================= */
+
 document.addEventListener('DOMContentLoaded', () => {
 
   /* ---------- STATE ---------- */
@@ -92,6 +97,8 @@ document.addEventListener('DOMContentLoaded', () => {
   btnApply.addEventListener('click', () => {
     state.budget    = budgetSel.value;
     state.country   = countrySel.value;
+    state.startDate = startDate.value;
+    state.endDate   = endDate.value;
 
     if (state.activeTab === 'recommended') loadRecommended();
     else loadPopularCombos();
@@ -100,10 +107,14 @@ document.addEventListener('DOMContentLoaded', () => {
   btnClear.addEventListener('click', () => {
     budgetSel.value   = '';
     countrySel.value  = '';
+    startDate.value   = '';
+    endDate.value     = '';
     state.budget      = '';
     state.country     = '';
     state.interests   = [];
     state.minRating   = 0;
+    state.startDate   = '';
+    state.endDate     = '';
     updateStars();
     document.querySelectorAll('.interest-tag').forEach(t => t.classList.remove('active'));
 
@@ -118,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* Load country dropdown */
   async function loadCountries() {
     try {
-      const res  = await fetch('discover.php?action=get_countries');
+      const res  = await fetch('discover_api.php?action=get_countries');
       const data = await res.json();
       if (data.status === 'ok') {
         data.countries.forEach(c => {
@@ -139,9 +150,12 @@ document.addEventListener('DOMContentLoaded', () => {
       'Food':       '🍜',
       'Nature':     '🌿',
       'Landmark':   '🗼',
+      'Shopping':   '🛍️',
+      'Adventure':  '🧗',
+      'Culture':    '🎭',
     };
     try {
-      const res  = await fetch('discover.php?action=get_categories');
+      const res  = await fetch('discover_api.php?action=get_categories');
       const data = await res.json();
       if (data.status === 'ok') {
         interestCont.innerHTML = '';
@@ -174,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const params = buildParams();
     try {
-      const res  = await fetch(`discover.php?action=get_recommended&${params}`);
+      const res  = await fetch(`discover_api.php?action=get_recommended&${params}`);
       const data = await res.json();
       recCards.innerHTML = '';
 
@@ -194,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
     noCombo.classList.add('hidden');
 
     try {
-      const res  = await fetch('discover.php?action=get_combos');
+      const res  = await fetch('discover_api.php?action=get_combos');
       const data = await res.json();
       comboCards.innerHTML = '';
 
@@ -216,6 +230,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (state.country)   p.set('country',   state.country);
     if (state.minRating) p.set('min_rating', state.minRating);
     if (state.interests.length) p.set('interests', state.interests.join(','));
+    if (state.startDate) p.set('start_date', state.startDate);
+    if (state.endDate)   p.set('end_date',   state.endDate);
     return p.toString();
   }
 
@@ -226,24 +242,21 @@ document.addEventListener('DOMContentLoaded', () => {
   function buildCard(a) {
     const div = document.createElement('div');
     div.className = 'card';
-    const img   = a.attraction_image
+    const img    = a.attraction_image
       ? `../../../assets/images/${a.attraction_image}`
       : 'https://placehold.co/400x190?text=No+Image';
-    const rating = parseFloat(a.avg_rating || 0).toFixed(1);
-    const reviews = a.review_count || 0;
+    const rating  = parseFloat(a.avg_rating || 0).toFixed(1);
+    const reviews = parseInt(a.review_count || 0);
 
     div.innerHTML = `
       <div class="card-img-wrap">
         <img src="${img}" alt="${a.attraction_name}" loading="lazy"
              onerror="this.src='https://placehold.co/400x190?text=No+Image'">
-        <div class="card-rating">
-          <span class="star-icon">★</span> ${rating}
-        </div>
+        <div class="card-rating">★ ${rating}</div>
       </div>
       <div class="card-body">
-        <h4>${a.attraction_name}</h4>
-        <div class="card-reviews">${reviews.toLocaleString()} reviews</div>
-        <p>${a.attraction_description || 'Explore this amazing destination.'}</p>
+        <h4>${a.city_name ? a.city_name + ', ' + a.country_name : a.attraction_name}</h4>
+        <p class="card-reviews">${reviews} reviews</p>
         <button class="btn-view" data-id="${a.attraction_id}">View Details</button>
       </div>`;
 
@@ -257,40 +270,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const div = document.createElement('div');
     div.className = 'combo-card';
 
-    const badgeLabels = ['Most Popular', 'Best Value', 'Hot Deal', 'Top Rated'];
-    const badgeClasses = ['', 'best', 'hot', 'deal'];
-    const badgeIndex   = c.combo_index % 4;
-    const badge        = badgeLabels[badgeIndex];
-    const badgeCls     = badgeClasses[badgeIndex];
-
     const img = c.image
       ? `../../../assets/images/${c.image}`
       : 'https://placehold.co/400x160?text=Combo';
 
-    const tagHtml = (c.categories || '').split(',').map(cat => {
-      const cl = cat.trim().toLowerCase();
-      return `<span class="combo-tag ${cl}">${cat.trim()}</span>`;
-    }).join('');
-
-    const price = c.total_price
-      ? `From <span>RM${parseFloat(c.total_price).toLocaleString()}</span> per person`
-      : '';
+    const comboNames = (c.combo_name || '').split(' + ');
+    const shortName  = comboNames.slice(0, 3).join(' + ');
+    const finalName  = comboNames.length > 3 ? shortName + ' + more' : shortName;
 
     div.innerHTML = `
       <div class="combo-img-wrap">
-        <img src="${img}" alt="${c.combo_name}" loading="lazy"
+        <img src="${img}" alt="${finalName}" loading="lazy"
              onerror="this.src='https://placehold.co/400x160?text=Combo'">
-        <div class="combo-badge ${badgeCls}">${badge}</div>
       </div>
       <div class="combo-body">
-        <h4>${c.combo_name}</h4>
-        <div class="combo-meta">
-          <span>🗓️ ${c.total_days || '?'} Days</span>
-          ${price ? `<span>💰 ${price}</span>` : ''}
-          <span>📍 ${c.cities || ''}</span>
-        </div>
-        <div class="combo-tags">${tagHtml}</div>
-        <button class="btn-combo" data-id="${c.trip_id}">Use This Combo</button>
+        <h4>${finalName}</h4>
+        <p>${c.cities || ''}</p>
+        <span>${c.stop_count || 0} attractions</span>
+        <button class="btn-combo" data-id="${c.trip_id}">View Combo</button>
       </div>`;
 
     div.querySelector('.btn-combo').addEventListener('click', () => {
