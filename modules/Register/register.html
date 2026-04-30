@@ -21,29 +21,30 @@
                 <h2>Create Account</h2>
                     <form id="registerForm">
                         <label>Full Name</label>
-                            <input type="text" id="fullName" placeholder="John Doe">
+                            <input type="text" id="fullName" name="username" placeholder="John Doe">
                             <small class="error" id="fullNameError"></small>
 
                         <label>Email Address</label>
-                            <input type="email" id="email" placeholder="you@example.com">
+                            <input type="email" id="email" name="email" placeholder="you@example.com">
                             <small class="error" id="emailError"></small>
 
                         <label>Password</label>
-                            <input type="password" id="password" placeholder="Enter your password">
+                            <input type="password" id="password" name="password" placeholder="Enter your password" >
                             <small class="error" id="passwordError"></small>
 
                         <label>Confirm Password</label>
-                            <input type="password" id="confirmPassword" placeholder="Re-enter your password">
+                            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Re-enter your password">
                             <small class="error" id="confirmPasswordError"></small>
 
                         <div class="terms">
-                            <input type="checkbox">
+                            <input type="checkbox" id="terms">
                             <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
                         </div>
                         <small class="error" id="termsError"></small>
 
                         <button type="submit">Register</button>
                     </form>
+                    
                     <p class="login">
                         Already have an account? <a href="../Login/login.html">Login here</a>
                     </p>
