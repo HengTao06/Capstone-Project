@@ -733,6 +733,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const description = document.querySelector('.detail-description');
     description.textContent = item.description || 'This attraction is one of the recommended places to visit during your trip.';
 
+    const viewBtn = document.getElementById("viewFullDetailsBtn");
+
+    if (viewBtn) {
+      viewBtn.onclick = function () {
+        console.log("View full details clicked:", item.id);
+        window.location.href = `../attraction_details/attraction_details.html?type=attraction&id=${item.id}`;
+      };
+    }
+
     openModal(detailModal);
   }
 

@@ -98,7 +98,7 @@ function loadTrending(list) {
 
     list.forEach(item => {
         container.innerHTML += `
-      <article class="trend-card">
+      <a href="../discovers/discover.html?city_id=${item.city_id}" class="trend-card">
         <img src="../../../assets/images/${item.attraction_image}">
         <div class="trend-overlay"></div>
         <span class="trend-badge">Trending</span>
@@ -106,7 +106,7 @@ function loadTrending(list) {
           <h3>${item.city_name}</h3>
           <p>${item.country_name}</p>
         </div>
-      </article>
+      </a>
     `;
     });
 }

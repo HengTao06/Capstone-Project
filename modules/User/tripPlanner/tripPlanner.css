@@ -837,8 +837,11 @@ input {
     margin-bottom: 20px;
 }
 
-.view-full-details {
+.viewFullDetailsBtn {
+    width: 90%;
     display: block;
+    margin: 0 auto;
+    background-color: #ffffff;
     text-align: center;
     border: 1px solid #f97316;
     color: #f97316;
@@ -848,7 +851,7 @@ input {
     font-weight: 700;
 }
 
-.view-full-details:hover {
+.viewFullDetailsBtn:hover {
     background: #f97316;
     color: #ffffff;
 }
