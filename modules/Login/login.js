@@ -38,7 +38,6 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
 
   // 🚫 Stop if validation fails
   if (!valid) return;
-});
 
   // ✅ Send to backend only if valid
 fetch("login.php", {
@@ -68,4 +67,5 @@ fetch("login.php", {
   } catch (e) {
     console.error("JSON ERROR:", e);
   }
+});
 });

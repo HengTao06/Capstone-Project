@@ -40,18 +40,33 @@ document.getElementById("registerForm").addEventListener("submit", function(e) {
     if (!valid) return;
 
     // Send to PHP
-    fetch("register.php", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: `username=${encodeURIComponent(username)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
-    })
-    .then(res => res.text())
-    .then(data => {
-        alert(data);
-        if (data.includes("Success")) {
+fetch("register.php", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: `username=${encodeURIComponent(username)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+})
+.then(res => res.text()) // 👈 change this
+.then(data => {
+    console.log("RAW RESPONSE:", data);
+
+    try {
+        let json = JSON.parse(data);
+
+        if (json.status === "success") {
+            alert(json.message);
             window.location.href = "../Login/login.html";
+        } else {
+            alert(json.message);
         }
-    });
+    } catch (e) {
+        // Show the raw response in an alert so you can read the actual PHP error
+        alert("PHP returned: " + data.substring(0, 300));
+    }
+})
+.catch(err => {
+    console.error(err);
+    alert("Server error");
+});
 });
