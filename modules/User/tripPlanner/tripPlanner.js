@@ -1,7 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
 
   const urlParams = new URLSearchParams(window.location.search);
+  const prefillCityId = urlParams.get('city_id');
+  const prefillAttractionId = urlParams.get('attraction_id');
+  console.log("Prefill City:", prefillCityId);
+  console.log("Prefill Attraction:", prefillAttractionId);
+  const prefillComboId = urlParams.get('combo_id');
   let editingTripId = urlParams.get('trip_id');
+  let hasPrefilledAttraction = false;
   const comboList = document.getElementById('comboList');
   const tabButtons = document.querySelectorAll('.tab-btn');
   const tabContents = document.querySelectorAll('.tab-content');
@@ -362,6 +368,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
       attractionsData = data.attractions;
       renderAttractionList(attractionsData);
+
+      if (prefillAttractionId && !hasPrefilledAttraction) {
+        hasPrefilledAttraction = true;
+
+        const found = attractionsData.find(a => Number(a.attraction_id) === Number(prefillAttractionId));
+
+        if (found) {
+          currentAttraction = {
+            id: found.attraction_id,
+            name: found.attraction_name,
+            category: found.attraction_category,
+            description: found.attraction_description || '',
+            price: found.estimated_price || '0',
+            season: found.best_season || 'All Year',
+            img: `../../../assets/images/${found.attraction_image}`
+          };
+
+          scheduleName.textContent = currentAttraction.name;
+          scheduleImg.src = currentAttraction.img;
+
+          openModal(scheduleModal);
+          console.log("Loaded attractions:", attractionsData);
+        }
+      }
     } catch (error) {
       console.error('Failed to load attractions:', error);
       attractionList.innerHTML = `<p class="empty-text">Failed to load attractions.</p>`;
@@ -399,6 +429,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (tripId) {
         await loadExistingTrip(tripId);
+      }
+
+      if (prefillCityId && !tripId) {
+        selectedCityId = prefillCityId;
+        destinationSelect.value = prefillCityId;
+
+        await loadAttractions();
+        await loadPopularCombos();
       }
 
     } catch (error) {

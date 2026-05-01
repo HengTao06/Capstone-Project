@@ -188,10 +188,10 @@ body {
   margin: 36px auto 60px;
 }
 
-.destinations h3 {
-  font-family: var(--font-display);
-  font-size: 24px;
-  color: var(--navy);
+.destinations h2 {
+  /* font-family: var(--font-display);
+  font-size: 24px; 
+  color: var(--navy); */
   margin-bottom: 16px;
 }
 
@@ -276,8 +276,8 @@ body {
   align-items: center;
   gap: 3px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  color: #F59E0B; font-size: 12px;
 }
-.card-rating .star-icon { color: #F59E0B; font-size: 12px; }
 
 .card-body {
   padding: 14px 16px 16px;
@@ -303,20 +303,29 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.card-body .btn-view {
+.view-details-btn,
+.combo-view-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  background: var(--accent);
-  color: white;
-  border: none;
-  padding: 9px 0;
-  border-radius: 8px;
-  font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 600;
+  height: 48px;
+  border: 2px solid #ff790f;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #ff790f;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
   cursor: pointer;
-  transition: background var(--transition), color var(--transition);
+  transition: 0.3s ease;
 }
-.card-body .btn-view:hover { background: var(--accent-hover); }
+
+.view-details-btn:hover,
+.combo-view-btn:hover {
+  background: #ff790f;
+  color: #ffffff;
+}
 
 /* ---- COMBO CARDS ---- */
 .combo-cards {

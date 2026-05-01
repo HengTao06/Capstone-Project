@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Attraction Details</title>
+
+        <link rel="stylesheet" href="../../../shared/css/variables.css">
+        <link rel="stylesheet" href="../../../shared/css/global.css">
+        <link rel="stylesheet" href="../../../shared/css/header-footer.css">
+        <link rel="stylesheet" href="attraction_details.css">
+    </head>
+
+    <body data-page="discover">
+
+        <div id="header"></div>
+
+        <main class="details-page">
+
+            <button class="back-btn" id="backBtn">← Back to Discover</button>
+
+            <section class="details-hero">
+                <img id="hero-img" alt="Attraction image">
+            </section>
+
+            <section class="details-layout">
+                <div class="details-main">
+                    <div class="details-title-row">
+                        <div>
+                            <h1 id="title"></h1>
+                            <p id="location"></p>
+                        </div>
+                    </div>
+
+                    <div class="badges" id="categories"></div>
+
+                    <section class="details-card">
+                        <h3>About</h3>
+                        <p id="description"></p>
+                    </section>
+
+                    <section class="details-card">
+                        <h3>Reviews</h3>
+                        <div id="reviews"></div>
+                        <button class="see-more-review-btn"
+                            id="seeMoreReviewsBtn">See More Reviews</button>
+                    </section>
+                </div>
+
+                <aside class="details-sidebar">
+                    <div class="summary-card">
+                        <p><strong>Rating:</strong> <span
+                                id="rating"></span></p>
+                        <p><strong>Reviews:</strong> <span
+                                id="reviewCount"></span></p>
+                        <button id="addTripBtn">Add to Trip</button>
+                    </div>
+                </aside>
+            </section>
+
+        </main>
+
+        <div id="footer"></div>
+        <script src="../../../shared/js/main.js"></script>
+        <script src="attraction_details.js"></script>
+
+    </body>
+</html>

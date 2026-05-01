@@ -71,7 +71,7 @@ $comboSql = "
         t.trip_name,
         c.city_name,
         co.country_name
-    HAVING total_attractions >= 2
+        HAVING total_attractions >= 2
     ORDER BY 
         total_attractions DESC,
         td.trip_id DESC

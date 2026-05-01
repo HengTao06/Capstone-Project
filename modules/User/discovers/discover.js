@@ -1,81 +1,124 @@
-/* =============================================
-   discover.js  — Trev Discover Page
-   Handles: tabs, filters, star rating, AJAX loads
-   ============================================= */
-
 document.addEventListener('DOMContentLoaded', () => {
+
+  /* ---------- URL PARAMS ---------- */
+  const params = new URLSearchParams(window.location.search);
 
   /* ---------- STATE ---------- */
   const state = {
-    activeTab: 'recommended',
+    activeTab: params.get('tab') || 'recommended',
     budget: '',
     country: '',
     interests: [],
     minRating: 0,
-    startDate: '',
-    endDate: ''
+    search: params.get('q') || '',
+    city_id: params.get('city_id') || ''
   };
 
   /* ---------- ELEMENTS ---------- */
-  const tabBtns      = document.querySelectorAll('.tab-btn');
-  const panelRec     = document.getElementById('panel-recommended');
-  const panelPop     = document.getElementById('panel-popular');
-  const recCards     = document.getElementById('recommended-cards');
-  const comboCards   = document.getElementById('combo-cards');
-  const noRec        = document.getElementById('no-rec');
-  const noCombo      = document.getElementById('no-combo');
-  const budgetSel    = document.getElementById('budget-select');
-  const countrySel   = document.getElementById('country-select');
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const panelRec = document.getElementById('panel-recommended');
+  const panelPop = document.getElementById('panel-popular');
+  const recCards = document.getElementById('recommended-cards');
+  const comboCards = document.getElementById('combo-cards');
+  const noRec = document.getElementById('no-rec');
+  const noCombo = document.getElementById('no-combo');
+  const budgetSel = document.getElementById('budget-select');
+  const countrySel = document.getElementById('country-select');
   const interestCont = document.getElementById('interest-tags');
-  const starFilter   = document.getElementById('star-filter');
-  const stars        = starFilter.querySelectorAll('.star');
-  const startDate    = document.getElementById('start-date');
-  const endDate      = document.getElementById('end-date');
-  const btnApply     = document.getElementById('btn-apply');
-  const btnClear     = document.getElementById('btn-clear');
+  const starFilter = document.getElementById('star-filter');
+  const stars = starFilter.querySelectorAll('.star');
+  const btnApply = document.getElementById('btn-apply');
+  const btnClear = document.getElementById('btn-clear');
 
   /* ---------- INIT ---------- */
   loadCountries();
   loadCategories();
-  loadRecommended();
+  initTabs();
+  loadData();
 
-  /* ---------- TAB SWITCHING ---------- */
-  tabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      tabBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      state.activeTab = btn.dataset.tab;
+  /* ---------- TAB SWITCH ---------- */
+  function initTabs() {
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', function () {
 
-      if (state.activeTab === 'recommended') {
-        panelRec.classList.add('active');
-        panelPop.classList.remove('active');
-        panelPop.classList.add('hidden');
-        panelRec.classList.remove('hidden');
-        loadRecommended();
-      } else {
-        panelPop.classList.add('active');
-        panelRec.classList.remove('active');
-        panelRec.classList.add('hidden');
-        panelPop.classList.remove('hidden');
-        loadPopularCombos();
-      }
+        // 1. update state
+        state.activeTab = this.dataset.tab;
+
+        // 2. update button UI
+        tabBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+
+        // 3. switch panel
+        switchTab();
+
+        // 4. load data
+        loadData();
+      });
     });
+
+    switchTab();
+  }
+
+  function switchTab() {
+    if (state.activeTab === 'popular') {
+
+      panelPop.classList.add('active');
+      panelPop.classList.remove('hidden');
+
+      panelRec.classList.remove('active');
+      panelRec.classList.add('hidden');
+
+    } else {
+
+      panelRec.classList.add('active');
+      panelRec.classList.remove('hidden');
+
+      panelPop.classList.remove('active');
+      panelPop.classList.add('hidden');
+    }
+  }
+
+  /* ---------- FILTER APPLY ---------- */
+  btnApply.addEventListener('click', () => {
+    state.budget = budgetSel.value;
+    state.country = countrySel.value;
+
+    if (state.activeTab === 'recommended') loadRecommended();
+    else loadPopularCombos();
+  });
+
+  /* ---------- FILTER CLEAR ---------- */
+  btnClear.addEventListener('click', () => {
+    budgetSel.value = '';
+    countrySel.value = '';
+
+    state.budget = '';
+    state.country = '';
+    state.interests = [];
+    state.minRating = 0;
+
+    document.querySelectorAll('.interest-tag').forEach(t => t.classList.remove('active'));
+    updateStars();
+
+    loadData();
   });
 
   /* ---------- STAR FILTER ---------- */
   stars.forEach(star => {
     star.addEventListener('click', () => {
       const val = parseInt(star.dataset.val);
-      state.minRating = (state.minRating === val) ? 0 : val; // toggle off if same
+      state.minRating = (state.minRating === val) ? 0 : val;
       updateStars();
     });
+
     star.addEventListener('mouseover', () => highlightStars(parseInt(star.dataset.val)));
-    star.addEventListener('mouseout', () => updateStars());
+    star.addEventListener('mouseout', updateStars);
   });
 
   function highlightStars(n) {
     stars.forEach(s => s.classList.toggle('lit', parseInt(s.dataset.val) <= n));
   }
+
   function updateStars() {
     stars.forEach(s => s.classList.toggle('lit', parseInt(s.dataset.val) <= state.minRating));
   }
@@ -84,53 +127,31 @@ document.addEventListener('DOMContentLoaded', () => {
   interestCont.addEventListener('click', e => {
     const tag = e.target.closest('.interest-tag');
     if (!tag) return;
+
     tag.classList.toggle('active');
     const cat = tag.dataset.category;
+
     if (tag.classList.contains('active')) {
-      state.interests.push(cat);
+      if (!state.interests.includes(cat)) state.interests.push(cat);
     } else {
       state.interests = state.interests.filter(i => i !== cat);
     }
   });
 
-  /* ---------- APPLY / CLEAR ---------- */
-  btnApply.addEventListener('click', () => {
-    state.budget    = budgetSel.value;
-    state.country   = countrySel.value;
-    state.startDate = startDate.value;
-    state.endDate   = endDate.value;
-
-    if (state.activeTab === 'recommended') loadRecommended();
-    else loadPopularCombos();
-  });
-
-  btnClear.addEventListener('click', () => {
-    budgetSel.value   = '';
-    countrySel.value  = '';
-    startDate.value   = '';
-    endDate.value     = '';
-    state.budget      = '';
-    state.country     = '';
-    state.interests   = [];
-    state.minRating   = 0;
-    state.startDate   = '';
-    state.endDate     = '';
-    updateStars();
-    document.querySelectorAll('.interest-tag').forEach(t => t.classList.remove('active'));
-
-    if (state.activeTab === 'recommended') loadRecommended();
-    else loadPopularCombos();
-  });
-
   /* =============================================
-     FETCH FUNCTIONS
-     ============================================= */
+     LOAD DATA
+  ============================================= */
 
-  /* Load country dropdown */
+  function loadData() {
+    if (state.activeTab === 'popular') loadPopularCombos();
+    else loadRecommended();
+  }
+
   async function loadCountries() {
     try {
-      const res  = await fetch('discover_api.php?action=get_countries');
+      const res = await fetch('discover.php?action=get_countries');
       const data = await res.json();
+
       if (data.status === 'ok') {
         data.countries.forEach(c => {
           const opt = document.createElement('option');
@@ -139,161 +160,155 @@ document.addEventListener('DOMContentLoaded', () => {
           countrySel.appendChild(opt);
         });
       }
-    } catch (e) { console.warn('Countries load failed', e); }
+    } catch (e) {
+      console.warn('Countries load failed', e);
+    }
   }
 
-  /* Load attraction categories as interest tags */
   async function loadCategories() {
-    const icons = {
-      'Historical': '🏛️',
-      'City':       '🌆',
-      'Food':       '🍜',
-      'Nature':     '🌿',
-      'Landmark':   '🗼',
-      'Shopping':   '🛍️',
-      'Adventure':  '🧗',
-      'Culture':    '🎭',
-    };
     try {
-      const res  = await fetch('discover_api.php?action=get_categories');
+      const res = await fetch('discover.php?action=get_categories');
       const data = await res.json();
+
       if (data.status === 'ok') {
         interestCont.innerHTML = '';
         data.categories.forEach(cat => {
-          const icon = icons[cat] || '🌍';
-          const btn  = document.createElement('button');
-          btn.className    = 'interest-tag';
+          const btn = document.createElement('button');
+          btn.className = 'interest-tag';
           btn.dataset.category = cat;
-          btn.innerHTML    = `<span class="tag-icon">${icon}</span>${cat}`;
+          btn.textContent = cat;
           interestCont.appendChild(btn);
         });
       }
     } catch (e) {
-      /* Fallback static tags */
-      const defaults = ['Historical','City','Food','Nature','Landmark'];
-      defaults.forEach(cat => {
-        const btn = document.createElement('button');
-        btn.className = 'interest-tag';
-        btn.dataset.category = cat;
-        btn.textContent = cat;
-        interestCont.appendChild(btn);
-      });
+      console.warn('Categories load failed', e);
     }
   }
 
-  /* Load recommended attractions */
+  /* ---------- RECOMMENDED ---------- */
   async function loadRecommended() {
     recCards.innerHTML = skeletons(6);
     noRec.classList.add('hidden');
 
-    const params = buildParams();
     try {
-      const res  = await fetch(`discover_api.php?action=get_recommended&${params}`);
+      const res = await fetch(`discover.php?action=get_recommended&${buildParams()}`);
       const data = await res.json();
+
       recCards.innerHTML = '';
 
       if (!data.attractions || data.attractions.length === 0) {
         noRec.classList.remove('hidden');
         return;
       }
+
       data.attractions.forEach(a => recCards.appendChild(buildCard(a)));
+
     } catch (e) {
       recCards.innerHTML = '<p style="color:red;padding:20px">Failed to load destinations.</p>';
     }
   }
 
-  /* Load popular combo trips */
+  /* ---------- COMBOS ---------- */
   async function loadPopularCombos() {
     comboCards.innerHTML = skeletons(6);
     noCombo.classList.add('hidden');
 
     try {
-      const res  = await fetch('discover_api.php?action=get_combos');
+      const res = await fetch(`discover.php?action=get_combos&${buildParams()}`);
       const data = await res.json();
+
       comboCards.innerHTML = '';
 
       if (!data.combos || data.combos.length === 0) {
         noCombo.classList.remove('hidden');
         return;
       }
+
       data.combos.forEach(c => comboCards.appendChild(buildComboCard(c)));
+
     } catch (e) {
       comboCards.innerHTML = '<p style="color:red;padding:20px">Failed to load combos.</p>';
     }
   }
 
-  /* ---------- HELPERS ---------- */
-
+  /* ---------- PARAM BUILDER ---------- */
   function buildParams() {
     const p = new URLSearchParams();
-    if (state.budget)    p.set('budget',    state.budget);
-    if (state.country)   p.set('country',   state.country);
+
+    if (state.city_id) p.set('city_id', state.city_id);
+    if (state.search) p.set('q', state.search);
+    if (state.budget) p.set('budget', state.budget);
+    if (state.country) p.set('country', state.country);
     if (state.minRating) p.set('min_rating', state.minRating);
     if (state.interests.length) p.set('interests', state.interests.join(','));
-    if (state.startDate) p.set('start_date', state.startDate);
-    if (state.endDate)   p.set('end_date',   state.endDate);
+
+    console.log("FILTER PARAMS:", p.toString());
+
     return p.toString();
   }
 
-  function skeletons(n) {
-    return Array(n).fill('<div class="skeleton-card"></div>').join('');
-  }
-
+  /* ---------- CARD BUILD ---------- */
   function buildCard(a) {
     const div = document.createElement('div');
     div.className = 'card';
-    const img    = a.attraction_image
+
+    const img = a.attraction_image
       ? `../../../assets/images/${a.attraction_image}`
-      : 'https://placehold.co/400x190?text=No+Image';
-    const rating  = parseFloat(a.avg_rating || 0).toFixed(1);
-    const reviews = parseInt(a.review_count || 0);
+      : 'https://placehold.co/400x190';
 
     div.innerHTML = `
       <div class="card-img-wrap">
-        <img src="${img}" alt="${a.attraction_name}" loading="lazy"
-             onerror="this.src='https://placehold.co/400x190?text=No+Image'">
-        <div class="card-rating">★ ${rating}</div>
+        <img src="${img}" onerror="this.src='https://placehold.co/400x190'">
+        <div class="card-rating">★ ${a.avg_rating}</div>
       </div>
       <div class="card-body">
-        <h4>${a.city_name ? a.city_name + ', ' + a.country_name : a.attraction_name}</h4>
-        <p class="card-reviews">${reviews} reviews</p>
-        <button class="btn-view" data-id="${a.attraction_id}">View Details</button>
-      </div>`;
+        <h4>${a.city_name}, ${a.country_name}</h4>
+        <p>${a.review_count} reviews</p>
+        <a href="#" class="view-details-btn">View Details</a>
+      </div>
+    `;
 
-    div.querySelector('.btn-view').addEventListener('click', () => {
-      window.location.href = `../attraction/attraction.html?id=${a.attraction_id}`;
+    div.querySelector('.view-details-btn').addEventListener('click', () => {
+      window.location.href = `../attraction_details/attraction_details.html?type=attraction&id=${a.attraction_id}`;
     });
+
     return div;
   }
 
+  /* ---------- COMBO CARD ---------- */
   function buildComboCard(c) {
     const div = document.createElement('div');
     div.className = 'combo-card';
 
     const img = c.image
       ? `../../../assets/images/${c.image}`
-      : 'https://placehold.co/400x160?text=Combo';
+      : 'https://placehold.co/400x160';
 
-    const comboNames = (c.combo_name || '').split(' + ');
-    const shortName  = comboNames.slice(0, 3).join(' + ');
-    const finalName  = comboNames.length > 3 ? shortName + ' + more' : shortName;
+    const names = (c.combo_name || '').split(' + ');
+    const shortName = names.slice(0, 3).join(' + ');
+    const finalName = names.length > 3 ? shortName + ' + more' : shortName;
 
     div.innerHTML = `
       <div class="combo-img-wrap">
-        <img src="${img}" alt="${finalName}" loading="lazy"
-             onerror="this.src='https://placehold.co/400x160?text=Combo'">
+        <img src="${img}" onerror="this.src='https://placehold.co/400x160'">
       </div>
       <div class="combo-body">
         <h4>${finalName}</h4>
-        <p>${c.cities || ''}</p>
-        <span>${c.stop_count || 0} attractions</span>
-        <button class="btn-combo" data-id="${c.trip_id}">View Combo</button>
-      </div>`;
+        <p>${c.city_name}, ${c.country_name}</p>
+        <span>${c.stop_count} attractions</span>
+        <a href="#" class="combo-view-btn">View Combo</a>
+      </div>
+    `;
 
-    div.querySelector('.btn-combo').addEventListener('click', () => {
-      window.location.href = `../tripPlanner/tripPlanner.html?combo=${c.trip_id}`;
+    div.querySelector('.combo-view-btn').addEventListener('click', () => {
+      window.location.href = `../attractionDetails/attractionDetails.html?type=combo&id=${c.trip_id}`;
     });
+
     return div;
+  }
+
+  function skeletons(n) {
+    return Array(n).fill('<div class="skeleton-card"></div>').join('');
   }
 
 });
