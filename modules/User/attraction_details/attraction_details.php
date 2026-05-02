@@ -4,7 +4,7 @@ require_once "../../../shared/php/db.php";
 header("Content-Type: application/json");
 
 $type = $_GET["type"] ?? "";
-$id = isset($_GET["id"]) ? (int)$_GET["id"] : 0;
+$id = isset($_GET["id"]) ? (int) $_GET["id"] : 0;
 
 if ($id <= 0) {
     echo json_encode(["status" => "error", "message" => "Invalid ID"]);
@@ -139,6 +139,36 @@ if ($type === "combo") {
         exit();
     }
 
+    $reviewStmt = $conn->prepare("
+        SELECT 
+            r.rating,
+            r.comment,
+            r.review_date,
+            a.attraction_name
+        FROM review r
+        JOIN trip_details td ON r.attraction_id = td.attraction_id
+        JOIN attraction a ON r.attraction_id = a.attraction_id
+        WHERE td.trip_id = ?
+        ORDER BY r.rating DESC, r.review_date DESC
+        LIMIT 5
+    ");
+
+    $reviewStmt->bind_param("i", $id);
+    $reviewStmt->execute();
+    $reviewResult = $reviewStmt->get_result();
+
+    $reviews = [];
+
+    while ($r = $reviewResult->fetch_assoc()) {
+        $reviews[] = [
+            "username" => "User",
+            "rating" => $r["rating"],
+            "comment" => $r["comment"],
+            "review_date" => $r["review_date"],
+            "attraction_name" => $r["attraction_name"]
+        ];
+    }
+
     $categories = [];
     if (!empty($row["categories"])) {
         $categories = explode(",", $row["categories"]);
@@ -157,7 +187,7 @@ if ($type === "combo") {
         "review_count" => $row["review_count"],
         "estimated_price" => $row["estimated_price"],
         "best_season" => "Mixed / Not specified",
-        "reviews" => []
+        "reviews" => $reviews
     ]);
     exit();
 }

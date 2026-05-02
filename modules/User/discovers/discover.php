@@ -90,6 +90,7 @@ if ($action === "get_recommended") {
         $search = $conn->real_escape_string($search);
         $sql .= " AND (
             a.attraction_name LIKE '%$search%' OR
+            a.attraction_category LIKE '%$search%' OR
             c.city_name LIKE '%$search%' OR
             co.country_name LIKE '%$search%'
         )";
@@ -197,6 +198,7 @@ if ($action === "get_combos") {
         $sql .= " AND (
             t.trip_name LIKE '%$search%' OR
             a.attraction_name LIKE '%$search%' OR
+            a.attraction_category LIKE '%$search%' OR
             c.city_name LIKE '%$search%' OR
             co.country_name LIKE '%$search%'
         )";

@@ -24,7 +24,32 @@ document.addEventListener("DOMContentLoaded", async function () {
             }
         });
 
+        initGlobalSearch();
+
     } catch (error) {
         console.error("Header/Footer loading error:", error);
     }
 });
+
+function initGlobalSearch() {
+    const searchInput = document.getElementById("globalSearchInput");
+    const searchBtn = document.getElementById("globalSearchBtn");
+
+    if (!searchInput || !searchBtn) return;
+
+    function goSearch() {
+        const keyword = searchInput.value.trim();
+
+        if (keyword === "") return;
+
+        window.location.href = `../discovers/discover.html?q=${encodeURIComponent(keyword)}`;
+    }
+
+    searchBtn.addEventListener("click", goSearch);
+
+    searchInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+            goSearch();
+        }
+    });
+}

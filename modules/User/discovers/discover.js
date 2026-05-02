@@ -83,6 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
     state.budget = budgetSel.value;
     state.country = countrySel.value;
 
+    // clear header search keyword when using filters
+    state.search = "";
+    state.city_id = "";
+
     if (state.activeTab === 'recommended') loadRecommended();
     else loadPopularCombos();
   });
@@ -301,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
 
     div.querySelector('.combo-view-btn').addEventListener('click', () => {
-      window.location.href = `../attractionDetails/attractionDetails.html?type=combo&id=${c.trip_id}`;
+      window.location.href = `../attraction_details/attraction_details.html?type=combo&id=${c.trip_id}`;
     });
 
     return div;
