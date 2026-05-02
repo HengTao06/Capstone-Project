@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trev - Admin Dashboard</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- THIS IS THE LINK TO YOUR SEPARATED CSS FILE -->
+    <link rel="stylesheet" href="Dashboard.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo-link">
+                <img src="../../../assets/images/trev.png" alt="Trev Logo" class="header-logo">
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Dashboard</a></li>
+                    <li><a href="#">Manage Destination</a></li>
+                    <li><a href="#">Manage Reviews</a></li>
+                    <li><a href="#">Analytics</a></li>
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">User</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1>Admin Dashboard</h1>
+
+        <!-- Stats Section -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="icon-box"><i class="fa-solid fa-users"></i></div>
+                    <div class="trend"><i class="fa-solid fa-arrow-up"></i> 12%</div>
+                </div>
+                <div class="stat-number">12,458</div>
+                <div class="stat-label">Total Users</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="icon-box"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
+                    <div class="trend"><i class="fa-solid fa-arrow-up"></i> 8%</div>
+                </div>
+                <div class="stat-number">3,842</div>
+                <div class="stat-label">Total Trips</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="icon-box"><i class="fa-solid fa-star"></i></div>
+                    <div class="trend"><i class="fa-solid fa-arrow-up"></i> 18%</div>
+                </div>
+                <div class="stat-number">8,234</div>
+                <div class="stat-label">Total Reviews</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="icon-box"><i class="fa-solid fa-location-dot"></i></div>
+                    <div class="trend"><i class="fa-solid fa-arrow-up"></i> 3%</div>
+                </div>
+                <div class="stat-number">156</div>
+                <div class="stat-label">Active Destinations</div>
+            </div>
+        </div>
+
+        <!-- Top Destinations Section -->
+        <div class="section-header">
+            <h2>Top Destinations</h2>
+            <a href="#" class="view-details">View Details &rarr;</a>
+        </div>
+        <div class="destinations-grid">
+            <!-- Dest 1 -->
+            <div class="dest-card">
+                <div class="dest-img-box">
+                    <span class="rank-badge">1</span>
+                    <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Bali">
+                </div>
+                <div class="dest-info">
+                    <div class="dest-title">Bali</div>
+                    <div class="dest-location"><i class="fa-solid fa-location-dot"></i> Indonesia</div>
+                    <div class="dest-visits"><i class="fa-solid fa-chart-line"></i> 4,250 visits</div>
+                </div>
+            </div>
+            <!-- Dest 2 -->
+            <div class="dest-card">
+                <div class="dest-img-box">
+                    <span class="rank-badge">2</span>
+                    <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Tokyo">
+                </div>
+                <div class="dest-info">
+                    <div class="dest-title">Tokyo</div>
+                    <div class="dest-location"><i class="fa-solid fa-location-dot"></i> Japan</div>
+                    <div class="dest-visits"><i class="fa-solid fa-chart-line"></i> 3,890 visits</div>
+                </div>
+            </div>
+            <!-- Dest 3 -->
+            <div class="dest-card">
+                <div class="dest-img-box">
+                    <span class="rank-badge">3</span>
+                    <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Paris">
+                </div>
+                <div class="dest-info">
+                    <div class="dest-title">Paris</div>
+                    <div class="dest-location"><i class="fa-solid fa-location-dot"></i> France</div>
+                    <div class="dest-visits"><i class="fa-solid fa-chart-line"></i> 3,654 visits</div>
+                </div>
+            </div>
+            <!-- Dest 4 -->
+            <div class="dest-card">
+                <div class="dest-img-box">
+                    <span class="rank-badge">4</span>
+                    <img src="https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?q=80&w=500&auto=format&fit=crop" alt="Santorini">
+                </div>
+                <div class="dest-info">
+                    <div class="dest-title">Santorini</div>
+                    <div class="dest-location"><i class="fa-solid fa-location-dot"></i> Greece</div>
+                    <div class="dest-visits"><i class="fa-solid fa-chart-line"></i> 3,201 visits</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Reviews Section -->
+        <div class="section-header">
+            <h2>Top reviews</h2>
+            <a href="#" class="view-details">View Details &rarr;</a>
+        </div>
+        <div class="reviews-grid">
+            <!-- Review 1 -->
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="user-info">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=60" alt="User">
+                        <div class="user-details">
+                            <h4>Emily Rodriguez</h4>
+                            <div class="attraction-name">Tokyo Tower</div>
+                            <div class="stars">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <span>(5)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-date">April 10, 2026</div>
+                </div>
+                <img src="https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=60" alt="Review Image" class="review-img">
+                <p class="review-text">Absolutely breathtaking experience! The view from the top is spectacular, especially at sunset. The city lights coming on as the sun sets is magical. Highly recommend visiting during late afternoon.</p>
+            </div>
+
+            <!-- Review 2 -->
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="user-info">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=60" alt="User">
+                        <div class="user-details">
+                            <h4>Michael Chen</h4>
+                            <div class="attraction-name">Angkor Wat</div>
+                            <div class="stars">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <span>(5)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-date">April 8, 2026</div>
+                </div>
+                <img src="https://images.unsplash.com/photo-1540202404-b71180bb0755?q=80&w=600&auto=format&fit=crop" alt="Review Image" class="review-img">
+                <p class="review-text">One of the most incredible historical sites I've ever visited. The architecture is mind-blowing and the spiritual atmosphere is palpable. Get there early to beat the crowds and catch the sunrise.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="#">
+                    <img src="../../../assets/images/trev.png" alt="Trev Logo" class="footer-logo-img">
+                </a>
+                <p>Your trusted companion for discovering amazing destinations around the world.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="#">Destinations</a></li>
+                    <li><a href="#">Travel Guides</a></li>
+                    <li><a href="#">Trip Planner</a></li>
+                    <li><a href="#">Reviews</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Safety</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Trev. All rights reserved.
+        </div>
+    </footer>
+
+</body>
+</html>
