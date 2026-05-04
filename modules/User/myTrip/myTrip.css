@@ -526,21 +526,46 @@ body {
 ================================ */
 
 @media (max-width: 900px) {
+
+    /* SUMMARY (Total / Planned / Completed) */
     .trip-summary-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
     }
 
+    /* TRIPS GRID (Planned / Completed list) */
     .trip-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
     }
 
+    /* MAKE CARDS SMALLER */
+    .trip-card {
+        padding: 14px;
+    }
+
+    .trip-card h3 {
+        font-size: 14px;
+    }
+
+    .trip-card p {
+        font-size: 12px;
+    }
+
+    .trip-status {
+        font-size: 11px;
+        padding: 4px 10px;
+    }
+
+    /* MODAL (keep clean) */
     .modal-trip-header {
         flex-direction: column;
-        gap: 12px;
+        gap: 10px;
     }
 
     .confirm-actions {
         flex-direction: column;
+        gap: 10px;
     }
 
     .cancel-btn,

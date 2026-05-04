@@ -100,6 +100,7 @@
 }
 
 
+
 /* FOOTER */
 
 
@@ -167,50 +168,36 @@
 ================================ */
 
 @media (max-width: 900px) {
+
+  /* HEADER - keep desktop style but smaller */
   .site-header {
-    height: auto;
+    padding: 18px 0;
   }
 
   .header-container {
-    flex-direction: column;
-    padding: 16px 0;
-    gap: 14px;
+    width: 94%;
+    max-width: 900px;
   }
 
   .header-logo img {
-    width: 130px;
+    width: 120px;
   }
 
-  .header-search,
-  .header-search:focus-within {
-    width: 100%;
-    max-width: 420px;
+  .header-search {
+    width: 45%;
+    height: 44px;
+    margin: 16px auto;
   }
 
-  .header-nav {
-    width: 100%;
-    margin-left: 0;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 18px;
-  }
-
-  .header-nav a {
-    padding: 6px 0;
+  .header-search input {
     font-size: 14px;
   }
 
-  .footer-container {
-    grid-template-columns: 1fr;
-    gap: 30px;
-    text-align: center;
+  .header-nav {
+    gap: 24px;
   }
 
-  .footer-brand img {
-    margin: 0 auto 20px;
-  }
-
-  .footer-brand p {
-    margin: 0 auto;
+  .header-nav a {
+    font-size: 12px;
   }
 }

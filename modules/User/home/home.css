@@ -431,68 +431,151 @@ body {
 ================================ */
 
 @media (max-width: 900px) {
+   /* HERO */
   .hero {
-    height: 560px;
+    height: 500px;
   }
 
   .hero-content h1 {
-    font-size: 42px;
-    margin-bottom: 40px;
+    font-size: 40px;
+    margin-bottom: 35px;
   }
 
   .hero-content p {
-    font-size: 16px;
-    padding: 0 24px;
+    font-size: 15px;
+    margin-bottom: 32px;
   }
 
-  .hero-buttons {
-    flex-direction: column;
-    align-items: center;
+  .btn-orange,
+  .btn-white {
+    width: 165px;
+    height: 50px;
+    font-size: 14px;
   }
 
-  .video-section {
-    height: 330px;
+  /* VIDEO */
+  .video-container {
+    width: 94%;
+    height: 340px;
   }
 
-  .video-section h2 {
-    font-size: 38px;
-  }
-
+  /* GENERAL SECTION */
   .home-section {
-    width: 90%;
-    margin-top: 60px;
+    width: 94%;
+    margin-top: 55px;
+  }
+
+  .section-title-row {
+    margin-bottom: 22px;
   }
 
   .section-title-row h2 {
-    font-size: 22px;
+    font-size: 20px;
   }
 
+  .section-title-row a {
+    font-size: 13px;
+  }
+
+  /* RECOMMENDED - left to right */
   .recommended-wrapper {
     display: block;
   }
 
-  .recommended-grid,
-  .combo-grid,
+  .recommended-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .destination-image {
+    height: 135px;
+  }
+
+  .destination-info {
+    padding: 12px;
+  }
+
+  .destination-info h3 {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .destination-info p {
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+
+  .rating-badge {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+
+  /* POPULAR COMBO - left to right */
+  .combo-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .combo-card img {
+    height: 135px;
+  }
+
+  .combo-info {
+    padding: 12px;
+  }
+
+  .combo-info h4 {
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+
+  .combo-info p,
+  .combo-info span {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+
+  .view-details-btn,
+  .combo-view-btn {
+    height: 38px;
+    font-size: 12px;
+    border-radius: 7px;
+  }
+
+  /* TRENDING - 3 per row */
+  .trending-section {
+    margin-top: 65px;
+    margin-bottom: 60px;
+  }
+
   .trending-grid {
-    grid-template-columns: 1fr;
-    gap: 24px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .trend-card {
+    height: 190px;
+  }
+
+  .trend-badge {
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+
+  .trend-text {
+    left: 14px;
+    bottom: 14px;
+  }
+
+  .trend-text h3 {
+    font-size: 14px;
+  }
+
+  .trend-text p {
+    font-size: 12px;
   }
 
   .slider-arrow {
     display: none;
-  }
-
-  .destination-image,
-  .combo-image {
-    height: 220px;
-  }
-
-  .trend-card {
-    height: 300px;
-  }
-
-  .combo-section,
-  .trending-section {
-    margin-top: 70px;
   }
 }
