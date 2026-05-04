@@ -57,12 +57,15 @@ if ($type === "attraction") {
 
     $reviewStmt = $conn->prepare("
         SELECT 
-            rating,
-            comment,
-            review_date
-        FROM review
-        WHERE attraction_id = ?
-        ORDER BY rating DESC, review_date DESC
+            r.rating,
+            r.comment,
+            r.review_date,
+            u.username,
+            u.user_profile
+        FROM review r
+        LEFT JOIN users u ON r.user_id = u.user_id
+        WHERE r.attraction_id = ?
+        ORDER BY r.rating DESC, r.review_date DESC
         LIMIT 5
     ");
 
@@ -74,7 +77,8 @@ if ($type === "attraction") {
 
     while ($r = $reviewResult->fetch_assoc()) {
         $reviews[] = [
-            "username" => "User",
+            "username" => $r["username"] ?? "User",
+            "profile_picture" => $r["user_profile"] ?? "",
             "rating" => $r["rating"],
             "comment" => $r["comment"],
             "review_date" => $r["review_date"]
@@ -144,10 +148,13 @@ if ($type === "combo") {
             r.rating,
             r.comment,
             r.review_date,
-            a.attraction_name
+            a.attraction_name,
+            u.username,
+            u.user_profile
         FROM review r
         JOIN trip_details td ON r.attraction_id = td.attraction_id
         JOIN attraction a ON r.attraction_id = a.attraction_id
+        LEFT JOIN users u ON r.user_id = u.user_id
         WHERE td.trip_id = ?
         ORDER BY r.rating DESC, r.review_date DESC
         LIMIT 5
@@ -161,7 +168,7 @@ if ($type === "combo") {
 
     while ($r = $reviewResult->fetch_assoc()) {
         $reviews[] = [
-            "username" => "User",
+            "username" => $r["username"] ?? "User",
             "rating" => $r["rating"],
             "comment" => $r["comment"],
             "review_date" => $r["review_date"],
