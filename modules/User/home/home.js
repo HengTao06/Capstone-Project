@@ -51,7 +51,7 @@ function loadRecommended(list) {
         <div class="destination-info">
           <h3>${item.city_name}, ${item.country_name}</h3>
           <p>${item.total_reviews} reviews</p>
-          <a href="../discover/discover.html?city_id=${item.city_id}" class="view-details-btn">View Details</a>
+          <a href="../discovers/discover.html?city_id=${item.city_id}" class="view-details-btn">View Details</a>
         </div>
       </article>
     `;
@@ -80,7 +80,7 @@ function loadPopularCombos(list) {
           <h4>${finalComboName}</h4>
           <p>${item.city_name}, ${item.country_name}</p>
           <span>${item.total_attractions} attractions</span>
-          <a href="../discover/discover.html?city_id=${item.city_id}&combo=1" class="combo-view-btn">View Combo</a>
+          <a href="../discovers/discover.html?city_id=${item.city_id}&combo=1" class="combo-view-btn">View Combo</a>
         </div>
       </article>
     `;

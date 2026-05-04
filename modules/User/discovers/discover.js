@@ -38,6 +38,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ---------- TAB SWITCH ---------- */
   function initTabs() {
+
+    tabBtns.forEach(btn => {
+      btn.classList.remove('active');
+
+      if (btn.dataset.tab === state.activeTab) {
+        btn.classList.add('active');
+      }
+    });
+
     tabBtns.forEach(btn => {
       btn.addEventListener('click', function () {
 

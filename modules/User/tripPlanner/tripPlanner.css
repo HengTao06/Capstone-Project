@@ -4,9 +4,9 @@ body {
 }
 
 input {
-  font-family: var(--font-nav);
-  font-size: var(--text-s);
-  color: #6b7280;
+    font-family: var(--font-nav);
+    font-size: var(--text-s);
+    color: #6b7280;
 }
 
 .planner-page {
@@ -28,10 +28,6 @@ input {
     color: #111827;
     text-decoration: none;
     font-weight: 700;
-}
-
-.breadcrumb span {
-    color: #6b7280;
 }
 
 .planner-title-section h2 {
@@ -91,7 +87,7 @@ input {
     margin-bottom: 28px;
 }
 
-.planner-card h3, 
+.planner-card h3,
 .itinerary-card h3 {
     margin-bottom: 20px;
 }
@@ -124,18 +120,18 @@ input {
 }
 
 .flatpickr-day.selected {
-  background: #f97316;
-  border-color: #f97316;
+    background: #f97316;
+    border-color: #f97316;
 }
 
 .flatpickr-day:hover {
-  background: #fff7ed;
-  color: #f97316;
+    background: #fff7ed;
+    color: #f97316;
 }
 
 .flatpickr-calendar {
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .form-row {
@@ -301,6 +297,7 @@ input {
     font-size: 12px;
     color: #6b7280;
 }
+
 /* ================================
    ITINERARY TIMELINE DESIGN
 ================================ */
@@ -641,26 +638,26 @@ input {
 }
 
 .selected-item {
-  position: relative;
+    position: relative;
 }
 
 .remove-selected-btn {
-  margin-left: auto;
-  width: 28px;
-  height: 28px;
-  border: none;
-  border-radius: 50%;
-  background: #fee2e2;
-  color: #dc2626;
-  font-size: 18px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: 0.25s ease;
+    margin-left: auto;
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    background: #fee2e2;
+    color: #dc2626;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.25s ease;
 }
 
 .remove-selected-btn:hover {
-  background: #dc2626;
-  color: #ffffff;
+    background: #dc2626;
+    color: #ffffff;
 }
 
 .schedule-box {
@@ -857,28 +854,28 @@ input {
 }
 
 #destination {
-  width: 100%;
-  height: 42px;
-  padding: 0 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  background: #ffffff;
-  color: #111827;
-  font-size: 16px;
-  font-family: var(--font-nav);
-  outline: none;
-  cursor: pointer;
-  transition: 0.25s ease;
+    width: 100%;
+    height: 42px;
+    padding: 0 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #111827;
+    font-size: 16px;
+    font-family: var(--font-nav);
+    outline: none;
+    cursor: pointer;
+    transition: 0.25s ease;
 }
 
 #destination:focus {
-  border-color: #f97316;
-  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
+    border-color: #f97316;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
 }
 
 #destination option {
-  font-size: 15px;
-  color: #111827;
+    font-size: 15px;
+    color: #111827;
 }
 
 @keyframes modalPop {
