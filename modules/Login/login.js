@@ -57,7 +57,7 @@ fetch("login.php", {
     if (json.status === "success") {
       if (json.role === "user") {
         window.location.href = "../User/home/home.html";
-      } else {
+      } else if (json.role === "admin") {
         window.location.href = "../Admin/M_destination.html";
       }
     } else {
