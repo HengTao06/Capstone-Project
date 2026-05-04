@@ -56,7 +56,7 @@ fetch("register.php", {
 
         if (json.status === "success") {
             alert(json.message);
-            window.location.href = "../Login/login.html";
+            window.location.href = "/Trev/Login/login.html";
         } else {
             alert(json.message);
         }
