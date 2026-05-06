@@ -1,6 +1,6 @@
 <?php
-require_once "../../shared/php/db.php";
-require_once "../../shared/php/session.php";
+require_once "../../../shared/php/db.php";
+require_once "../../../shared/php/session.php";
 
 header('Content-Type: application/json');
 

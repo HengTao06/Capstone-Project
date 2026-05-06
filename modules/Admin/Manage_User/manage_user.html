@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage User</title>
+    <link rel="stylesheet" href="../../../shared/css/variables.css">
+    <link rel="stylesheet" href="../../../shared/css/global.css">
+    <link rel="stylesheet" href="../../../shared/css/header-footer.css">
+    <link rel="stylesheet" href="manage_user.css">
+    <script src="../../../shared/js/admin_main.js"></script>
+    <script src="manage_user.js"></script>
+
+</head>
+<body data-page="manage-user">
+    <div id="header"></div>
+ 
+<!-- MAIN -->
+<main> 
+    <h1>Manage User</h1>
+ 
+  <!-- Stats -->
+    <div class="stats">
+        <div class="stat-card">
+            <div class="stat-value">8</div>
+            <div class="stat-label">Total Users</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">7</div>
+            <div class="stat-label">Active Users</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">2</div>
+            <div class="stat-label">Admin</div>
+        </div>
+    </div>
+
+ 
+  <!-- Toolbar -->
+<div class="toolbar">
+  <div class="search-wrap">
+    <span class="icon">🔍</span>
+    <input type="text" placeholder="Search by name or email..." />
+  </div>
+
+  <select class="filter-select">
+    <option>All Roles</option>
+    <option>User</option>
+    <option>Admin</option>
+  </select>
+
+  <button class="add-btn">Add New User</button>
+</div>
+ 
+  <!-- Table -->
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="user-cell">
+              <div class="avatar">SJ</div>
+              <span class="user-name">Sarah Johnson</span>
+            </div>
+          </td>
+          <td class="email-cell">sarah.johnson@example.com</td>
+          <td><span class="badge badge-user">User</span></td>
+          <td>
+            <div class="actions-cell">
+              <button class="action-link action-view">View</button>
+              <button class="action-link action-edit">Edit</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="user-cell">
+              <div class="avatar" style="background:linear-gradient(135deg,#0EA5E9,#38BDF8)">MC</div>
+              <span class="user-name">Michael Chen</span>
+            </div>
+          </td>
+          <td class="email-cell">michael.chen@example.com</td>
+          <td><span class="badge badge-admin">Admin</span></td>
+          <td>
+            <div class="actions-cell">
+              <button class="action-link action-view">View</button>
+              <button class="action-link action-edit">Edit</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="user-cell">
+              <div class="avatar" style="background:linear-gradient(135deg,#10B981,#34D399)">EW</div>
+              <span class="user-name">Emma Williams</span>
+            </div>
+          </td>
+          <td class="email-cell">emma.williams@example.com</td>
+          <td><span class="badge badge-user">User</span></td>
+          <td>
+            <div class="actions-cell">
+              <button class="action-link action-view">View</button>
+              <button class="action-link action-edit">Edit</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="user-cell">
+              <div class="avatar" style="background:linear-gradient(135deg,#8B5CF6,#A78BFA)">JR</div>
+              <span class="user-name">James Rodriguez</span>
+            </div>
+          </td>
+          <td class="email-cell">james.rodriguez@example.com</td>
+          <td><span class="badge badge-user">User</span></td>
+          <td>
+            <div class="actions-cell">
+              <button class="action-link action-view">View</button>
+              <button class="action-link action-edit">Edit</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="user-cell">
+              <div class="avatar" style="background:linear-gradient(135deg,#EC4899,#F472B6)">OM</div>
+              <span class="user-name">Olivia Martinez</span>
+            </div>
+          </td>
+          <td class="email-cell">olivia.martinez@example.com</td>
+          <td><span class="badge badge-user">User</span></td>
+          <td>
+            <div class="actions-cell">
+              <button class="action-link action-view">View</button>
+              <button class="action-link action-edit">Edit</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="user-cell">
+              <div class="avatar" style="background:linear-gradient(135deg,#F59E0B,#FCD34D)">DK</div>
+              <span class="user-name">David Kim</span>
+            </div>
+          </td>
+          <td class="email-cell">david.kim@example.com</td>
+          <td><span class="badge badge-admin">Admin</span></td>
+          <td>
+            <div class="actions-cell">
+              <button class="action-link action-view">View</button>
+              <button class="action-link action-edit">Edit</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+ 
+    <!-- Pagination -->
+    <div class="pagination-row">
+      <span class="pagination-info">Showing 1 to 6 of 8 users</span>
+      <div class="pagination-controls">
+        <button class="page-btn prev-next">← Previous</button>
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn prev-next">Next →</button>
+      </div>
+    </div>
+  </div>
+</main>
+ 
+    <div id="footer"></div>
+    <!-- OVERLAY MODAL -->
+<div class="modal-overlay" id="userModal">
+  <div class="modal">
+
+    <!-- HEADER -->
+    <div class="modal-header">
+      <h3>Add New User</h3>
+      <button class="close-btn" id="closeModal">&times;</button>
+    </div>
+
+    <!-- BODY -->
+    <div class="modal-body">
+      <label>Username</label>
+      <input type="text" placeholder="Enter username">
+
+      <label>Email</label>
+      <input type="email" placeholder="Enter email address">
+
+      <label>Password</label>
+      <input type="password" placeholder="Enter password">
+
+      <label>Role</label>
+      <select>
+        <option>Select role</option>
+        <option>User</option>
+        <option>Admin</option>
+      </select>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="modal-footer">
+      <button class="btn-cancel" id="cancelModal">Cancel</button>
+      <button class="btn-add">Add User</button>
+    </div>
+
+  </div>
+</div>
+    
+</body>
+</html>
