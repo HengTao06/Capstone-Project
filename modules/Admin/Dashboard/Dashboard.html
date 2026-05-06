@@ -17,28 +17,15 @@
     
     <!-- 2. Admin Specific CSS -->
     <link rel="stylesheet" href="Dashboard.css">
+
+    <!-- 3. Shared Admin JS (Injects the header!) -->
+    <script src="../../../shared/js/admin_main.js"></script>
+    <script src="Dashboard.js"></script>
 </head>
 <body data-page="admin-dashboard">
 
-    <!-- ADMIN CUSTOM HEADER -->
-    <header class="admin-header">
-        <div class="admin-header-container">
-            <a href="#" class="admin-logo-link">
-                <!-- Pointing to your logo -->
-                <img src="../../../assets/images/trev.png" alt="Trev Logo">
-            </a>
-            
-            <nav class="admin-nav">
-                <!-- Matches the links you wanted exactly -->
-                <a href="#" class="active">Dashboard</a>
-                <a href="#">Manage Destination</a>
-                <a href="#">Manage Reviews</a>
-                <a href="#">Analytics</a>
-                <a href="#">Profile</a>
-                <a href="#">User</a>
-            </nav>
-        </div>
-    </header>
+    <!-- THE SHARED HEADER INJECTION POINT -->
+    <div id="header"></div>
 
     <main class="container admin-main">
         <h1 class="section-title">Admin Dashboard</h1>
@@ -102,12 +89,8 @@
         </div>
     </main>
 
-    <!-- Shared Footer Container (main.js will still inject the footer here!) -->
+    <!-- THE SHARED FOOTER INJECTION POINT -->
     <div id="footer"></div>
 
-    <!-- 3. Shared Team JS -->
-    <script src="../../../shared/js/main.js"></script>
-    <!-- 4. Admin Specific JS -->
-    <script src="Dashboard.js"></script>
 </body>
 </html>

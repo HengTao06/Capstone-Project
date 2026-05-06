@@ -1,65 +1,101 @@
 /* ============================================
-   ADMIN HEADER STYLES (Custom for Admin)
+   SHARED ADMIN HEADER (Matches Friend's Design)
 ============================================= */
-.admin-header {
-    background-color: var(--color-white);
-    border-bottom: 1px solid var(--color-border);
+/* Targeting both .admin-header and .site-header in case the shared JS uses either */
+.admin-header, .site-header {
+    background-color: var(--white, #ffffff);
+    border-bottom: 1px solid var(--line, #E2E8F0);
     position: sticky;
     top: 0;
     z-index: 1000;
-    height: 70px; /* Slim bar */
+    height: 76px; /* Exact height to fit the logo and underline */
 }
 
-.admin-header-container {
-    max-width: var(--container-max);
+.admin-header-container, .header-container {
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 0 var(--container-pad);
+    padding: 0 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    position: relative;
 }
 
-.admin-logo-link {
-    position: absolute;
-    top: 5px; /* Adjust overhang */
-    z-index: 1100;
+.admin-logo-link, .header-logo {
+    display: flex;
+    align-items: center;
+    height: 100%;
 }
 
-.admin-logo-link img {
-    height: 90px; /* Big logo */
+.admin-logo-link img, .header-logo img {
+    height: 85px; /* Overhangs slightly like the image */
+    margin-top: 10px; /* Pushes the logo down slightly */
     width: auto;
 }
 
-.admin-nav {
+.admin-nav, .header-nav {
     margin-left: auto;
     display: flex;
-    gap: var(--space-6);
-    align-items: center;
+    gap: 32px;
+    height: 100%; /* Forces the nav to be full height */
 }
 
-.admin-nav a {
-    font-family: var(--font-body);
-    font-size: var(--text-sm);
-    font-weight: var(--font-bold);
-    color: var(--color-text-secondary);
+.admin-nav a, .header-nav a {
+    font-family: 'Inter', 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--dark, #1E293B);
     text-decoration: none;
-    transition: color var(--transition-fast);
+    display: flex;
+    align-items: center; /* Centers the text vertically */
+    height: 100%; /* Stretches the link area from top to bottom */
+    border-bottom: 3px solid transparent; /* Invisible border ready for hover/active */
+    transition: color 0.2s, border-color 0.2s;
 }
 
-.admin-nav a:hover,
-.admin-nav a.active {
-    color: var(--color-primary);
+.admin-nav a:hover, .header-nav a:hover {
+    color: var(--orange, #F97316);
+}
+
+/* The exact active state from the screenshot */
+.admin-nav a.active, .header-nav a.active {
+    color: var(--orange, #F97316);
+    border-bottom: 3px solid var(--orange, #F97316); 
 }
 
 /* ============================================
    ADMIN DASHBOARD MAIN STYLES
 ============================================= */
 .admin-main {
-    padding-top: var(--space-8);
-    padding-bottom: var(--space-16);
+    padding-top: 32px;
+    padding-bottom: 56px;
 }
+
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--dark, #1E293B);
+    margin-bottom: 28px;
+    letter-spacing: -.4px;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.section-see-all {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--orange, #F97316);
+}
+
+.section-see-all:hover {
+    text-decoration: underline;
+}
+
 
 /* ── Stats Grid ── */
 .stats-grid {
