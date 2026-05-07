@@ -1,128 +1,207 @@
-<?php 
-// include '../../../shared/php/session.php';
-// include '../../../shared/php/db.php';
+<?php
+include '../../../shared/php/session.php';
+include '../../../shared/php/db.php';
+
+$sql = "
+SELECT review.*, users.username,
+       attraction.attraction_image
+FROM review
+JOIN users ON review.user_id = users.user_id
+JOIN attraction ON review.attraction_id = attraction.attraction_id
+ORDER BY review.review_date DESC
+";
+
+$result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-      <meta charset="UTF-8">
-      <title>Manage Reviews</title>
 
-      <!-- ✅ SHARED CSS -->
-      <link rel="stylesheet" href="../../../shared/css/global.css">
-      <link rel="stylesheet" href="../../../shared/css/components.css">
-      <link rel="stylesheet" href="../../../shared/css/header-footer.css">
-      <link rel="stylesheet" href="../../../shared/css/variables.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Reviews</title>
 
-  </head>
+    <!-- ✅ IMPORT SHARED CSS -->
+    <link rel="stylesheet" href="../../../shared/css/global.css">
+    <link rel="stylesheet" href="../../../shared/css/components.css">
+    <link rel="stylesheet" href="../../../shared/css/header-footer.css">
+    <link rel="stylesheet" href="../../../shared/css/variables.css">
 
-  <body>
+    <!-- ✅ PAGE CSS -->
+    <link rel="stylesheet" href="M_reviews.css">
+</head>
 
-  <!-- ✅ HEADER -->
-  <?php include '../../../shared/partials/header_admin.html'; ?>
+<body>
 
-  <main class="container">
+<!-- ✅ IMPORT HEADER -->
+<?php include '../../../shared/partials/header_admin.html'; ?>
 
-  <h2>User Reviews</h2>
+<div class="review-page">
 
-  <div class="reviews-grid">
-
-  <?php
-  $sql = "
-  SELECT review.*, users.username,
-        attraction.attraction_name, attraction.attraction_image
-  FROM review
-  JOIN users ON review.user_id = users.user_id
-  JOIN attraction ON review.attraction_id = attraction.attraction_id
-  ORDER BY review_date DESC
-  ";
-
-  $result = $conn->query($sql);
-
-  while($row = $result->fetch_assoc()):
-  ?>
-
-  <div class="card">
-
-    <!-- USER -->
-    <div class="card-header">
-      <img src="../../../assets/images/black.png" class="user-img">
-      <div>
-        <strong><?= $row['username'] ?></strong><br>
-        <small><?= $row['review_date'] ?></small>
-      </div>
+    <div class="breadcrumb">
+        Home > Manage Reviews
     </div>
 
-    <!-- IMAGE -->
-    <img class="card-img" src="../../../assets/images/<?= $row['attraction_image'] ?>">
+    <h2>User Reviews</h2>
 
-    <!-- RATING -->
-    <div class="stars">
-      <?php for($i=0;$i<$row['rating'];$i++) echo "⭐"; ?>
+    <!-- FILTER -->
+    <div class="filter-row">
+
+        <select>
+            <option>All Review</option>
+        </select>
+
+        <select>
+            <option>All Attraction</option>
+        </select>
+
     </div>
 
-    <!-- COMMENT -->
-    <p><?= $row['comment'] ?></p>
+    <!-- REVIEW GRID -->
+    <div class="review-grid">
 
-    <!-- ACTION -->
-    <div class="card-actions">
-      <button onclick="openModal('<?= addslashes($row['comment']) ?>','../../../assets/images/<?= $row['attraction_image'] ?>')">
-        View Details
-      </button>
+        <?php while($row = $result->fetch_assoc()): ?>
 
-      <a href="delete.php?id=<?= $row['review_id'] ?>" class="btn-danger">
-        Delete
-      </a>
+        <div class="review-card">
+
+            <!-- USER -->
+            <div class="review-top">
+
+                <div class="user-info">
+
+                    <img src="../../../assets/images/black.png">
+
+                    <div>
+                        <h4><?= $row['username']; ?></h4>
+
+                        <div class="rating">
+                            <?php for($i=0;$i<$row['rating'];$i++): ?>
+                                ⭐
+                            <?php endfor; ?>
+                        </div>
+                    </div>
+
+                </div>
+
+                <span class="review-date">
+                    <?= date("M d, Y", strtotime($row['review_date'])); ?>
+                </span>
+
+            </div>
+
+            <!-- IMAGE -->
+            <img class="review-image"
+                 src="../../../assets/images/<?= $row['attraction_image']; ?>">
+
+            <!-- COMMENT -->
+            <p class="review-text">
+                <?= $row['comment']; ?>
+            </p>
+
+            <!-- BUTTON -->
+            <div class="review-actions">
+
+                <button class="view-btn"
+                    onclick="openModal(
+                    '<?= addslashes($row['username']); ?>',
+                    '<?= addslashes($row['comment']); ?>',
+                    '../../../assets/images/<?= $row['attraction_image']; ?>',
+                    '<?= $row['rating']; ?>'
+                    )">
+                    View Details
+                </button>
+
+                <button class="delete-btn"
+                    onclick="openDelete(<?= $row['review_id']; ?>)">
+                    Delete
+                </button>
+
+            </div>
+
+        </div>
+
+        <?php endwhile; ?>
+
     </div>
 
-  </div>
+</div>
 
-  <?php endwhile; ?>
+<!-- REVIEW MODAL -->
+<div id="reviewModal" class="modal">
 
-  </div>
-  </main>
+    <div class="modal-box">
 
-  <!-- ✅ MODAL -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">×</span>
-      <img id="modalImg">
-      <p id="modalText"></p>
+        <span class="close-btn"
+            onclick="closeModal()">×</span>
+
+        <div class="modal-user">
+
+            <img src="../../../assets/images/black.png">
+
+            <div>
+                <h3 id="modalUser"></h3>
+                <div id="modalRating"></div>
+            </div>
+
+        </div>
+
+        <img id="modalImage" class="modal-image">
+
+        <p id="modalComment"></p>
+
+        <div class="modal-actions">
+
+            <button class="close-modal-btn"
+                onclick="closeModal()">
+                Close
+            </button>
+
+            <button class="delete-btn"
+                id="modalDeleteBtn">
+                Delete
+            </button>
+
+        </div>
+
     </div>
-  </div>
 
-  <!-- ✅ FOOTER -->
-  <?php include '../../../shared/partials/footer.html'; ?>
+</div>
 
-  <!-- ✅ SHARED JS -->
-  <script src="../../../shared/js/main.js"></script>
+<!-- DELETE MODAL -->
+<div id="deleteModal" class="modal">
 
-  <!-- YOUR JS -->
-  <script src="M_reviews.js"></script>
+    <div class="delete-box">
 
-  <div class="card">
-    <div class="card-header">
-      <img src="../../../assets/images/black.png" class="user-img">
-      <div>
-        <strong>John Doe</strong><br>
-        <small>2026-04-29</small>
-      </div>
+        <h3>Delete Confirmation</h3>
+
+        <p>Are you sure you want to delete this review?</p>
+
+        <div class="delete-actions">
+
+            <button class="close-modal-btn"
+                onclick="closeDelete()">
+                Close
+            </button>
+
+            <button class="delete-btn"
+                id="confirmDeleteBtn">
+                Delete
+            </button>
+
+        </div>
+
     </div>
 
-    <img class="card-img" src="../../../assets/images/sample.jpg">
+</div>
 
-    <div class="stars">⭐⭐⭐⭐⭐</div>
+<!-- ✅ IMPORT FOOTER -->
+<?php include '../../../shared/partials/footer.html'; ?>
 
-    <p>This is a sample review comment.</p>
+<!-- ✅ IMPORT SHARED JS -->
+<script src="../../../shared/js/main.js"></script>
 
-    <div class="card-actions">
-      <button onclick="openModal('Sample comment','../../../assets/images/sample.jpg')">
-        View Details
-      </button>
+<!-- PAGE JS -->
+<script src="M_reviews.js"></script>
 
-      <a href="#" class="btn-danger">Delete</a>
-    </div>
-  </div>
-  </body>
+</body>
 </html>
