@@ -21,19 +21,16 @@ $result = $conn->query($sql);
     <meta charset="UTF-8">
     <title>Manage Reviews</title>
 
-    <!-- ✅ IMPORT SHARED CSS -->
     <link rel="stylesheet" href="../../../shared/css/global.css">
     <link rel="stylesheet" href="../../../shared/css/components.css">
     <link rel="stylesheet" href="../../../shared/css/header-footer.css">
     <link rel="stylesheet" href="../../../shared/css/variables.css">
 
-    <!-- ✅ PAGE CSS -->
     <link rel="stylesheet" href="M_reviews.css">
 </head>
 
 <body>
 
-<!-- ✅ IMPORT HEADER -->
 <?php include '../../../shared/partials/header_admin.html'; ?>
 
 <div class="review-page">
@@ -44,7 +41,6 @@ $result = $conn->query($sql);
 
     <h2>User Reviews</h2>
 
-    <!-- FILTER -->
     <div class="filter-row">
 
         <select>
@@ -57,7 +53,6 @@ $result = $conn->query($sql);
 
     </div>
 
-    <!-- REVIEW GRID -->
     <div class="review-grid">
 
         <?php while($row = $result->fetch_assoc()): ?>
@@ -89,16 +84,13 @@ $result = $conn->query($sql);
 
             </div>
 
-            <!-- IMAGE -->
             <img class="review-image"
                  src="../../../assets/images/<?= $row['attraction_image']; ?>">
 
-            <!-- COMMENT -->
             <p class="review-text">
                 <?= $row['comment']; ?>
             </p>
 
-            <!-- BUTTON -->
             <div class="review-actions">
 
                 <button class="view-btn"
@@ -126,7 +118,6 @@ $result = $conn->query($sql);
 
 </div>
 
-<!-- REVIEW MODAL -->
 <div id="reviewModal" class="modal">
 
     <div class="modal-box">
@@ -167,7 +158,6 @@ $result = $conn->query($sql);
 
 </div>
 
-<!-- DELETE MODAL -->
 <div id="deleteModal" class="modal">
 
     <div class="delete-box">
@@ -194,13 +184,10 @@ $result = $conn->query($sql);
 
 </div>
 
-<!-- ✅ IMPORT FOOTER -->
 <?php include '../../../shared/partials/footer.html'; ?>
 
-<!-- ✅ IMPORT SHARED JS -->
 <script src="../../../shared/js/main.js"></script>
 
-<!-- PAGE JS -->
 <script src="M_reviews.js"></script>
 
 </body>
