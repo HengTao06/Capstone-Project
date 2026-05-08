@@ -23,14 +23,6 @@ body {
   display: block;
 }
 
-img {
-  width: 100px !important;
-  height: auto !important;
-  display: block !important;
-  opacity: 1 !important;
-}
-
-
 
 /* NAVBAR CONTAINER */
 .navbar {

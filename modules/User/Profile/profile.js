@@ -72,3 +72,27 @@ document.getElementById('editBtn').addEventListener('click', function() {
 document.querySelector('.logout-btn').addEventListener('click', function() {
   document.getElementById('logoutModal').classList.add('active');
 });
+
+// VIEW DETAILS BUTTONS
+document.querySelectorAll('.view-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    const card = this.closest('.trip-card');
+    const image = card.querySelector('.trip-image').src;
+    const location = card.querySelector('.trip-location').textContent;
+    const reviews = card.querySelector('.trip-reviews').textContent;
+    const desc = card.querySelector('.trip-desc').textContent;
+    const rating = card.querySelector('.trip-rating').textContent;
+
+    document.getElementById('tripDetailPhoto').src = image;
+    document.getElementById('tripDetailLocation').textContent = location;
+    document.getElementById('tripDetailRating').textContent = rating;
+    document.getElementById('tripDetailReviews').textContent = reviews;
+    document.getElementById('tripDetailDesc').textContent = desc;
+
+    document.getElementById('tripDetailOverlay').classList.add('active');
+  });
+});
+
+function closeTripDetail() {
+  document.getElementById('tripDetailOverlay').classList.remove('active');
+}

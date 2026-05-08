@@ -112,6 +112,34 @@
       </div>
     </div>
 
+<!-- TRIP DETAIL POPUP -->
+<div class="popup-overlay" id="tripDetailOverlay">
+  <div class="detail-card">
+    <div class="detail-header">
+      <h3>Trip Details</h3>
+      <span class="detail-close" onclick="closeTripDetail()">✕</span>
+    </div>
+
+    <div class="detail-reviewer">
+      <div>
+        <div class="detail-name" id="tripDetailLocation"></div>
+        <div class="reviewer-attraction" id="tripDetailRating"></div>
+        <div class="review-date" id="tripDetailReviews"></div>
+      </div>
+    </div>
+
+    <img class="detail-photo" id="tripDetailPhoto" src="" alt="" />
+
+    <div class="detail-body">
+      <p class="detail-label">Description</p>
+      <p id="tripDetailDesc"></p>
+    </div>
+
+    <button class="detail-close-btn" onclick="closeTripDetail()">Close</button>
+  </div>
+</div>
+
+    
     <div id="footer"></div>
 
     <script src="../../../shared/js/main.js"></script>

@@ -183,10 +183,15 @@ let uploadedPhotoURL = null;
 function handleUpload(e) {
     const file = e.target.files[0];
     if (file) {
-        document.getElementById('uploadLabel').textContent = file.name;
         const reader = new FileReader();
         reader.onload = function(e) {
             uploadedPhotoURL = e.target.result;
+            // Show image preview in upload box
+            const uploadBox = document.querySelector('.upload-box');
+            uploadBox.innerHTML = `
+                <img src="${uploadedPhotoURL}" 
+                style="width:100%; height:100%; object-fit:cover; border-radius:10px;" />
+            `;
         };
         reader.readAsDataURL(file);
     }
@@ -240,7 +245,11 @@ function submitReview() {
     document.getElementById('charCount').textContent = '0';
     currentRating = 0;
     document.querySelectorAll('#starRow .star').forEach(s => s.classList.remove('filled'));
-    document.getElementById('uploadLabel').textContent = 'Click to upload';
+    // Reset upload box back to original
+    document.querySelector('.upload-box').innerHTML = `<div class="upload-icon">⬆</div>
+    <p id="uploadLabel">Click to upload</p>
+`;
+uploadedPhotoURL = null;
     checkForm();
     document.getElementById('popupOverlay').classList.add('active');
 }
