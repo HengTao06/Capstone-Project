@@ -111,6 +111,7 @@ if ($type === "combo") {
         SELECT 
             t.trip_id,
             t.trip_name,
+            c.city_id,
             c.city_name,
             co.country_name,
             GROUP_CONCAT(DISTINCT a.attraction_name ORDER BY a.attraction_name SEPARATOR ', ') AS name,
@@ -185,6 +186,7 @@ if ($type === "combo") {
         "status" => "ok",
         "type" => "combo",
         "id" => $row["trip_id"],
+        "city_id" => $row["city_id"],
         "name" => $row["name"],
         "description" => "This popular combo includes multiple attractions commonly planned together by users.",
         "image" => $row["image"],

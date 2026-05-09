@@ -90,6 +90,14 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     attachComboButtonEvents();
+
+    if (prefillComboId) {
+      const comboButton = document.querySelector(`.use-combo-btn[data-trip-id="${prefillComboId}"]`);
+
+      if (comboButton) {
+        comboButton.click();
+      }
+    }
   }
 
   function attachComboButtonEvents() {
@@ -458,6 +466,10 @@ document.addEventListener('DOMContentLoaded', function () {
         await loadPopularCombos();
       }
 
+      if (prefillComboId) {
+        document.querySelector('[data-tab="comboTrip"]').click();
+      }
+
     } catch (error) {
       console.error('Failed to load destinations:', error);
     }
@@ -809,67 +821,37 @@ document.addEventListener('DOMContentLoaded', function () {
     openModal(detailModal);
   }
 
-  document.querySelectorAll('.use-combo-btn').forEach(button => {
-    button.addEventListener('click', function () {
-      if (!document.getElementById('startDate').value || !document.getElementById('endDate').value) {
-        alert('Please select start date and end date first.');
-        return;
-      }
-
-      const comboCard = this.closest('.combo-card');
-
-      selectedCombo = {
-        title: comboCard.querySelector('h3').textContent,
-        desc: 'This combo is generated based on frequently selected attractions from saved trips.',
-        attractions: Array.from(comboCard.querySelectorAll('.combo-tags span')).map((tag, index) => {
-          return {
-            id: 0,
-            name: tag.textContent,
-            category: 'Popular Attraction',
-            description: 'This attraction is included in this popular travel combo.',
-            price: '0',
-            season: 'All Year',
-            img: '../../../assets/images/default.jpg',
-            day: index < 2 ? 1 : 2,
-            time: index < 2 ? '09:00' : '14:00'
-          };
-        })
-      };
-
-      comboTitle.textContent = selectedCombo.title;
-      comboDesc.textContent = selectedCombo.desc;
-      comboDetailList.innerHTML = '';
-
-      selectedCombo.attractions.forEach(attraction => {
-        const div = document.createElement('div');
-        div.className = 'combo-detail-item';
-        div.innerHTML = `
-            <img src="${attraction.img}" alt="${attraction.name}">
-            <div>
-              <span class="combo-day-label">Day ${attraction.day} · ${attraction.time}</span>
-              <h3>${attraction.name}</h3>
-              <p>${attraction.description}</p>
-            </div>
-          `;
-        comboDetailList.appendChild(div);
-      });
-
-      openModal(comboModal);
-    });
-  });
 
   confirmCombo.addEventListener('click', function () {
     if (!selectedCombo) return;
 
-    selectedCombo.attractions.forEach(attraction => {
-      const maxDay = Object.keys(itineraryData).length;
+    const totalDays = Object.keys(itineraryData).length;
 
-      if (attraction.day > maxDay) {
-        attraction.day = maxDay;
-      }
+    if (totalDays === 0) {
+      alert('Please select start date and end date first.');
+      return;
+    }
 
-      addAttractionToSelected(attraction);
-      addItemToItinerary(attraction);
+    const timeSlots = ['09:00', '14:00', '17:00'];
+
+    selectedCombo.attractions.forEach((attraction, index) => {
+      const day = Math.floor(index / timeSlots.length) + 1;
+      const finalDay = day <= totalDays ? day : totalDays;
+
+      const item = {
+        id: attraction.id,
+        name: attraction.name,
+        category: attraction.category,
+        description: attraction.description,
+        price: attraction.price,
+        season: attraction.season,
+        img: attraction.img,
+        day: finalDay,
+        time: timeSlots[index % timeSlots.length]
+      };
+
+      addAttractionToSelected(item);
+      addItemToItinerary(item);
     });
 
     closeModal(comboModal);

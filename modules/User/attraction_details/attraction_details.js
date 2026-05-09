@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 })
 
-function renderStars (rating) {
+function renderStars(rating) {
   const fullStars = Math.round(Number(rating) || 0)
   let stars = ''
 
@@ -30,7 +30,8 @@ function renderStars (rating) {
   return `<span class="star-rating">${stars}</span>`
 }
 
-function render (data) {
+function render(data) {
+  console.log("FULL DETAIL DATA:", data);
   document.getElementById('hero-img').src = data.image
     ? `../../../assets/images/${data.image}`
     : 'https://placehold.co/800x300'
@@ -63,11 +64,10 @@ function render (data) {
     reviewDiv.innerHTML += `
     <div class="review">
       <div class="review-avatar">
-        ${
-          r.profile_image
-            ? `<img src="../../../assets/images/${r.profile_picture}" alt="${r.username}">`
-            : `${r.username ? r.username.charAt(0).toUpperCase() : 'U'}`
-        }
+        ${r.profile_picture
+        ? `<img src="../../../assets/images/${r.profile_picture}" alt="${r.username}">`
+        : `${r.username ? r.username.charAt(0).toUpperCase() : 'U'}`
+      }
       </div>
 
       <div class="review-content">
@@ -89,6 +89,14 @@ function render (data) {
 
   // button
   document.getElementById('addTripBtn').onclick = () => {
-    window.location.href = `../tripPlanner/tripPlanner.html?city_id=${data.city_id}&attraction_id=${data.id}`
-  }
+    console.log("DETAIL DATA:", data);
+
+    if (data.type === "combo") {
+      window.location.href =
+        `../tripPlanner/tripPlanner.html?city_id=${encodeURIComponent(data.city_id)}&combo_id=${encodeURIComponent(data.id)}`;
+    } else {
+      window.location.href =
+        `../tripPlanner/tripPlanner.html?city_id=${encodeURIComponent(data.city_id)}&attraction_id=${encodeURIComponent(data.id)}`;
+    }
+  };
 }
