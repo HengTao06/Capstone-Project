@@ -691,7 +691,7 @@ input {
     color: #6b7280;
 }
 
-.day-buttons {
+.day-button {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;

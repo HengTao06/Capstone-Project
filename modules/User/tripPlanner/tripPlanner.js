@@ -170,6 +170,26 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
+  const scheduleStartPicker = flatpickr('#scheduleStartDate', {
+    dateFormat: 'Y-m-d',
+    minDate: 'today',
+    onChange: function (selectedDates) {
+      if (selectedDates.length > 0) {
+        scheduleEndPicker.set('minDate', selectedDates[0]);
+      }
+
+      syncScheduleDatesToTrip();
+    }
+  });
+
+  const scheduleEndPicker = flatpickr('#scheduleEndDate', {
+    dateFormat: 'Y-m-d',
+    minDate: 'today',
+    onChange: function () {
+      syncScheduleDatesToTrip();
+    }
+  });
+
   flatpickr('#scheduleTime', {
     enableTime: true,
     noCalendar: true,
@@ -196,7 +216,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (!startDate || !endDate) {
       itineraryData = {};
-      selectedDay = 1;
       emptyItinerary.style.display = 'flex';
       itineraryList.innerHTML = '';
       clearDayButtons();
@@ -256,7 +275,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     for (let i = 1; i <= totalDays; i++) {
       dayButtonsContainer.innerHTML += `
-          <button class="day-btn ${i === 1 ? 'active' : ''}" data-day="${i}">
+          <button class="day-btn ${i === selectedDay ? 'active' : ''}" data-day="${i}">
             Day ${i}
           </button>
         `;
@@ -459,6 +478,30 @@ document.addEventListener('DOMContentLoaded', function () {
     loadPopularCombos();
   });
 
+  function syncScheduleDatesToTrip() {
+    const modalStart = document.getElementById('scheduleStartDate').value;
+    const modalEnd = document.getElementById('scheduleEndDate').value;
+
+    if (!modalStart || !modalEnd) return;
+
+    const mainStart = document.getElementById('startDate').value;
+    const mainEnd = document.getElementById('endDate').value;
+
+    const datesChanged = modalStart !== mainStart || modalEnd !== mainEnd;
+
+    document.getElementById('startDate').value = modalStart;
+    document.getElementById('endDate').value = modalEnd;
+
+    // only generate/reset days when dates really changed
+    if (datesChanged) {
+      generateTripDays();
+    }
+
+    const totalDays = Object.keys(itineraryData).length;
+    renderDayButtons(totalDays);
+    updateDayButtons();
+  }
+
   function renderAttractionList(list) {
     attractionList.innerHTML = '';
 
@@ -518,6 +561,13 @@ document.addEventListener('DOMContentLoaded', function () {
         updateDayButtons();
 
         closeModal(attractionModal);
+
+        document.getElementById('scheduleStartDate').value =
+          document.getElementById('startDate').value;
+
+        document.getElementById('scheduleEndDate').value =
+          document.getElementById('endDate').value;
+
         openModal(scheduleModal);
       });
     });
@@ -538,6 +588,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
   confirmSchedule.addEventListener('click', function () {
     if (!currentAttraction) return;
+
+    const modalStart = document.getElementById('scheduleStartDate').value;
+    const modalEnd = document.getElementById('scheduleEndDate').value;
+
+    if (!modalStart || !modalEnd) {
+      alert('Please select start date and end date first.');
+      return;
+    }
+
+    const chosenDay = selectedDay;
+
+    syncScheduleDatesToTrip();
+
+    selectedDay = chosenDay;
 
     if (Object.keys(itineraryData).length === 0) {
       alert('Please select start date and end date first.');
