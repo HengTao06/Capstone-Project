@@ -1,3 +1,24 @@
+// LOAD USER DATA ON PAGE LOAD
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('../../../modules/User/Profile/profile.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.username) {
+                document.getElementById('username').value = data.username;
+                document.querySelector('.profile-name').textContent = data.username;
+            }
+            if (data.email) {
+                document.getElementById('email').value = data.email;
+            }
+            if (data.profile_photo && data.profile_photo !== '') {
+                document.getElementById('profilePic').src = '../../../assets/images/' + data.profile_photo;
+            }
+        })
+        .catch(error => {
+            console.error('Error loading user data:', error);
+        });
+});
+
 // PROFILE PICTURE UPLOAD
 document.getElementById('uploadPic').addEventListener('change', function() {
   const file = this.files[0];
