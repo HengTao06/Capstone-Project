@@ -6,11 +6,14 @@ if(isset($_GET['id'])){
 
     $id = $_GET['id'];
 
-    $sql = "DELETE FROM review WHERE review_id = $id";
+    $sql =
+    "DELETE FROM review
+     WHERE review_id = $id";
 
     $conn->query($sql);
 }
 
-header("Location: M_reviews.php");
+header("Location:M_reviews.html");
+
 exit;
 ?>
