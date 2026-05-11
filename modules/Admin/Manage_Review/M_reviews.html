@@ -1,59 +1,79 @@
 <!DOCTYPE html>
-
 <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Manage Reviews</title>
 
-<head>
+        <link rel="stylesheet" href="../../../shared/css/variables.css">
+        <link rel="stylesheet" href="../../../shared/css/global.css">
+        <link rel="stylesheet" href="../../../shared/css/components.css">
+        <link rel="stylesheet" href="../../../shared/css/header-footer.css">
+        <link rel="stylesheet" href="M_reviews.css">
+    </head>
 
-<meta charset="UTF-8">
+    <body data-page="manage-review">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+        <div id="header"></div>
 
-<title>Manage Review</title>
+        <main class="review-page">
+            <div class="review-header">
+                <div>
+                    <h2>Manage Reviews</h2>
+                    <p>View and delete user reviews submitted for
+                        attractions.</p>
+                </div>
+            </div>
 
-<link rel="stylesheet"
-href="../../../shared/css/variables.css">
+            <div id="reviewGrid" class="review-grid"></div>
+        </main>
 
-<link rel="stylesheet"
-href="../../../shared/css/global.css">
+        <!-- VIEW REVIEW MODAL -->
+        <div class="modal" id="reviewModal">
+            <div class="modal-box">
+                <button class="close-btn" id="closeReviewModal">&times;</button>
 
-<link rel="stylesheet"
-href="../../../shared/css/components.css">
+                <div class="modal-user">
+                    <img id="modalUserImage" src="/Trev/assets/images/black.png"
+                        alt="User">
+                    <div>
+                        <h3 id="modalUser">User</h3>
+                        <div id="modalRating" class="stars"></div>
+                    </div>
+                </div>
 
-<link rel="stylesheet"
-href="../../../shared/css/header-footer.css">
+                <img id="modalImage" class="modal-image" src alt="Review Image">
 
-<link rel="stylesheet"
-href="M_reviews.css">
+                <h3 id="modalAttractionName"></h3>
 
-</head>
+                <p id="modalComment" class="modal-comment"></p>
 
-<body data-page="manage-review">
+                <div class="modal-actions">
+                    <button class="close-modal-btn"
+                        id="closeReviewModalBottom">Close</button>
+                </div>
+            </div>
+        </div>
 
-<div id="header"></div>
+        <!-- DELETE CONFIRM MODAL -->
+        <div class="modal" id="deleteModal">
+            <div class="delete-box">
+                <h3>Delete Review?</h3>
+                <p>This action cannot be undone.</p>
 
-<div class="review-page">
+                <div class="delete-actions">
+                    <button class="cancel-delete-btn"
+                        id="cancelDeleteBtn">Cancel</button>
+                    <button class="confirm-delete-btn"
+                        id="confirmDeleteBtn">Delete</button>
+                </div>
+            </div>
+        </div>
 
-    <div class="review-header">
+        <div id="footer"></div>
 
-        <h2>Manage Reviews</h2>
+        <script src="../../../shared/js/admin_main.js"></script>
+        <script src="M_reviews.js"></script>
 
-    </div>
-
-    <div id="reviewGrid"
-         class="review-grid">
-
-    </div>
-
-</div>
-
-<div id="popupContainer"></div>
-
-<div id="footer"></div>
-
-<script src="../../../shared/js/admin_main.js"></script>
-
-<script src="M_reviews.js"></script>
-
-</body>
+    </body>
 </html>

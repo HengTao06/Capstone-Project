@@ -1,149 +1,191 @@
 document.addEventListener("DOMContentLoaded", () => {
-
     loadReviews();
-    loadPopup();
-
+    bindModalEvents();
 });
 
-async function loadPopup() {
-
-    const response = await fetch("popup.html");
-
-    const html = await response.text();
-
-    document.getElementById("popup-container").innerHTML = html;
-}
+let deleteReviewId = null;
+let currentReviews = [];
 
 async function loadReviews() {
-
-    const response = await fetch("reviews.php");
-
-    const reviews = await response.json();
-
     const reviewGrid = document.getElementById("reviewGrid");
 
-    reviewGrid.innerHTML = "";
+    try {
+        reviewGrid.innerHTML = `
+            <div class="empty-review">Loading reviews...</div>
+        `;
 
-    reviews.forEach(review => {
+        const response = await fetch("M_reviews.php");
+        const reviews = await response.json();
 
-        const stars = "★".repeat(review.rating);
+        currentReviews = reviews;
 
-        reviewGrid.innerHTML += `
+        reviewGrid.innerHTML = "";
 
-        <div class="review-card">
+        if (!Array.isArray(reviews) || reviews.length === 0) {
+            reviewGrid.innerHTML = `
+                <div class="empty-review">No reviews available.</div>
+            `;
+            return;
+        }
 
-            <img class="review-image"
-                 src="/Capstone-Project/assets/images/${review.attraction_image}">
+        reviews.forEach(review => {
+            const stars = "★".repeat(Number(review.rating || 0));
+            const attractionImage = review.attraction_image
+                ? `/Trev/assets/images/${review.attraction_image}`
+                : `/Trev/assets/images/default.jpg`;
 
-            <div class="review-content">
+            const userImage = review.user_profile
+                ? `/Trev/assets/images/${review.user_profile}`
+                : `/Trev/assets/images/black.png`;
 
-                <div class="review-user">
+            const card = document.createElement("div");
+            card.className = "review-card";
 
-                    <img src="/Capstone-Project/assets/images/black.png">
+            card.innerHTML = `
+                <img class="review-image" src="${attractionImage}" 
+                     onerror="this.src='/Trev/assets/images/default.jpg'" 
+                     alt="${escapeHTML(review.attraction_name || "Attraction")}">
 
-                    <div>
+                <div class="review-content">
+                    <div class="review-user">
+                        <img src="${userImage}" 
+                             onerror="this.src='/Trev/assets/images/black.png'" 
+                             alt="${escapeHTML(review.username || "User")}">
 
-                        <h3>${review.username}</h3>
-
-                        <div class="stars">${stars}</div>
-
+                        <div>
+                            <h3>${escapeHTML(review.username || "User")}</h3>
+                            <div class="stars">${stars}</div>
+                        </div>
                     </div>
 
+                    <h2>${escapeHTML(review.attraction_name || "Unknown Attraction")}</h2>
+
+                    <p>${escapeHTML(review.comment || "No comment provided.")}</p>
+
+                    <div class="review-buttons">
+                        <button class="view-btn" data-id="${review.review_id}">
+                            View
+                        </button>
+
+                        <button class="delete-btn" data-id="${review.review_id}">
+                            Delete
+                        </button>
+                    </div>
                 </div>
+            `;
 
-                <h2>${review.attraction_name}</h2>
+            reviewGrid.appendChild(card);
+        });
 
-                <p>
-                    ${review.comment}
-                </p>
+        bindReviewButtons();
 
-                <div class="review-buttons">
+    } catch (error) {
+        console.error("Failed to load reviews:", error);
 
-                    <button class="view-btn"
-                            onclick="openModal(
-                            '${review.username}',
-                            '${review.rating}',
-                            '${review.comment}',
-                            '/Capstone-Project/assets/images/${review.attraction_image}'
-                            )">
-
-                        View
-                    </button>
-
-                    <button class="delete-btn"
-                            onclick="openDelete(${review.review_id})">
-
-                        Delete
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
+        reviewGrid.innerHTML = `
+            <div class="empty-review">Failed to load reviews.</div>
         `;
+    }
+}
+
+function bindReviewButtons() {
+    document.querySelectorAll(".view-btn").forEach(button => {
+        button.addEventListener("click", () => {
+            const reviewId = button.dataset.id;
+            const review = currentReviews.find(r => String(r.review_id) === String(reviewId));
+
+            if (review) {
+                openReviewModal(review);
+            }
+        });
+    });
+
+    document.querySelectorAll(".delete-btn").forEach(button => {
+        button.addEventListener("click", () => {
+            deleteReviewId = button.dataset.id;
+            openDeleteModal();
+        });
     });
 }
 
-function openModal(user, rating, comment, image) {
+function openReviewModal(review) {
+    const modal = document.getElementById("reviewModal");
 
-    document.getElementById("reviewModal").style.display = "flex";
+    const attractionImage = review.attraction_image
+        ? `/Trev/assets/images/${review.attraction_image}`
+        : `/Trev/assets/images/default.jpg`;
 
-    document.getElementById("modalUser").innerText = user;
+    const userImage = review.user_profile
+        ? `/Trev/assets/images/${review.user_profile}`
+        : `/Trev/assets/images/black.png`;
 
-    document.getElementById("modalComment").innerText = comment;
+    document.getElementById("modalUser").innerText = review.username || "User";
+    document.getElementById("modalRating").innerHTML = "★".repeat(Number(review.rating || 0));
+    document.getElementById("modalComment").innerText = review.comment || "No comment provided.";
+    document.getElementById("modalAttractionName").innerText = review.attraction_name || "Unknown Attraction";
 
-    document.getElementById("modalImage").src = image;
+    document.getElementById("modalImage").src = attractionImage;
+    document.getElementById("modalUserImage").src = userImage;
 
-    document.getElementById("modalRating").innerHTML =
-        "★".repeat(rating);
+    modal.classList.add("active");
 }
 
-function closeModal() {
-
-    document.getElementById("reviewModal").style.display = "none";
+function closeReviewModal() {
+    document.getElementById("reviewModal").classList.remove("active");
 }
 
-let deleteReviewId = null;
-
-function openDelete(id) {
-
-    deleteReviewId = id;
-
-    document.getElementById("deleteModal").style.display = "flex";
+function openDeleteModal() {
+    document.getElementById("deleteModal").classList.add("active");
 }
 
-function closeDelete() {
-
-    document.getElementById("deleteModal").style.display = "none";
+function closeDeleteModal() {
+    document.getElementById("deleteModal").classList.remove("active");
+    deleteReviewId = null;
 }
 
-document.addEventListener("click", async (e) => {
+function bindModalEvents() {
+    document.getElementById("closeReviewModal").addEventListener("click", closeReviewModal);
+    document.getElementById("closeReviewModalBottom").addEventListener("click", closeReviewModal);
+    document.getElementById("cancelDeleteBtn").addEventListener("click", closeDeleteModal);
 
-    if (e.target.id === "confirmDeleteBtn") {
+    document.getElementById("confirmDeleteBtn").addEventListener("click", async () => {
+        if (!deleteReviewId) return;
 
-        await fetch("delete_review.php?id=" + deleteReviewId);
+        try {
+            const response = await fetch(`delete_review.php?id=${encodeURIComponent(deleteReviewId)}`);
+            const result = await response.json();
 
-        closeDelete();
+            if (result.status === "success") {
+                closeDeleteModal();
+                loadReviews();
+            } else {
+                alert(result.message || "Failed to delete review.");
+            }
 
-        loadReviews();
-    }
-});
+        } catch (error) {
+            console.error("Delete failed:", error);
+            alert("Something went wrong while deleting the review.");
+        }
+    });
 
-window.onclick = function (event) {
+    document.getElementById("reviewModal").addEventListener("click", event => {
+        if (event.target.id === "reviewModal") {
+            closeReviewModal();
+        }
+    });
 
-    const reviewModal = document.getElementById("reviewModal");
+    document.getElementById("deleteModal").addEventListener("click", event => {
+        if (event.target.id === "deleteModal") {
+            closeDeleteModal();
+        }
+    });
+}
 
-    const deleteModal = document.getElementById("deleteModal");
-
-    if (event.target === reviewModal) {
-
-        closeModal();
-    }
-
-    if (event.target === deleteModal) {
-
-        closeDelete();
-    }
-};
+function escapeHTML(value) {
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}

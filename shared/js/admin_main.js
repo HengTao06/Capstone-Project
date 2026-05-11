@@ -24,8 +24,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             }
         });
 
-        initGlobalSearch();
-
     } catch (error) {
         console.error("Header/Footer loading error:", error);
     }

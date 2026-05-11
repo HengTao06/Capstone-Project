@@ -1,19 +1,39 @@
 <?php
+require_once "../../../shared/php/db.php";
 
-include '../../../shared/php/db.php';
+header("Content-Type: application/json");
 
-if(isset($_GET['id'])){
+$id = isset($_GET["id"]) ? (int)$_GET["id"] : 0;
 
-    $id = $_GET['id'];
-
-    $sql =
-    "DELETE FROM review
-     WHERE review_id = $id";
-
-    $conn->query($sql);
+if ($id <= 0) {
+    echo json_encode([
+        "status" => "error",
+        "message" => "Invalid review ID."
+    ]);
+    exit();
 }
 
-header("Location:M_reviews.html");
+$stmt = $conn->prepare("DELETE FROM review WHERE review_id = ?");
 
-exit;
+if (!$stmt) {
+    echo json_encode([
+        "status" => "error",
+        "message" => $conn->error
+    ]);
+    exit();
+}
+
+$stmt->bind_param("i", $id);
+
+if ($stmt->execute()) {
+    echo json_encode([
+        "status" => "success",
+        "message" => "Review deleted successfully."
+    ]);
+} else {
+    echo json_encode([
+        "status" => "error",
+        "message" => "Failed to delete review."
+    ]);
+}
 ?>
