@@ -254,7 +254,8 @@ body {
 
 .review-img {
     width: 100%;
-    height: 250px !important; 
+    height: auto !important; /* CHANGED FROM 250px TO AUTO */
+    max-height: 400px; /* Stops incredibly tall photos from taking up the whole screen */
     object-fit: cover !important; 
     border-radius: 8px;
     margin-bottom: 16px;
