@@ -5,47 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trev - Analytics Dashboard</title>
     
-    <!-- Google Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Chart.js Library for Data Visualization -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- Shared Team CSS[cite: 4] -->
     <link rel="stylesheet" href="../../../shared/css/variables.css">
     <link rel="stylesheet" href="../../../shared/css/global.css">
     <link rel="stylesheet" href="../../../shared/css/header-footer.css">
-    <link rel="stylesheet" href="../../../shared/css/components.css">
     
-    <!-- Analytics Specific CSS -->
     <link rel="stylesheet" href="Analytics.css">
+
+    <script src="../../../shared/js/admin_main.js"></script>
 </head>
 <body data-page="analytics">
 
-    <!-- ADMIN CUSTOM HEADER -->
-    <header class="admin-header">
-        <div class="admin-header-container">
-            <a href="#" class="admin-logo-link">
-                <img src="../../../assets/images/trev.png" alt="Trev Logo">
-            </a>
-            
-            <nav class="admin-nav">
-                <a href="Dashboard.html">Dashboard</a>
-                <a href="#">Manage Destination</a>
-                <a href="#">Manage Reviews</a>
-                <a href="#" class="active">Analytics</a>
-                <a href="#">Profile</a>
-                <a href="#">User</a>
-            </nav>
-        </div>
-    </header>
+    <div id="header"></div>
 
     <main class="container admin-main">
         <h1 class="section-title">Analytics Dashboard</h1>
 
         <div class="analytics-layout">
-            <!-- Top Row: Bar Chart -->
             <div class="chart-card full-width">
                 <h3>Most Popular Destinations</h3>
                 <div class="canvas-container bar-container">
@@ -53,28 +32,28 @@
                 </div>
             </div>
 
-            <!-- Middle Row: 2 Columns -->
             <div class="grid-2-col">
-                <!-- Left: Top Rated List -->
                 <div class="chart-card">
                     <h3>Top Rated Attractions</h3>
                     <div class="top-rated-list" id="topRatedList">
-                        <!-- List items loaded by JS -->
-                    </div>
+                        </div>
                 </div>
 
-                <!-- Right: Pie Chart -->
                 <div class="chart-card">
-                    <h3>Most Common Travel Combos</h3>
+                    <div class="card-header-flex">
+                        <h3>Popular Trip Combos</h3>
+                        <select id="countryComboFilter" class="chart-filter">
+                            <option value="">Loading...</option>
+                        </select>
+                    </div>
                     <div class="canvas-container pie-container">
                         <canvas id="combosChart"></canvas>
                     </div>
                 </div>
             </div>
 
-            <!-- Bottom Row: Line Chart -->
             <div class="chart-card full-width">
-                <h3>Total Platform Bookings</h3>
+                <h3>Trips Planned Over Time</h3>
                 <div class="canvas-container line-container">
                     <canvas id="bookingsChart"></canvas>
                 </div>
@@ -82,13 +61,8 @@
         </div>
     </main>
 
-    <!-- Shared Footer Container[cite: 4] -->
     <div id="footer"></div>
 
-    <!-- Shared Team JS[cite: 4] -->
-    <script src="../../../shared/js/main.js"></script>
-    
-    <!-- Analytics JS -->
     <script src="Analytics.js"></script>
 </body>
 </html>

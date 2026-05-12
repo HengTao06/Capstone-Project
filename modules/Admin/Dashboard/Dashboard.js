@@ -2,6 +2,22 @@ document.addEventListener("DOMContentLoaded", function () {
     loadAdminData();
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    loadAdminData();
+
+    // Fix the broken logo injected by the shared header
+    fixBrokenLogos();
+    setTimeout(fixBrokenLogos, 300);
+    setTimeout(fixBrokenLogos, 1000);
+});
+
+// This function forces the logo to use the correct folder path
+function fixBrokenLogos() {
+    const logos = document.querySelectorAll('img[alt="Trev Logo"]');
+    logos.forEach(logo => {
+        logo.src = "../../../assets/images/trev.png";
+    });
+}
 async function loadAdminData() {
     try {
         const response = await fetch("Dashboard.php");

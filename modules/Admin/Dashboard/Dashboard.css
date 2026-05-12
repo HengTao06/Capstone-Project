@@ -1,71 +1,18 @@
 /* ============================================
-   SHARED ADMIN HEADER (Matches Friend's Design)
-============================================= */
-/* Targeting both .admin-header and .site-header in case the shared JS uses either */
-.admin-header, .site-header {
-    background-color: var(--white, #ffffff);
-    border-bottom: 1px solid var(--line, #E2E8F0);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    height: 76px; /* Exact height to fit the logo and underline */
-}
-
-.admin-header-container, .header-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 100%;
-}
-
-.admin-logo-link, .header-logo {
-    display: flex;
-    align-items: center;
-    height: 100%;
-}
-
-.admin-logo-link img, .header-logo img {
-    height: 85px; /* Overhangs slightly like the image */
-    margin-top: 10px; /* Pushes the logo down slightly */
-    width: auto;
-}
-
-.admin-nav, .header-nav {
-    margin-left: auto;
-    display: flex;
-    gap: 32px;
-    height: 100%; /* Forces the nav to be full height */
-}
-
-.admin-nav a, .header-nav a {
-    font-family: 'Inter', 'DM Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--dark, #1E293B);
-    text-decoration: none;
-    display: flex;
-    align-items: center; /* Centers the text vertically */
-    height: 100%; /* Stretches the link area from top to bottom */
-    border-bottom: 3px solid transparent; /* Invisible border ready for hover/active */
-    transition: color 0.2s, border-color 0.2s;
-}
-
-.admin-nav a:hover, .header-nav a:hover {
-    color: var(--orange, #F97316);
-}
-
-/* The exact active state from the screenshot */
-.admin-nav a.active, .header-nav a.active {
-    color: var(--orange, #F97316);
-    border-bottom: 3px solid var(--orange, #F97316); 
-}
-
-/* ============================================
    ADMIN DASHBOARD MAIN STYLES
+   (Header/Footer styling is handled 100% by shared files)
 ============================================= */
+
+/* Page Background (Matches manage_user exactly) */
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg, #F8FAFC); /* Creates the subtle contrast for the header */
+    color: var(--dark, #1E293B);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 .admin-main {
     padding-top: 32px;
     padding-bottom: 56px;
@@ -96,42 +43,41 @@
     text-decoration: underline;
 }
 
-
 /* ── Stats Grid ── */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-5);
-    margin-bottom: var(--space-12);
+    gap: var(--space-5, 1.25rem);
+    margin-bottom: var(--space-12, 3rem);
 }
 
 .stat-card {
-    background: var(--color-card-bg);
-    padding: var(--space-6);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-card);
-    border: 1px solid var(--color-border);
-    transition: transform var(--transition-base);
+    background: var(--white, #ffffff);
+    padding: 24px;
+    border-radius: var(--radius, 12px);
+    box-shadow: var(--shadow, 0 1px 4px rgba(0,0,0,.07), 0 4px 16px rgba(0,0,0,.05));
+    border: 1px solid var(--line, #E2E8F0);
+    transition: transform .2s, box-shadow .2s;
 }
 
 .stat-card:hover {
     transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 6px 24px rgba(0,0,0,.09);
 }
 
 .stat-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: var(--space-5);
+    margin-bottom: var(--space-5, 1.25rem);
 }
 
 .icon-box {
     width: 40px;
     height: 40px;
-    border-radius: var(--radius-sm);
-    background-color: var(--color-primary-light);
-    color: var(--color-primary-dark);
+    border-radius: 8px;
+    background-color: var(--orange-light, #FFF7ED);
+    color: var(--orange-dark, #EA580C);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -139,51 +85,54 @@
 }
 
 .trend {
-    font-size: var(--text-xs);
-    font-weight: var(--font-semibold);
-    color: var(--color-badge-new); 
+    font-size: 12px;
+    font-weight: 600;
+    color: #22c55e; /* Green for positive trend */
 }
 
 .stat-number {
-    font-size: var(--text-xxl);
-    font-weight: var(--font-bold);
-    margin-bottom: 5px;
-    font-family: var(--font-body); /* FIXED FONT */
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--dark, #1E293B);
+    line-height: 1;
+    margin-bottom: 6px;
 }
 
 .stat-label {
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
+    font-size: 13px;
+    color: var(--mid, #64748B);
+    font-weight: 400;
 }
 
 /* ── Admin Destinations Grid ── */
 .destinations-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-5);
+    gap: var(--space-5, 1.25rem);
 }
 
 .admin-rank-badge {
     position: absolute;
-    top: var(--space-3);
-    left: var(--space-3);
-    background-color: var(--color-primary);
-    color: var(--color-white);
+    top: 12px;
+    left: 12px;
+    background-color: var(--orange, #F97316);
+    color: #ffffff;
     width: 28px;
     height: 28px;
-    border-radius: var(--radius-full);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: var(--text-xs);
-    font-weight: var(--font-bold);
+    font-size: 12px;
+    font-weight: 700;
     z-index: 10;
 }
 
 .dest-visits {
-    font-size: var(--text-xs);
-    font-weight: var(--font-semibold);
-    color: var(--color-badge-new);
+    font-size: 12px;
+    font-weight: 600;
+    color: #22c55e;
     margin-top: 5px;
 }
 
@@ -191,52 +140,52 @@
 .reviews-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-5);
+    gap: var(--space-5, 1.25rem);
 }
 
 .review-card {
-    background: var(--color-card-bg);
-    padding: var(--space-6);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-card);
-    border: 1px solid var(--color-border);
-    transition: transform var(--transition-base);
+    background: var(--white, #ffffff);
+    padding: 24px;
+    border-radius: var(--radius, 12px);
+    box-shadow: var(--shadow, 0 1px 4px rgba(0,0,0,.07), 0 4px 16px rgba(0,0,0,.05));
+    border: 1px solid var(--line, #E2E8F0);
+    transition: transform .2s, box-shadow .2s;
 }
 
 .review-card:hover {
     transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 6px 24px rgba(0,0,0,.09);
 }
 
 .review-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: var(--space-4);
+    margin-bottom: 16px;
 }
 
 .user-info {
     display: flex;
     align-items: center;
-    gap: var(--space-3);
+    gap: 12px;
 }
 
 .user-info img {
     width: 50px;
     height: 50px;
-    border-radius: var(--radius-full);
+    border-radius: 50%;
     object-fit: cover;
 }
 
 .user-details h4 {
-    font-size: var(--text-sm);
-    font-weight: var(--font-bold);
-    color: var(--color-text-primary);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--dark, #1E293B);
 }
 
 .attraction-name {
-    font-size: var(--text-xs);
-    color: var(--color-primary);
+    font-size: 12px;
+    color: var(--orange, #F97316);
     margin-bottom: 2px;
 }
 
@@ -246,27 +195,26 @@
 }
 
 .stars span {
-    color: var(--color-text-muted);
+    color: var(--mid, #64748B);
     margin-left: 5px;
 }
 
 .review-date {
-    font-size: var(--text-xs);
-    color: var(--color-text-muted);
+    font-size: 12px;
+    color: var(--mid, #64748B);
 }
 
-/* FIXED REVIEW IMAGE SQUISHING */
 .review-img {
     width: 100%;
     height: 250px !important; 
     object-fit: cover !important; 
-    border-radius: var(--radius-md);
-    margin-bottom: var(--space-4);
+    border-radius: 8px;
+    margin-bottom: 16px;
 }
 
 .review-text {
-    font-size: var(--text-sm);
-    color: var(--color-text-secondary);
+    font-size: 14px;
+    color: var(--user-text, #475569);
     line-height: 1.6;
 }
 
