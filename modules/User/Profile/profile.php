@@ -26,3 +26,4 @@ echo json_encode([
     'profile_photo' => $user['user_profile']
 ]);
 ?>
+
