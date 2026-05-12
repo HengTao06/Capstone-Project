@@ -3,7 +3,8 @@ ob_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 0);
 
-require_once "../../shared/php/db.php";
+require_once "../../../shared/php/db.php";
+require_once "../../../shared/php/session.php";
 // ← session.php line deleted
 
 ob_clean();
@@ -45,13 +46,13 @@ if ($result->num_rows > 0) {
     exit();
 }
 
-$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+$userPassword = $password;
 
 $sql = "INSERT INTO users (username, user_email, user_password, user_role, user_profile) 
-        VALUES (?, ?, ?, 'user', NULL)";
+        VALUES (?, ?, ?, 'user', '')";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("sss", $username, $email, $hashedPassword);
+$stmt->bind_param("sss", $username, $email, $userPassword);
 
 if ($stmt->execute()) {
     $response["status"] = "success";

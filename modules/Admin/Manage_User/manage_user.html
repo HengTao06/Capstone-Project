@@ -40,10 +40,10 @@
 <div class="toolbar">
   <div class="search-wrap">
     <span class="icon">🔍</span>
-    <input type="text" placeholder="Search by name or email..." />
+  <input type="text" id="searchInput" placeholder="Search by name or email..." />
   </div>
 
-  <select class="filter-select">
+  <select class="filter-select" id="roleFilter">
     <option>All Roles</option>
     <option>User</option>
     <option>Admin</option>
@@ -63,104 +63,9 @@
           <th>Actions</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>
-            <div class="user-cell">
-              <div class="avatar">SJ</div>
-              <span class="user-name">Sarah Johnson</span>
-            </div>
-          </td>
-          <td class="email-cell">sarah.johnson@example.com</td>
-          <td><span class="badge badge-user">User</span></td>
-          <td>
-            <div class="actions-cell">
-              <button class="action-link action-view">View</button>
-              <button class="action-link action-edit">Edit</button>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="user-cell">
-              <div class="avatar" style="background:linear-gradient(135deg,#0EA5E9,#38BDF8)">MC</div>
-              <span class="user-name">Michael Chen</span>
-            </div>
-          </td>
-          <td class="email-cell">michael.chen@example.com</td>
-          <td><span class="badge badge-admin">Admin</span></td>
-          <td>
-            <div class="actions-cell">
-              <button class="action-link action-view">View</button>
-              <button class="action-link action-edit">Edit</button>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="user-cell">
-              <div class="avatar" style="background:linear-gradient(135deg,#10B981,#34D399)">EW</div>
-              <span class="user-name">Emma Williams</span>
-            </div>
-          </td>
-          <td class="email-cell">emma.williams@example.com</td>
-          <td><span class="badge badge-user">User</span></td>
-          <td>
-            <div class="actions-cell">
-              <button class="action-link action-view">View</button>
-              <button class="action-link action-edit">Edit</button>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="user-cell">
-              <div class="avatar" style="background:linear-gradient(135deg,#8B5CF6,#A78BFA)">JR</div>
-              <span class="user-name">James Rodriguez</span>
-            </div>
-          </td>
-          <td class="email-cell">james.rodriguez@example.com</td>
-          <td><span class="badge badge-user">User</span></td>
-          <td>
-            <div class="actions-cell">
-              <button class="action-link action-view">View</button>
-              <button class="action-link action-edit">Edit</button>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="user-cell">
-              <div class="avatar" style="background:linear-gradient(135deg,#EC4899,#F472B6)">OM</div>
-              <span class="user-name">Olivia Martinez</span>
-            </div>
-          </td>
-          <td class="email-cell">olivia.martinez@example.com</td>
-          <td><span class="badge badge-user">User</span></td>
-          <td>
-            <div class="actions-cell">
-              <button class="action-link action-view">View</button>
-              <button class="action-link action-edit">Edit</button>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="user-cell">
-              <div class="avatar" style="background:linear-gradient(135deg,#F59E0B,#FCD34D)">DK</div>
-              <span class="user-name">David Kim</span>
-            </div>
-          </td>
-          <td class="email-cell">david.kim@example.com</td>
-          <td><span class="badge badge-admin">Admin</span></td>
-          <td>
-            <div class="actions-cell">
-              <button class="action-link action-view">View</button>
-              <button class="action-link action-edit">Edit</button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
+<tbody id="userTableBody">
+
+</tbody>
     </table>
  
     <!-- Pagination -->
