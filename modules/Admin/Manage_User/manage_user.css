@@ -267,9 +267,6 @@
       transition: all .15s;
     }
  
-    .action-view { color: var(--orange); }
-    .action-view:hover { background: var(--orange-light); }
- 
     .action-edit { color: var(--mid); }
     .action-edit:hover { background: var(--user-bg); color: var(--dark); }
  

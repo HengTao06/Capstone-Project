@@ -5,12 +5,10 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
 
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
-  const terms = document.getElementById("terms").checked;
 
   // Clear errors
   document.getElementById("emailError").textContent = "";
   document.getElementById("passwordError").textContent = "";
-  document.getElementById("termsError").textContent = "";
 
   // Email validation
   if (email === "") {
@@ -27,12 +25,6 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
     valid = false;
   } else if (password.length < 6) {
     document.getElementById("passwordError").textContent = "Minimum 6 characters";
-    valid = false;
-  }
-
-  // Terms validation
-  if (!terms) {
-    document.getElementById("termsError").textContent = "You must agree first";
     valid = false;
   }
 

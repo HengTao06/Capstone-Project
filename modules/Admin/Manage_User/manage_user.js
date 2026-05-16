@@ -1,3 +1,6 @@
+let currentPage = 1;
+const usersPerPage = 8;
+
 document.addEventListener("DOMContentLoaded", () => {
 
   const modal = document.getElementById("userModal");
@@ -11,16 +14,23 @@ document.addEventListener("DOMContentLoaded", () => {
 const roleFilter =
   document.getElementById("roleFilter");
 
+  const addUserBtn =
+  document.getElementById("addUserBtn");
+
+addUserBtn.addEventListener("click", addUser);
+
       // LOAD USERS
   loadUsers();
 
 // SEARCH EVENT
 searchInput.addEventListener("keyup", () => {
+  currentPage = 1;
   loadUsers();
 });
 
 // FILTER EVENT
 roleFilter.addEventListener("change", () => {
+  currentPage = 1;
   loadUsers();
 });
 
@@ -55,18 +65,14 @@ async function loadUsers() {
 
     const users = await response.json();
 
-    console.log(users);
-
     const tableBody =
       document.getElementById("userTableBody");
 
-    // GET SEARCH VALUE
     const searchValue =
       document.getElementById("searchInput")
       .value
       .toLowerCase();
 
-    // GET FILTER VALUE
     const roleValue =
       document.getElementById("roleFilter")
       .value
@@ -77,13 +83,11 @@ async function loadUsers() {
     // FILTER USERS
     const filteredUsers = users.filter(user => {
 
-      // SEARCH MATCH
       const matchesSearch =
         user.username.toLowerCase().includes(searchValue)
         ||
         user.user_email.toLowerCase().includes(searchValue);
 
-      // ROLE MATCH
       const matchesRole =
         roleValue === "all roles"
         ||
@@ -93,8 +97,44 @@ async function loadUsers() {
 
     });
 
-    // SHOW USERS
-    filteredUsers.forEach(user => {
+    // =========================
+    // STATS CALCULATION
+    // =========================
+
+    const totalUsers = filteredUsers.length;
+
+    const adminUsers = filteredUsers.filter(user =>
+      user.user_role.toLowerCase() === "admin"
+    ).length;
+
+const normalUsers = filteredUsers.filter(user =>
+  user.user_role.toLowerCase() === "user"
+).length;
+
+document.getElementById("activeUsers").innerText =
+  normalUsers;
+
+    // =========================
+    // PAGINATION
+    // =========================
+
+    const totalPages =
+      Math.ceil(filteredUsers.length / usersPerPage);
+
+    const startIndex =
+      (currentPage - 1) * usersPerPage;
+
+    const endIndex =
+      startIndex + usersPerPage;
+
+    const paginatedUsers =
+      filteredUsers.slice(startIndex, endIndex);
+
+    // =========================
+    // DISPLAY USERS
+    // =========================
+
+    paginatedUsers.forEach(user => {
 
       let badgeClass =
         user.user_role === "admin"
@@ -140,10 +180,6 @@ async function loadUsers() {
           <td>
             <div class="actions-cell">
 
-              <button class="action-link action-view">
-                View
-              </button>
-
               <button class="action-link action-edit">
                 Edit
               </button>
@@ -155,9 +191,158 @@ async function loadUsers() {
       `;
     });
 
+    // =========================
+    // PAGINATION INFO
+    // =========================
+
+    const showingStart =
+      filteredUsers.length === 0
+      ? 0
+      : startIndex + 1;
+
+    const showingEnd =
+      Math.min(endIndex, filteredUsers.length);
+
+    document.querySelector(".pagination-info").innerText =
+      `Showing ${showingStart} to ${showingEnd} of ${filteredUsers.length} users`;
+
+    // =========================
+    // PAGINATION BUTTONS
+    // =========================
+
+    const paginationControls =
+      document.querySelector(".pagination-controls");
+
+    paginationControls.innerHTML = "";
+
+    // PREVIOUS BUTTON
+
+    paginationControls.innerHTML += `
+      <button
+        class="page-btn prev-next"
+        ${currentPage === 1 ? "disabled" : ""}
+        onclick="changePage(${currentPage - 1})"
+      >
+        ← Previous
+      </button>
+    `;
+
+    // PAGE BUTTONS
+
+    for(let i = 1; i <= totalPages; i++) {
+
+      paginationControls.innerHTML += `
+        <button
+          class="page-btn ${i === currentPage ? "active" : ""}"
+          onclick="changePage(${i})"
+        >
+          ${i}
+        </button>
+      `;
+    }
+
+    // NEXT BUTTON
+
+    paginationControls.innerHTML += `
+      <button
+        class="page-btn prev-next"
+        ${currentPage === totalPages ? "disabled" : ""}
+        onclick="changePage(${currentPage + 1})"
+      >
+        Next →
+      </button>
+    `;
+
   } catch(error) {
 
     console.log("Error loading users:", error);
+
+  }
+
+}
+
+function changePage(page) {
+
+  currentPage = page;
+
+  loadUsers();
+
+}
+
+async function addUser() {
+
+  const username =
+    document.getElementById("addUsername").value.trim();
+
+  const email =
+    document.getElementById("addEmail").value.trim();
+
+  const password =
+    document.getElementById("addPassword").value.trim();
+
+  const role =
+    document.getElementById("addRole").value;
+
+  // VALIDATION
+  if(
+    username === "" ||
+    email === "" ||
+    password === "" ||
+    role === ""
+  ) {
+
+    alert("Please fill in all fields");
+    return;
+
+  }
+
+  try {
+
+    const response = await fetch(
+      "add_user.php",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+          role
+        })
+      }
+    );
+
+    const result = await response.json();
+
+    if(result.success) {
+
+      alert("User added successfully");
+
+      // CLOSE MODAL
+      document
+        .getElementById("userModal")
+        .classList.remove("active");
+
+      // CLEAR FORM
+      document.getElementById("addUsername").value = "";
+      document.getElementById("addEmail").value = "";
+      document.getElementById("addPassword").value = "";
+      document.getElementById("addRole").value = "";
+
+      // RELOAD USERS
+      loadUsers();
+
+    } else {
+
+      alert(result.message);
+
+    }
+
+  } catch(error) {
+
+    console.log(error);
 
   }
 

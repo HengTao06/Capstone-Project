@@ -22,15 +22,15 @@
   <!-- Stats -->
     <div class="stats">
         <div class="stat-card">
-            <div class="stat-value">8</div>
+            <div class="stat-value" id="totalUsers">8</div>
             <div class="stat-label">Total Users</div>
         </div>
         <div class="stat-card">
-            <div class="stat-value">7</div>
-            <div class="stat-label">Active Users</div>
+            <div class="stat-value" id="activeUsers">7</div>
+            <div class="stat-label">Users</div>
         </div>
         <div class="stat-card">
-            <div class="stat-value">2</div>
+            <div class="stat-value" id="adminUsers">2</div>
             <div class="stat-label">Admin</div>
         </div>
     </div>
@@ -81,7 +81,6 @@
   </div>
 </main>
  
-    <div id="footer"></div>
     <!-- OVERLAY MODAL -->
 <div class="modal-overlay" id="userModal">
   <div class="modal">
@@ -93,28 +92,30 @@
     </div>
 
     <!-- BODY -->
-    <div class="modal-body">
-      <label>Username</label>
-      <input type="text" placeholder="Enter username">
+<div class="modal-body">
 
-      <label>Email</label>
-      <input type="email" placeholder="Enter email address">
+  <label>Username</label>
+  <input type="text" id="addUsername" placeholder="Enter username">
 
-      <label>Password</label>
-      <input type="password" placeholder="Enter password">
+  <label>Email</label>
+  <input type="email" id="addEmail" placeholder="Enter email address">
 
-      <label>Role</label>
-      <select>
-        <option>Select role</option>
-        <option>User</option>
-        <option>Admin</option>
-      </select>
-    </div>
+  <label>Password</label>
+  <input type="password" id="addPassword" placeholder="Enter password">
+
+  <label>Role</label>
+  <select id="addRole">
+    <option value="">Select role</option>
+    <option value="user">User</option>
+    <option value="admin">Admin</option>
+  </select>
+
+</div>
 
     <!-- FOOTER -->
     <div class="modal-footer">
       <button class="btn-cancel" id="cancelModal">Cancel</button>
-      <button class="btn-add">Add User</button>
+      <button class="btn-add" id="addUserBtn">Add User</button>
     </div>
 
   </div>
