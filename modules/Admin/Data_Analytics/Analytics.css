@@ -12,17 +12,38 @@ body {
 }
 
 /* Match your friend's main layout spacing */
+/* ── Matches the wide layout of Manage Destination & Dashboard ── */
 .admin-main {
-    flex: 1;
-    max-width: 1100px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 32px 24px 56px;
+    width: 95%;
+    max-width: 1400px;
+    margin: 40px auto 80px;
+}
+
+/* ── Main Page Header ── */
+.page-main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    gap: 20px;
+}
+
+.page-main-header h1 {
+    font-size: 34px;
+    color: #111827;
+    margin-bottom: 8px;
+    font-family: inherit; /* Inherits the clean sans-serif font */
+    font-weight: 700;
+}
+
+.page-main-header p {
+    color: #6b7280;
+    font-size: 15px;
+    margin: 0;
 }
 
 /* Match your friend's H1 title font */
 .section-title {
-    font-family: 'Playfair Display', serif;
     font-size: 28px;
     font-weight: 700;
     color: var(--dark, #1E293B);
