@@ -4,14 +4,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.addEventListener("DOMContentLoaded", function () {
     loadAdminData();
-
-    // Fix the broken logo injected by the shared header
     fixBrokenLogos();
     setTimeout(fixBrokenLogos, 300);
     setTimeout(fixBrokenLogos, 1000);
 });
 
-// This function forces the logo to use the correct folder path
 function fixBrokenLogos() {
     const logos = document.querySelectorAll('img[alt="Trev Logo"]');
     logos.forEach(logo => {
@@ -21,18 +18,16 @@ function fixBrokenLogos() {
 async function loadAdminData() {
     try {
         const response = await fetch("Dashboard.php");
-        const textData = await response.text(); // Get raw text first to catch PHP errors
+        const textData = await response.text(); 
 
         try {
-            const data = JSON.parse(textData); // Try to parse as JSON
+            const data = JSON.parse(textData);
 
-            // If PHP threw a custom error (like DB connection failed)
             if (data.error) {
                 console.error("DATABASE ERROR:", data.error);
                 return;
             }
 
-            // 1. Update Stats
             if (data.stats) {
                 document.getElementById("stat-users").textContent = data.stats.users;
                 document.getElementById("stat-trips").textContent = data.stats.trips;
@@ -40,7 +35,6 @@ async function loadAdminData() {
                 document.getElementById("stat-dest").textContent = data.stats.destinations;
             }
 
-            // 2. Load Cards
             loadTopDestinations(data.topDestinations || []);
             loadTopReviews(data.topReviews || []);
             initScrollFadeAnimation();
