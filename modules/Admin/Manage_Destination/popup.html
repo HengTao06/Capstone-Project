@@ -1,0 +1,246 @@
+<div id="infoModal" class="modal">
+    <div class="modal-box">
+        <div class="modal-content">
+
+            <img id="infoImage" class="modal-image">
+
+            <h2 id="infoTitle"></h2>
+
+            <p id="infoCategory"></p>
+
+            <div id="infoStars" class="stars"></div>
+
+            <p id="infoDescription"></p>
+
+            <div class="modal-buttons">
+                <button class="edit-btn" onclick="openEditModal()">Edit</button>
+                <button class="delete-btn" onclick="openDeleteModal()">Delete</button>
+                <button class="close-btn-modal" onclick="closeInfoModal()">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="addStep1" class="modal">
+    <div class="form-popup">
+
+        <div class="form-header">
+            <h2>Add New Destination</h2>
+            <span onclick="closeAddModal()">×</span>
+            <div class="progress active-1"></div>
+            <p>Step 1 of 3</p>
+        </div>
+
+        <div class="form-body">
+
+            <label>Destination Name *</label>
+            <input type="text" id="addName" placeholder="e.g. Eiffel Tower">
+
+            <label>Country *</label>
+            <select id="addCountry">
+                <option>Select country</option>
+                <option>Japan</option>
+                <option>Malaysia</option>
+                <option>Indonesia</option>
+                <option>France</option>
+            </select>
+
+            <label>Category *</label>
+            <select id="addCategory">
+                <option>Select category</option>
+                <option>Beach</option>
+                <option>City</option>
+                <option>Nature</option>
+                <option>Historical</option>
+                <option>Landmark</option>
+            </select>
+
+            <button class="next-btn" onclick="nextAdd(1)">Next Step</button>
+
+        </div>
+    </div>
+</div>
+
+<div id="addStep2" class="modal">
+    <div class="form-popup">
+
+        <div class="form-header">
+            <h2>Add New Destination</h2>
+            <span onclick="closeAddModal()">×</span>
+            <div class="progress active-2"></div>
+            <p>Step 2 of 3</p>
+        </div>
+
+        <div class="form-body">
+
+            <label>Image File Name *</label>
+            <input type="text" id="addImage" placeholder="tokyo.png">
+
+            <label>Description *</label>
+            <textarea id="addDescription" placeholder="Describe this destination..."></textarea>
+
+            <label>Rating</label>
+            <input type="number" id="addRating" min="1" max="5" value="5">
+
+            <div class="form-actions">
+                <button class="back-btn" onclick="backAdd(2)">Back</button>
+                <button class="next-btn" onclick="nextAdd(2)">Next Step</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="addStep3" class="modal">
+    <div class="form-popup">
+
+        <div class="form-header">
+            <h2>Add New Destination</h2>
+            <span onclick="closeAddModal()">×</span>
+            <div class="progress active-3"></div>
+            <p>Step 3 of 3</p>
+        </div>
+
+        <div class="form-body">
+
+            <label>Status</label>
+            <select>
+                <option>Active</option>
+                <option>Inactive</option>
+            </select>
+
+            <label>Featured</label>
+            <select>
+                <option>No</option>
+                <option>Yes</option>
+            </select>
+
+            <div class="form-actions">
+                <button class="back-btn" onclick="backAdd(3)">Back</button>
+                <button class="next-btn">Add Destination</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="editStep1" class="modal">
+    <div class="form-popup">
+
+        <div class="form-header">
+            <h2>Edit Destination</h2>
+            <span onclick="closeEditModal()">×</span>
+            <div class="progress active-1"></div>
+            <p>Step 1 of 3</p>
+        </div>
+
+        <div class="form-body">
+
+            <label>Destination Name *</label>
+            <input type="text" id="editName">
+
+            <label>Country *</label>
+            <select id="editCountry">
+                <option>Japan</option>
+                <option>Malaysia</option>
+                <option>Indonesia</option>
+                <option>France</option>
+            </select>
+
+            <label>Category *</label>
+            <select id="editCategory">
+                <option>Beach</option>
+                <option>City</option>
+                <option>Nature</option>
+                <option>Historical</option>
+                <option>Landmark</option>
+            </select>
+
+            <button class="next-btn" onclick="nextEdit(1)">Next Step</button>
+
+        </div>
+    </div>
+</div>
+
+<!-- EDIT STEP 2 -->
+<div id="editStep2" class="modal">
+    <div class="form-popup">
+
+        <div class="form-header">
+            <h2>Edit Destination</h2>
+            <span onclick="closeEditModal()">×</span>
+            <div class="progress active-2"></div>
+            <p>Step 2 of 3</p>
+        </div>
+
+        <div class="form-body">
+
+            <label>Image File Name *</label>
+            <input type="text" id="editImage">
+
+            <label>Description *</label>
+            <textarea id="editDescription"></textarea>
+
+            <div class="form-actions">
+                <button class="back-btn" onclick="backEdit(2)">Back</button>
+                <button class="next-btn" onclick="nextEdit(2)">Next Step</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="editStep3" class="modal">
+    <div class="form-popup">
+
+        <div class="form-header">
+            <h2>Edit Destination</h2>
+            <span onclick="closeEditModal()">×</span>
+            <div class="progress active-3"></div>
+            <p>Step 3 of 3</p>
+        </div>
+
+        <div class="form-body">
+
+            <label>Status</label>
+            <select>
+                <option>Active</option>
+                <option>Inactive</option>
+            </select>
+
+            <label>Featured</label>
+            <select>
+                <option>No</option>
+                <option>Yes</option>
+            </select>
+
+            <div class="form-actions">
+                <button class="back-btn" onclick="backEdit(3)">Back</button>
+                <button class="next-btn">Save Changes</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="deleteModal" class="modal">
+    <div class="delete-popup">
+
+        <div class="delete-icon">🗑</div>
+
+        <h2>Delete Destination?</h2>
+
+        <p>
+            Are you sure you want to delete
+            <strong id="deleteName"></strong>?
+            This action cannot be undone.
+        </p>
+
+        <div class="delete-popup-buttons">
+            <button class="cancel-btn" onclick="closeDeleteModal()">Cancel</button>
+            <button class="delete-btn">Delete</button>
+        </div>
+
+    </div>
+</div>

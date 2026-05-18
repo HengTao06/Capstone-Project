@@ -1,154 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Manage Destinations</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Destination</title>
 
-        <link rel="stylesheet" href="../../../shared/css/variables.css">
-        <link rel="stylesheet" href="../../../shared/css/global.css">
-        <link rel="stylesheet" href="../../../shared/css/components.css">
-        <link rel="stylesheet" href="../../../shared/css/header-footer.css">
-        <link rel="stylesheet" href="M_destination.css">
-    </head>
+    <link rel="stylesheet" href="../../../shared/css/variables.css">
+    <link rel="stylesheet" href="../../../shared/css/global.css">
+    <link rel="stylesheet" href="../../../shared/css/components.css">
+    <link rel="stylesheet" href="../../../shared/css/header-footer.css">
+    <link rel="stylesheet" href="M_destination.css">
+</head>
 
-    <body data-page="manage-destination">
+<body data-page="manage-destination">
 
-        <div id="header"></div>
+<div id="page-wrapper">
 
-        <main class="destination-section">
-            <div class="destination-header">
-                <div>
-                    <h1>Manage Destinations</h1>
-                    <p>Add, view, update and delete attraction destinations.</p>
-                </div>
+    <div id="header"></div>
 
-                <button class="add-destination-btn" id="openAddBtn">+ Add
-                    Destination</button>
+    <main id="page-content">
+
+        <section class="destination-section">
+
+            <h1>Manage Destinations</h1>
+
+            <div class="filter-row">
+                <input type="text" id="searchInput" placeholder="Search destinations...">
+
+                <select id="countryFilter">
+                    <option value="">All Countries</option>
+                </select>
+
+                <select id="categoryFilter">
+                    <option value="">All Categories</option>
+                </select>
             </div>
 
             <div id="destinationGrid" class="destination-grid"></div>
-        </main>
 
-        <!-- INFO MODAL -->
-        <div id="infoModal" class="modal">
-            <div class="modal-box">
-                <button class="modal-close" id="closeInfoBtn">&times;</button>
+        </section>
 
-                <img id="infoImage" class="modal-image" src alt="Destination">
+    </main>
 
-                <h2 id="infoTitle"></h2>
-                <p id="infoLocation" class="info-location"></p>
+    <div id="footer"></div>
 
-                <div class="info-tags" id="infoTags"></div>
+</div>
 
-                <p id="infoDescription" class="info-description"></p>
+<button class="floating-add-btn" onclick="openAddModal()">+</button>
 
-                <div class="info-details">
-                    <p><strong>Estimated Price:</strong> RM <span
-                            id="infoPrice"></span></p>
-                    <p><strong>Best Season:</strong> <span
-                            id="infoSeason"></span></p>
-                </div>
+<div id="popup-container"></div>
 
-                <div class="modal-buttons">
-                    <button class="edit-btn" id="openEditBtn">Edit</button>
-                    <button class="delete-btn"
-                        id="openDeleteBtn">Delete</button>
-                    <button class="close-btn-modal"
-                        id="closeInfoBottomBtn">Close</button>
-                </div>
-            </div>
-        </div>
+<script src="../../../shared/js/admin_main.js"></script>
+<script src="M_destination.js"></script>
 
-        <!-- ADD / EDIT MODAL -->
-        <div id="formModal" class="modal">
-            <div class="form-popup">
-                <div class="form-header">
-                    <h2 id="formTitle">Add Destination</h2>
-                    <button class="form-close"
-                        id="closeFormBtn">&times;</button>
-                </div>
-
-                <form id="destinationForm" class="form-body">
-                    <input type="hidden" id="attractionId">
-
-                    <div class="form-group">
-                        <label>Attraction Name</label>
-                        <input type="text" id="attractionName"
-                            placeholder="e.g. Tokyo Tower" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>City</label>
-                        <select id="cityId" required>
-                            <option value>Select city</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Category</label>
-                        <input type="text" id="category"
-                            placeholder="e.g. Nature, Culture, Landmark"
-                            required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Estimated Price (RM)</label>
-                        <input type="number" id="estimatedPrice" min="0"
-                            step="0.01" placeholder="e.g. 80.00">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Best Season</label>
-                        <input type="text" id="bestSeason"
-                            placeholder="e.g. March to May / All Year">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Image File Name</label>
-                        <input type="text" id="imageName"
-                            placeholder="e.g. tokyo_tower.jpg">
-                        <small>Place the image inside
-                            <b>/Trev/assets/images/</b></small>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea id="description" rows="5"
-                            placeholder="Write attraction description..."></textarea>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="button" class="back-btn"
-                            id="cancelFormBtn">Cancel</button>
-                        <button type="submit" class="next-btn"
-                            id="saveFormBtn">Save Destination</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- DELETE MODAL -->
-        <div id="deleteModal" class="modal">
-            <div class="delete-popup">
-                <h2>Delete Destination?</h2>
-                <p>Are you sure you want to delete this destination? This action
-                    cannot be undone.</p>
-
-                <div class="delete-popup-buttons">
-                    <button class="close-btn-modal"
-                        id="cancelDeleteBtn">Cancel</button>
-                    <button class="delete-btn"
-                        id="confirmDeleteBtn">Delete</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="footer"></div>
-
-        <script src="../../../shared/js/admin_main.js"></script>
-        <script src="M_destination.js"></script>
-
-    </body>
+</body>
 </html>
