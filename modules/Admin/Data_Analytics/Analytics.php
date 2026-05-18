@@ -10,7 +10,6 @@ if ($conn->connect_error) {
 
 $response = [];
 
-// 1. Most Popular Destinations (Bar Chart)
 $pop_dest_sql = "SELECT c.city_name, COUNT(t.trip_id) as trips_count 
                  FROM trip t
                  JOIN city c ON t.city_id = c.city_id
@@ -28,7 +27,6 @@ if ($pop_dest_result) {
 $response['popularDestinations'] = $popularDestinations;
 
 
-// 2. Top Rated Attractions (List)
 $top_rated_sql = "SELECT a.attraction_name, ROUND(AVG(r.rating), 1) as avg_rating, COUNT(r.review_id) as review_count
                   FROM attraction a
                   JOIN review r ON a.attraction_id = r.attraction_id
@@ -49,7 +47,6 @@ if ($top_rated_result) {
 $response['topRated'] = $topRated;
 
 
-// 3. Popular Travel Combos FILTERED BY COUNTRY (Pie Chart)
 $combos_sql = "SELECT co.country_name, t.trip_name, COUNT(t.trip_id) as trips_count
                FROM trip t
                JOIN city c ON t.city_id = c.city_id
@@ -73,7 +70,6 @@ if ($combos_result) {
 $response['travelCombos'] = $travelCombos;
 
 
-// 4. Trips Planned Over Time (Line Chart) 
 $lastSixMonths = [];
 for ($i = 5; $i >= 0; $i--) {
     $monthName = date('M', strtotime("-$i months")); 

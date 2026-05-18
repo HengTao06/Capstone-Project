@@ -1,4 +1,3 @@
-// Global instances to prevent "Canvas is already in use" errors
 let popChartInstance = null;
 let combosChartInstance = null;
 let lineChartInstance = null;
@@ -29,11 +28,9 @@ async function loadAnalyticsData() {
         renderBarChart(data.popularDestinations.labels, data.popularDestinations.data);
         renderTopRatedList(data.topRated);
         
-        // Crash Protection: Safely fallback if PHP data is missing
         const tripDataObj = data.platformTrips || { labels: [], data: [] };
         renderLineChart(tripDataObj.labels, tripDataObj.data);
 
-        // Setup the Interactive Pie Chart with crash protection
         globalComboData = data.travelCombos || {};
         setupComboFilter();
 
@@ -47,7 +44,7 @@ function setupComboFilter() {
     const filterSelect = document.getElementById("countryComboFilter");
     if (!filterSelect) return; 
     
-    filterSelect.innerHTML = ""; // Clear "Loading..."
+    filterSelect.innerHTML = ""; 
 
     const countries = Object.keys(globalComboData);
     if (countries.length === 0 || countries[0] === "labels") {

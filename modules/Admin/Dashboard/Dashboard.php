@@ -1,11 +1,8 @@
 <?php
 header('Content-Type: application/json');
 
-// 1. Link the Shared Database Connection!
-// This path looks for 'db.php' inside your shared/php folder based on your previous screenshot.
 require_once "../../../shared/php/db.php";
 
-// 2. We use the $conn variable that was created inside your shared db.php file
 if ($conn->connect_error) {
     echo json_encode(["error" => "Database Connection Failed: " . $conn->connect_error]);
     exit();
@@ -13,7 +10,6 @@ if ($conn->connect_error) {
 
 $response = [];
 
-// 3. Calculate Top Stats
 $response['stats'] = [
     'users' => $conn->query("SELECT COUNT(*) as count FROM users")->fetch_assoc()['count'],
     'trips' => $conn->query("SELECT COUNT(*) as count FROM trip")->fetch_assoc()['count'],
@@ -21,9 +17,6 @@ $response['stats'] = [
     'destinations' => $conn->query("SELECT COUNT(*) as count FROM attraction")->fetch_assoc()['count']
 ];
 
-// ... (Keep the rest of the code for Top Destinations and Top Reviews exactly the same as before!) ...
-
-// 3. Get Top Destinations (Based on how many times they appear in trip_details)
 $topDestinations = [];
 $dest_sql = "SELECT a.attraction_name, c.city_name, co.country_name, a.attraction_image, COUNT(td.trip_details_id) as visits 
              FROM attraction a
@@ -37,7 +30,6 @@ $dest_sql = "SELECT a.attraction_name, c.city_name, co.country_name, a.attractio
 $dest_result = $conn->query($dest_sql);
 if ($dest_result) {
     while ($row = $dest_result->fetch_assoc()) {
-        // Build correct image path based on your folder structure
         $image = !empty($row['attraction_image']) ? "../../../assets/images/" . $row['attraction_image'] : "https://images.unsplash.com/photo-1488085061387-422e29b40080?q=80&w=500&auto=format&fit=crop";
         
         $topDestinations[] = [
@@ -50,7 +42,6 @@ if ($dest_result) {
 }
 $response['topDestinations'] = $topDestinations;
 
-// 4. Get Top Reviews (Highest rated)
 $topReviews = [];
 $rev_sql = "SELECT u.username, u.user_profile, a.attraction_name, r.rating, r.review_date, r.photo, r.comment 
             FROM review r
