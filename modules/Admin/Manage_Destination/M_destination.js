@@ -65,7 +65,7 @@ function displayDestinations(data) {
             <div class="destination-card" onclick='openInfoModal(${JSON.stringify(destination)})'>
 
                 <img class="destination-image"
-                     src="/Capstone-Project/assets/images/${destination.attraction_image}">
+                     src="/Trev/assets/images/${destination.attraction_image}">
 
                 <div class="destination-content">
 
@@ -100,7 +100,7 @@ function openInfoModal(destination) {
     selectedDestination = destination;
 
     document.getElementById("infoModal").style.display = "flex";
-    document.getElementById("infoImage").src = "/Capstone-Project/assets/images/" + destination.attraction_image;
+    document.getElementById("infoImage").src = "/Trev/assets/images/" + destination.attraction_image;
     document.getElementById("infoTitle").innerText = destination.attraction_name;
     document.getElementById("infoCategory").innerText = destination.country_name + " • " + destination.attraction_category;
     document.getElementById("infoStars").innerHTML = generateStars(destination.avg_rating) + " " + destination.avg_rating;

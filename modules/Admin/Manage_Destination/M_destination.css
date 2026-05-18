@@ -507,3 +507,32 @@ body {
         width:100%;
     }
 }
+
+.floating-add-btn{
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    width: 65px;
+    height: 65px;
+    border: none;
+    border-radius: 50%;
+    background: #f97316;
+    color: white;
+    font-size: 38px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 99999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+
+    transition: 0.3s ease;
+}
+
+.floating-add-btn:hover{
+    background:#ea580c;
+    transform: scale(1.08);
+}
