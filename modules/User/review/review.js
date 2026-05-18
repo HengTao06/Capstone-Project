@@ -1,64 +1,9 @@
 // ===========================
-// ATTRACTION DATA
-// ===========================
-const attractionMap = {
-    venice: ['Grand Canal', "St. Mark's Basilica", "Doge's Palace", 'Rialto Bridge'],
-    paris:  ['Eiffel Tower', 'Louvre Museum', 'Notre-Dame Cathedral', 'Champs-Élysées'],
-    tokyo:  ['Senso-ji Temple', 'Shibuya Crossing', 'Shinjuku Gyoen', 'Tokyo Tower']
-};
-
-// ===========================
-// REVIEWS DATA
-// ===========================
-const allReviews = [
-    {
-        name: 'Ethan Tan', initials: 'ET', color: '#3a8fc7',
-        avatar: null,
-        photo: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=500&h=200&fit=crop',
-        date: 'April 10, 2026', rating: 5, attraction: 'Tokyo Tower',
-        text: 'Absolutely breathtaking experience! The view from the top is spectacular, especially at sunset. The city lights coming on as the sun sets is magical. Highly recommend visiting during golden hour for the best photos.'
-    },
-    {
-        name: 'Aiden Lim', initials: 'AL', color: '#e07b39',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face',
-        photo: 'https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=500&h=200&fit=crop',
-        date: 'April 8, 2026', rating: 5, attraction: 'Angkor Wat',
-        text: "One of the most incredible historical sites I've ever visited. The architecture is mind-blowing and the spiritual atmosphere is palpable. Get there early to beat the crowds and catch the sunrise over the temple."
-    },
-    {
-        name: 'Ryan Wong', initials: 'RW', color: '#5ab56e',
-        avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face',
-        photo: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&h=200&fit=crop',
-        date: 'April 5, 2026', rating: 4.5, attraction: 'Maldives Beach Resort',
-        text: 'Paradise on earth! Crystal clear water, white sandy beaches, and amazing snorkeling. The resort staff was incredibly friendly and accommodating. Perfect for a relaxing getaway. Only downside was the price but totally worth it.'
-    },
-    {
-        name: 'Daniel Ng', initials: 'DN', color: '#9b6ec7',
-        avatar: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=80&h=80&fit=crop&crop=face',
-        photo: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=500&h=200&fit=crop',
-        date: 'April 2, 2026', rating: 5, attraction: 'Swiss Alps Hiking Trail',
-        text: 'The most scenic hiking experience of our lives! Well-marked trails, stunning mountain views at every turn, and charming alpine villages. The fresh mountain air and peaceful surroundings made this trip truly unforgettable.'
-    },
-    {
-        name: 'Kevin Chua', initials: 'KC', color: '#3ab8b8',
-        avatar: null,
-        photo: 'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?w=500&h=200&fit=crop',
-        date: 'March 28, 2026', rating: 4, attraction: 'Eiffel Tower',
-        text: "Iconic landmark that lives up to the hype! The architecture is stunning and the views of Paris from the top are incredible. Went at night to see the light show — absolutely magical. Book tickets in advance to skip the long queue."
-    },
-    {
-        name: 'Sean Goh', initials: 'SG', color: '#d4515b',
-        avatar: null,
-        photo: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=500&h=200&fit=crop',
-        date: 'March 25, 2026', rating: 5, attraction: 'Bangkok Street Food Tour',
-        text: "Food lover's paradise! Every corner has amazing street food vendors. The flavors are incredible and so authentic. Our guide was knowledgeable and took us to the best local spots. Pad Thai here is on another level entirely!"
-    }
-];
-
-// ===========================
 // STATE
 // ===========================
 let currentRating = 0;
+let uploadedPhotoFile = null;
+let allReviews = [];
 
 // ===========================
 // RENDER STARS (display only)
@@ -83,16 +28,15 @@ function starsHTML(rating) {
 function renderReviews(list) {
     document.getElementById('reviewsFound').textContent = list.length + ' reviews found';
 
-    document.getElementById('reviewsGrid').innerHTML = list.map(function(r) {
+    document.getElementById('reviewsGrid').innerHTML = list.map(function(r, index) {
+        const initials = r.username ? r.username.substring(0, 2).toUpperCase() : 'UN';
+        const colors = ['#3a8fc7', '#e07b39', '#5ab56e', '#9b6ec7', '#3ab8b8', '#d4515b'];
+        const color = colors[index % colors.length];
 
-        const avatarHTML = r.avatar
-            ? `<img class="avatar-img" src="${r.avatar}" alt="${r.name}"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
-               <div class="avatar-circle" style="background:${r.color};display:none">${r.initials}</div>`
-            : `<div class="avatar-circle" style="background:${r.color}">${r.initials}</div>`;
+        const avatarHTML = `<div class="avatar-circle" style="background:${color}">${initials}</div>`;
 
         const photoHTML = r.photo
-            ? `<img class="card-photo" src="${r.photo}" alt="${r.attraction}"
+            ? `<img class="card-photo" src="../../../assets/images/${r.photo}" alt="${r.attraction_name}"
                 onerror="this.outerHTML='<div class=card-photo-placeholder>No photo available</div>'" />`
             : `<div class="card-photo-placeholder">No photo available</div>`;
 
@@ -102,11 +46,11 @@ function renderReviews(list) {
                 <div class="reviewer-info">
                     ${avatarHTML}
                     <div>
-                        <div class="reviewer-name">${r.name}</div>
-                        <div class="reviewer-attraction">${r.attraction}</div>
+                        <div class="reviewer-name">${r.username}</div>
+                        <div class="reviewer-attraction">${r.attraction_name}</div>
                     </div>
                 </div>
-                <div class="review-date">${r.date}</div>
+                <div class="review-date">${r.review_date}</div>
             </div>
             <div class="card-stars">
                 ${starsHTML(r.rating)}
@@ -114,8 +58,8 @@ function renderReviews(list) {
             </div>
             ${photoHTML}
             <div class="card-body">
-                <p class="card-text">${r.text}</p>
-                <a class="view-details" onclick="openDetail(${allReviews.indexOf(r)})">View Details →</a>
+                <p class="card-text">${r.comment}</p>
+                <a class="view-details" onclick="openDetail(${index})">View Details →</a>
             </div>
         </div>`;
     }).join('');
@@ -130,27 +74,51 @@ function filterReviews() {
 
     let filtered = allReviews;
     if (rf !== 'all') filtered = filtered.filter(r => Math.floor(r.rating) === parseInt(rf));
-    if (df !== 'all') filtered = filtered.filter(r => r.attraction === df);
+    if (df !== 'all') filtered = filtered.filter(r => r.attraction_name === df);
 
     renderReviews(filtered);
+}
+
+// ===========================
+// LOAD TRIPS FROM DATABASE
+// ===========================
+function loadTrips() {
+    fetch('review.php?action=trips')
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                const tripSelect = document.getElementById('tripSelect');
+                tripSelect.innerHTML = '<option value="">Choose a completed trip</option>';
+                data.trips.forEach(function(trip) {
+                    tripSelect.innerHTML += `<option value="${trip.trip_id}">${trip.trip_name} (${trip.city_name})</option>`;
+                });
+            }
+        })
+        .catch(error => console.error('Error loading trips:', error));
 }
 
 // ===========================
 // UPDATE ATTRACTION DROPDOWN
 // ===========================
 function updateAttractions() {
-    const trip = document.getElementById('tripSelect').value;
-    const sel  = document.getElementById('attractionSelect');
+    const trip_id = document.getElementById('tripSelect').value;
+    const sel = document.getElementById('attractionSelect');
 
     sel.innerHTML = '<option value="">Choose an attraction</option>';
+    sel.disabled = true;
 
-    if (trip && attractionMap[trip]) {
-        attractionMap[trip].forEach(function(a) {
-            sel.innerHTML += `<option value="${a}">${a}</option>`;
-        });
-        sel.disabled = false;
-    } else {
-        sel.disabled = true;
+    if (trip_id) {
+        fetch(`review.php?action=attractions&trip_id=${trip_id}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success' && data.attractions.length > 0) {
+                    data.attractions.forEach(function(a) {
+                        sel.innerHTML += `<option value="${a.attraction_id}">${a.attraction_name}</option>`;
+                    });
+                    sel.disabled = false;
+                }
+            })
+            .catch(error => console.error('Error loading attractions:', error));
     }
     checkForm();
 }
@@ -176,20 +144,17 @@ function updateCount() {
 }
 
 // ===========================
-// PHOTO UPLOAD LABEL
+// PHOTO UPLOAD
 // ===========================
-let uploadedPhotoURL = null;
-
 function handleUpload(e) {
     const file = e.target.files[0];
     if (file) {
+        uploadedPhotoFile = file;
         const reader = new FileReader();
         reader.onload = function(e) {
-            uploadedPhotoURL = e.target.result;
-            // Show image preview in upload box
             const uploadBox = document.querySelector('.upload-box');
             uploadBox.innerHTML = `
-                <img src="${uploadedPhotoURL}" 
+                <img src="${e.target.result}" 
                 style="width:100%; height:100%; object-fit:cover; border-radius:10px;" />
             `;
         };
@@ -204,9 +169,9 @@ function checkForm() {
     const trip = document.getElementById('tripSelect').value;
     const attr = document.getElementById('attractionSelect').value;
     const text = document.getElementById('reviewText').value.trim();
-    const ok   = trip && attr && currentRating > 0 && text.length > 0;
+    const ok = trip && attr && currentRating > 0 && text.length > 0;
 
-    const btn  = document.getElementById('submitBtn');
+    const btn = document.getElementById('submitBtn');
     const hint = document.getElementById('submitHint');
     btn.classList.toggle('ready', ok);
     hint.style.display = ok ? 'none' : 'block';
@@ -219,39 +184,50 @@ function submitReview() {
     const btn = document.getElementById('submitBtn');
     if (!btn.classList.contains('ready')) return;
 
-    const trip = document.getElementById('tripSelect').value;
     const attr = document.getElementById('attractionSelect').value;
     const text = document.getElementById('reviewText').value.trim();
 
-    allReviews.unshift({
-        name: 'Ng Heng Tao',
-        initials: 'NH',
-        color: '#ff7a00',
-        avatar: null,
-        photo: uploadedPhotoURL,
-        date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-        rating: currentRating,
-        attraction: attr,
-        text: text
-    });
+    const formData = new FormData();
+    formData.append('attraction_id', attr);
+    formData.append('rating', currentRating);
+    formData.append('comment', text);
 
-    filterReviews();
+    if (uploadedPhotoFile) {
+        formData.append('photo', uploadedPhotoFile);
+    }
 
-    // Reset form
-    document.getElementById('tripSelect').value = '';
-    document.getElementById('attractionSelect').innerHTML = '<option value="">Choose an attraction</option>';
-    document.getElementById('attractionSelect').disabled = true;
-    document.getElementById('reviewText').value = '';
-    document.getElementById('charCount').textContent = '0';
-    currentRating = 0;
-    document.querySelectorAll('#starRow .star').forEach(s => s.classList.remove('filled'));
-    // Reset upload box back to original
-    document.querySelector('.upload-box').innerHTML = `<div class="upload-icon">⬆</div>
-    <p id="uploadLabel">Click to upload</p>
-`;
-uploadedPhotoURL = null;
-    checkForm();
-    document.getElementById('popupOverlay').classList.add('active');
+    fetch('review.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // Reset form
+            document.getElementById('tripSelect').value = '';
+            document.getElementById('attractionSelect').innerHTML = '<option value="">Choose an attraction</option>';
+            document.getElementById('attractionSelect').disabled = true;
+            document.getElementById('reviewText').value = '';
+            document.getElementById('charCount').textContent = '0';
+            currentRating = 0;
+            document.querySelectorAll('#starRow .star').forEach(s => s.classList.remove('filled'));
+            document.querySelector('.upload-box').innerHTML = `
+                <div class="upload-icon">⬆</div>
+                <p id="uploadLabel">Click to upload</p>
+            `;
+            uploadedPhotoFile = null;
+            checkForm();
+
+            // Show success popup
+            document.getElementById('popupOverlay').classList.add('active');
+
+            // Reload reviews
+            loadReviews();
+        } else {
+            alert('Error submitting review!');
+        }
+    })
+    .catch(error => console.error('Error:', error));
 }
 
 function closePopup() {
@@ -259,29 +235,57 @@ function closePopup() {
 }
 
 // ===========================
-// INIT - run on page load
+// LOAD REVIEWS FROM DATABASE
+// ===========================
+function loadReviews() {
+    fetch('review.php?action=reviews')
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                allReviews = data.reviews;
+                renderReviews(allReviews);
+
+                // Update filter dropdown
+                const destFilter = document.getElementById('destFilter');
+                const currentVal = destFilter.value;
+                destFilter.innerHTML = '<option value="all">All Attraction</option>';
+                const attractions = [...new Set(allReviews.map(r => r.attraction_name))];
+                attractions.forEach(a => {
+                    destFilter.innerHTML += `<option value="${a}">${a}</option>`;
+                });
+                destFilter.value = currentVal;
+            }
+        })
+        .catch(error => console.error('Error loading reviews:', error));
+}
+
+// ===========================
+// INIT
 // ===========================
 document.addEventListener('DOMContentLoaded', function() {
-    renderReviews(allReviews);
+    loadReviews();
+    loadTrips();
 });
 
+// ===========================
+// OPEN DETAIL POPUP
+// ===========================
 function openDetail(index) {
     const r = allReviews[index];
 
-    document.getElementById('detailName').textContent = r.name;
-    document.getElementById('detailAttraction').textContent = r.attraction;
-    document.getElementById('detailDate').textContent = r.date;
+    document.getElementById('detailName').textContent = r.username;
+    document.getElementById('detailAttraction').textContent = r.attraction_name;
+    document.getElementById('detailDate').textContent = r.review_date;
     document.getElementById('detailStars').innerHTML = starsHTML(r.rating) + `<span class="rating-num">(${r.rating})</span>`;
-    document.getElementById('detailText').textContent = r.text;
+    document.getElementById('detailText').textContent = r.comment;
 
     const avatarEl = document.getElementById('detailAvatar');
-    avatarEl.innerHTML = r.avatar
-        ? `<img class="avatar-img" src="${r.avatar}" alt="${r.name}" />`
-        : `<div class="avatar-circle" style="background:${r.color}">${r.initials}</div>`;
+    const initials = r.username ? r.username.substring(0, 2).toUpperCase() : 'UN';
+    avatarEl.innerHTML = `<div class="avatar-circle" style="background:#ff7a00">${initials}</div>`;
 
     const photo = document.getElementById('detailPhoto');
     if (r.photo) {
-        photo.src = r.photo;
+        photo.src = '../../../assets/images/' + r.photo;
         photo.style.display = 'block';
     } else {
         photo.style.display = 'none';

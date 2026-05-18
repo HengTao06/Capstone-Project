@@ -1,189 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trev</title>
-    <link rel="stylesheet" href="../../../shared/css/header-footer.css">
-    <link rel="stylesheet" href="review.css">
-    <script src="review.js"></script>
-  </head>
-  <body>
-    <div id="header"></div>
 
-    <div class="breadcrumb">
-      <span>Home</span>
-      <span>›</span>
-      <span class="active">Reviews</span>
-    </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trev</title>
+  <link rel="stylesheet" href="../../../shared/css/header-footer.css">
+  <link rel="stylesheet" href="review.css">
+  <script src="review.js"></script>
+</head>
 
-    <div class="page-wrapper">
+<body>
+  <div id="header"></div>
 
-      <h1 class="page-title">Reviews</h1>
+  <div class="breadcrumb">
+    <a href="../home/home.html">Home</a>
+    <a>›</a>
+    <a href="../review/review.html">Reviews</a>
+  </div>
 
-      <!-- WRITE A REVIEW CARD -->
-      <div class="write-review-card">
-        <h2>Write a Review</h2>
-
-        <div class="notice-banner">
-          <span>⚠</span>
-          <span>You can only review attractions from completed trips.</span>
-        </div>
-
-        <!-- STEP 1, 2, 3 ROW -->
-        <div class="form-row">
-
-          <div class="form-col">
-            <label class="form-label">Step 1: Select Trip <span
-                class="required">*</span></label>
-            <div class="select-wrapper">
-              <select id="tripSelect" onchange="updateAttractions()">
-                <option value>Choose a completed trip</option>
-                <option value="venice">Venice, Italy</option>
-                <option value="paris">Paris, France</option>
-                <option value="tokyo">Tokyo, Japan</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-col">
-            <label class="form-label">Step 2: Select Attraction <span
-                class="required">*</span></label>
-            <div class="select-wrapper">
-              <select id="attractionSelect" disabled>
-                <option value>Choose an attraction</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-col">
-            <label class="form-label">Step 3: Your Rating <span
-                class="required">*</span></label>
-            <div class="star-row" id="starRow">
-              <span class="star" data-val="1" onclick="setRating(1)">★</span>
-              <span class="star" data-val="2" onclick="setRating(2)">★</span>
-              <span class="star" data-val="3" onclick="setRating(3)">★</span>
-              <span class="star" data-val="4" onclick="setRating(4)">★</span>
-              <span class="star" data-val="5" onclick="setRating(5)">★</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- STEP 4, 5 ROW -->
-        <div class="form-row">
-
-          <div class="form-col form-col-wide">
-            <label class="form-label">Step 4: Your Review <span
-                class="required">*</span></label>
-            <textarea id="reviewText" placeholder="Share your experience..."
-              maxlength="500" oninput="updateCount()"></textarea>
-            <div class="char-count"><span id="charCount">0</span> / 500
-              characters</div>
-          </div>
-
-          <div class="form-col form-col-narrow">
-            <label class="form-label">Step 5: Add Photo <span
-                class="optional">(Optional)</span></label>
-            <div class="upload-box"
-              onclick="document.getElementById('photoUpload').click()">
-              <div class="upload-icon">⬆</div>
-              <p id="uploadLabel">Click to upload</p>
-            </div>
-            <input type="file" id="photoUpload" accept="image/*" hidden
-              onchange="handleUpload(event)" />
-          </div>
-
-        </div>
-
-        <!-- SUBMIT -->
-        <div class="submit-row">
-          <button class="submit-btn" id="submitBtn" onclick="submitReview()">
-            ✈ Submit Review
-          </button>
-          <p class="submit-hint" id="submitHint">Please complete all required
-            fields</p>
-        </div>
-
-        <!-- USER REVIEWS SECTION -->
-        <h2 class="section-title">User Reviews</h2>
-
-        <div class="filter-row">
-          <div class="filter-wrapper">
-            <select id="ratingFilter" onchange="filterReviews()">
-              <option value="all">All Review</option>
-              <option value="5">5 Stars</option>
-              <option value="4">4 Stars</option>
-              <option value="3">3 Stars</option>
-            </select>
-          </div>
-          <div class="filter-wrapper">
-            <select id="destFilter" onchange="filterReviews()">
-              <option value="all">All Attraction</option>
-              <option value="Tokyo Tower">Tokyo Tower</option>
-              <option value="Angkor Wat">Angkor Wat</option>
-              <option value="Maldives Beach Resort">Maldives Beach
-                Resort</option>
-              <option value="Swiss Alps Hiking Trail">Swiss Alps Hiking
-                Trail</option>
-              <option value="Eiffel Tower">Eiffel Tower</option>
-              <option value="Bangkok Street Food Tour">Bangkok Street Food
-                Tour</option>
-            </select>
-          </div>
-        </div>
-
-        <p class="reviews-found" id="reviewsFound">6 reviews found</p>
-
-        <!-- REVIEWS GRID - cards are generated by JavaScript -->
-        <div class="reviews-grid" id="reviewsGrid"></div>
-
-      </div>
-    </div>
-
-    <!-- SUCCESS POPUP -->
-    <div class="popup-overlay" id="popupOverlay">
-      <div class="popup-card">
-        <div class="popup-icon">✈</div>
-        <h3>Review Submitted!</h3>
-        <p>Thank you for sharing your experience. Your review has been posted
-          successfully!</p>
-        <button class="popup-done-btn" onclick="closePopup()">Done</button>
-      </div>
-    </div>
-
-    <!-- REVIEW DETAIL POPUP -->
-    <div class="popup-overlay" id="detailOverlay">
-      <div class="detail-card">
-        <div class="detail-header">
-          <h3>Review Details</h3>
-          <span class="detail-close" onclick="closeDetail()">✕</span>
-        </div>
-
-        <div class="detail-reviewer">
-          <div id="detailAvatar"></div>
-          <div>
-            <div class="detail-name" id="detailName"></div>
-            <div class="reviewer-attraction" id="detailAttraction"></div>
-            <div class="card-stars" id="detailStars"></div>
-            <div class="review-date" id="detailDate"></div>
-          </div>
-        </div>
-
-        <img class="detail-photo" id="detailPhoto" src alt />
-
-        <div class="detail-body">
-          <p class="detail-label">Review</p>
-          <p id="detailText"></p>
-        </div>
-
-        <button class="detail-close-btn" onclick="closeDetail()">Close</button>
-      </div>
-    </div>
-
-    <div id="footer"></div>
-
-    <script src="../../../shared/js/main.js"></script>
-    <script src="review.js"></script>
+  <body data-page="reviews">
     
-  </body>
+  <div class="page-wrapper">
+
+    <h1 class="page-title">Reviews</h1>
+
+    <!-- WRITE A REVIEW CARD -->
+    <div class="write-review-card">
+      <h2>Write a Review</h2>
+
+      <div class="notice-banner">
+        <span>⚠</span>
+        <span>You can only review attractions from completed trips.</span>
+      </div>
+
+      <!-- STEP 1, 2, 3 ROW -->
+      <div class="form-row">
+
+        <div class="form-col">
+          <label class="form-label">Step 1: Select Trip <span class="required">*</span></label>
+          <div class="select-wrapper">
+            <select id="tripSelect" onchange="updateAttractions()">
+              <option value="">Choose a completed trip</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-col">
+          <label class="form-label">Step 2: Select Attraction <span class="required">*</span></label>
+          <div class="select-wrapper">
+            <select id="attractionSelect" disabled>
+              <option value>Choose an attraction</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-col">
+          <label class="form-label">Step 3: Your Rating <span class="required">*</span></label>
+          <div class="star-row" id="starRow">
+            <span class="star" data-val="1" onclick="setRating(1)">★</span>
+            <span class="star" data-val="2" onclick="setRating(2)">★</span>
+            <span class="star" data-val="3" onclick="setRating(3)">★</span>
+            <span class="star" data-val="4" onclick="setRating(4)">★</span>
+            <span class="star" data-val="5" onclick="setRating(5)">★</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4, 5 ROW -->
+      <div class="form-row">
+
+        <div class="form-col form-col-wide">
+          <label class="form-label">Step 4: Your Review <span class="required">*</span></label>
+          <textarea id="reviewText" placeholder="Share your experience..." maxlength="500"
+            oninput="updateCount()"></textarea>
+          <div class="char-count"><span id="charCount">0</span> / 500
+            characters</div>
+        </div>
+
+        <div class="form-col form-col-narrow">
+          <label class="form-label">Step 5: Add Photo <span class="optional">(Optional)</span></label>
+          <div class="upload-box" onclick="document.getElementById('photoUpload').click()">
+            <div class="upload-icon">⬆</div>
+            <p id="uploadLabel">Click to upload</p>
+          </div>
+          <input type="file" id="photoUpload" accept="image/*" hidden onchange="handleUpload(event)" />
+        </div>
+
+      </div>
+
+      <!-- SUBMIT -->
+      <div class="submit-row">
+        <button class="submit-btn" id="submitBtn" onclick="submitReview()">
+          ✈ Submit Review
+        </button>
+        <p class="submit-hint" id="submitHint">Please complete all required
+          fields</p>
+      </div>
+
+      <!-- USER REVIEWS SECTION -->
+      <h2 class="section-title">User Reviews</h2>
+
+      <div class="filter-row">
+        <div class="filter-wrapper">
+          <select id="ratingFilter" onchange="filterReviews()">
+            <option value="all">All Review</option>
+            <option value="5">5 Stars</option>
+            <option value="4">4 Stars</option>
+            <option value="3">3 Stars</option>
+          </select>
+        </div>
+        <div class="filter-wrapper">
+          <select id="destFilter" onchange="filterReviews()">
+            <option value="all">All Attraction</option>
+            <option value="Tokyo Tower">Tokyo Tower</option>
+            <option value="Angkor Wat">Angkor Wat</option>
+            <option value="Maldives Beach Resort">Maldives Beach
+              Resort</option>
+            <option value="Swiss Alps Hiking Trail">Swiss Alps Hiking
+              Trail</option>
+            <option value="Eiffel Tower">Eiffel Tower</option>
+            <option value="Bangkok Street Food Tour">Bangkok Street Food
+              Tour</option>
+          </select>
+        </div>
+      </div>
+
+      <p class="reviews-found" id="reviewsFound">6 reviews found</p>
+
+      <!-- REVIEWS GRID - cards are generated by JavaScript -->
+      <div class="reviews-grid" id="reviewsGrid"></div>
+
+    </div>
+  </div>
+
+  <!-- SUCCESS POPUP -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup-card">
+      <div class="popup-icon">✈</div>
+      <h3>Review Submitted!</h3>
+      <p>Thank you for sharing your experience. Your review has been posted
+        successfully!</p>
+      <button class="popup-done-btn" onclick="closePopup()">Done</button>
+    </div>
+  </div>
+
+  <!-- REVIEW DETAIL POPUP -->
+  <div class="popup-overlay" id="detailOverlay">
+    <div class="detail-card">
+      <div class="detail-header">
+        <h3>Review Details</h3>
+        <span class="detail-close" onclick="closeDetail()">✕</span>
+      </div>
+
+      <div class="detail-reviewer">
+        <div id="detailAvatar"></div>
+        <div>
+          <div class="detail-name" id="detailName"></div>
+          <div class="reviewer-attraction" id="detailAttraction"></div>
+          <div class="card-stars" id="detailStars"></div>
+          <div class="review-date" id="detailDate"></div>
+        </div>
+      </div>
+
+      <img class="detail-photo" id="detailPhoto" src alt />
+
+      <div class="detail-body">
+        <p class="detail-label">Review</p>
+        <p id="detailText"></p>
+      </div>
+
+      <button class="detail-close-btn" onclick="closeDetail()">Close</button>
+    </div>
+  </div>
+
+  <div id="footer"></div>
+
+  <script src="../../../shared/js/main.js"></script>
+  <script src="review.js"></script>
+
+</body>
+
 </html>
