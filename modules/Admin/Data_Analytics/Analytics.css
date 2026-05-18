@@ -3,7 +3,6 @@
    (Header/Footer styling is handled 100% by shared files)
 ============================================= */
 body {
-    font-family: 'DM Sans', sans-serif;
     background: var(--bg, #F8FAFC); /* This creates the subtle contrast! */
     color: var(--dark, #1E293B);
     min-height: 100vh;
@@ -32,8 +31,6 @@ body {
     font-size: 34px;
     color: #111827;
     margin-bottom: 8px;
-    font-family: inherit; /* Inherits the clean sans-serif font */
-    font-weight: 700;
 }
 
 .page-main-header p {
