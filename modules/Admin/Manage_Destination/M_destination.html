@@ -1,57 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Destination</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Manage Destinations</title>
 
-    <link rel="stylesheet" href="../../../shared/css/variables.css">
-    <link rel="stylesheet" href="../../../shared/css/global.css">
-    <link rel="stylesheet" href="../../../shared/css/components.css">
-    <link rel="stylesheet" href="../../../shared/css/header-footer.css">
-    <link rel="stylesheet" href="M_destination.css">
-</head>
+        <link rel="stylesheet" href="../../../shared/css/variables.css">
+        <link rel="stylesheet" href="../../../shared/css/global.css">
+        <link rel="stylesheet" href="../../../shared/css/components.css">
+        <link rel="stylesheet" href="../../../shared/css/header-footer.css">
+        <link rel="stylesheet" href="M_destination.css">
+    </head>
 
-<body data-page="manage-destination">
+    <body data-page="manage-destination">
 
-<div id="page-wrapper">
+        <div id="page-wrapper">
+            <div id="header"></div>
 
-    <div id="header"></div>
+            <main id="page-content">
+                <section class="destination-section">
 
-    <main id="page-content">
+                    <div class="destination-header">
+                        <div>
+                            <h1>Manage Destinations</h1>
+                            <p>Add, edit, delete and manage attraction
+                                destinations.</p>
+                        </div>
+                    </div>
 
-        <section class="destination-section">
+                    <div class="filter-row">
+                        <input type="text" id="searchInput"
+                            placeholder="Search destinations...">
 
-            <h1>Manage Destinations</h1>
+                        <select id="countryFilter">
+                            <option value>All Countries</option>
+                        </select>
 
-            <div class="filter-row">
-                <input type="text" id="searchInput" placeholder="Search destinations...">
+                        <select id="categoryFilter">
+                            <option value>All Categories</option>
+                        </select>
+                    </div>
 
-                <select id="countryFilter">
-                    <option value="">All Countries</option>
-                </select>
+                    <div id="destinationGrid" class="destination-grid"></div>
 
-                <select id="categoryFilter">
-                    <option value="">All Categories</option>
-                </select>
+                </section>
+            </main>
+
+            <div id="footer"></div>
+        </div>
+
+        <button class="floating-add-btn" onclick="openAddModal()">+</button>
+
+        <!-- INFO MODAL -->
+        <div id="infoModal" class="modal">
+            <div class="modal-box">
+                <button class="modal-close"
+                    onclick="closeModal('infoModal')">×</button>
+
+                <img id="infoImage" class="modal-image">
+
+                <h2 id="infoTitle"></h2>
+                <p id="infoLocation" class="info-location"></p>
+
+                <div class="info-tags">
+                    <span id="infoCategory"></span>
+                    <span id="infoRating"></span>
+                </div>
+
+                <p id="infoDescription" class="info-description"></p>
+
+                <div class="modal-buttons">
+                    <button class="edit-btn"
+                        onclick="openEditModal()">Edit</button>
+                    <button class="delete-btn"
+                        onclick="openDeleteModal()">Delete</button>
+                    <button class="close-btn-modal"
+                        onclick="closeModal('infoModal')">Close</button>
+                </div>
             </div>
+        </div>
 
-            <div id="destinationGrid" class="destination-grid"></div>
+        <!-- ADD / EDIT MODAL -->
+        <div id="formModal" class="modal">
+            <div class="form-popup">
+                <div class="form-header">
+                    <h2 id="formTitle">Add Destination</h2>
+                    <span onclick="closeModal('formModal')">×</span>
+                </div>
 
-        </section>
+                <div class="form-body">
+                    <input type="hidden" id="attractionId">
 
-    </main>
+                    <label>Attraction Name *</label>
+                    <input type="text" id="attractionName"
+                        placeholder="e.g. Tokyo Tower">
 
-    <div id="footer"></div>
+                    <label>Country *</label>
+                    <select id="countrySelect">
+                        <option value>Select country</option>
+                    </select>
 
-</div>
+                    <label>City *</label>
+                    <select id="citySelect">
+                        <option value>Select city</option>
+                    </select>
 
-<button class="floating-add-btn" onclick="openAddModal()">+</button>
+                    <label>Category *</label>
+                    <select id="attractionCategory">
+                        <option value>Select category</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Historical">Historical</option>
+                        <option value="Culture">Culture</option>
+                        <option value="Landmark">Landmark</option>
+                        <option value="Nature">Nature</option>
+                        <option value="City">City</option>
+                        <option value="Food">Food</option>
+                    </select>
 
-<div id="popup-container"></div>
+                    <label>Estimated Price (RM) *</label>
+                    <input type="number"
+                        id="estimatedPrice"
+                        placeholder="e.g. 80">
 
-<script src="../../../shared/js/admin_main.js"></script>
-<script src="M_destination.js"></script>
+                    <label>Best Season *</label>
 
-</body>
+                    <select id="bestSeason">
+                        <option value>Select season</option>
+                        <option value="Spring">Spring</option>
+                        <option value="Summer">Summer</option>
+                        <option value="Autumn">Autumn</option>
+                        <option value="Winter">Winter</option>
+                        <option value="All Year">All Year</option>
+                    </select>
+
+                    <label>Upload Image</label>
+                    <input type="file" id="attractionImageFile"
+                        accept="image/*">
+
+                    <input type="hidden" id="attractionImage">
+
+                    <small id="currentImageText">No image selected</small>
+
+                    <label>Description *</label>
+                    <textarea id="attractionDescription"
+                        placeholder="Describe this attraction..."></textarea>
+
+                    <button class="next-btn" onclick="saveDestination()">Save
+                        Destination</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- DELETE MODAL -->
+        <div id="deleteModal" class="modal">
+            <div class="delete-popup">
+                <div class="delete-icon">🗑</div>
+
+                <h2>Delete Destination?</h2>
+                <p>
+                    Are you sure you want to delete
+                    <strong id="deleteName"></strong>?
+                </p>
+
+                <div class="delete-popup-buttons">
+                    <button class="cancel-btn"
+                        onclick="closeModal('deleteModal')">Cancel</button>
+                    <button class="delete-btn"
+                        onclick="confirmDelete()">Delete</button>
+                </div>
+            </div>
+        </div>
+
+        <script src="../../../shared/js/admin_main.js"></script>
+        <script src="M_destination.js"></script>
+
+    </body>
 </html>
