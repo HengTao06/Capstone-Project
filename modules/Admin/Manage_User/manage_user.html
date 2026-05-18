@@ -120,6 +120,108 @@
 
   </div>
 </div>
+
+<!-- EDIT USER MODAL -->
+<div class="modal-overlay" id="editUserModal">
+
+  <div class="modal">
+
+    <!-- HEADER -->
+    <div class="modal-header">
+      <h3>Edit User</h3>
+
+      <button
+        class="close-btn"
+        id="closeEditModal"
+      >
+        &times;
+      </button>
+    </div>
+
+    <!-- PROFILE BOX -->
+    <div class="edit-profile-box">
+
+      <div class="edit-avatar" id="editAvatar">
+        SJ
+      </div>
+
+      <div class="edit-profile-name" id="editProfileName">
+        Sarah Johnson
+      </div>
+
+    </div>
+
+    <!-- BODY -->
+    <div class="modal-body">
+
+      <label>User ID</label>
+      <input
+        type="text"
+        id="editUserId"
+        readonly
+      >
+
+      <label>Full Name</label>
+      <input
+        type="text"
+        id="editUsername"
+      >
+
+      <label>Email</label>
+      <input
+        type="email"
+        id="editEmail"
+      >
+
+      <label>Role</label>
+
+      <select id="editRole">
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
+
+    </div>
+
+    <!-- STATS -->
+    <div class="edit-stats">
+
+      <div class="edit-stat">
+        <span class="edit-stat-number" id="totalTrips">8</span>
+        <span class="edit-stat-label">
+          Trips Created
+        </span>
+      </div>
+
+      <div class="edit-stat">
+        <span class="edit-stat-number orange" id="totalReviews">
+          12
+        </span>
+        <span class="edit-stat-label">
+          Reviews
+        </span>
+      </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="modal-footer">
+
+      <button
+        class="btn-cancel"
+        id="cancelEditModal"
+      >
+        Cancel
+      </button>
+
+      <button class="btn-add" id="saveEditBtn">
+        Save Changes
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
     
 </body>
 </html>

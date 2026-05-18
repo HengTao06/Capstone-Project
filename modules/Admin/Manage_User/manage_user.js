@@ -17,6 +17,49 @@ const roleFilter =
   const addUserBtn =
   document.getElementById("addUserBtn");
 
+  const editModal =
+  document.getElementById("editUserModal");
+
+const closeEditBtn =
+  document.getElementById("closeEditModal");
+
+const cancelEditBtn =
+  document.getElementById("cancelEditModal");
+
+  const saveEditBtn =
+  document.getElementById("saveEditBtn");
+
+saveEditBtn.addEventListener(
+  "click",
+  saveUserChanges
+);
+
+function closeEditModal() {
+
+  editModal.classList.remove("active");
+
+}
+
+closeEditBtn.addEventListener(
+  "click",
+  closeEditModal
+);
+
+cancelEditBtn.addEventListener(
+  "click",
+  closeEditModal
+);
+
+editModal.addEventListener("click", (e) => {
+
+  if(e.target === editModal) {
+
+    closeEditModal();
+
+  }
+
+});
+
 addUserBtn.addEventListener("click", addUser);
 
       // LOAD USERS
@@ -180,9 +223,12 @@ document.getElementById("activeUsers").innerText =
           <td>
             <div class="actions-cell">
 
-              <button class="action-link action-edit">
-                Edit
-              </button>
+<button
+  class="action-link action-edit"
+  onclick='openEditModal(${JSON.stringify(user)})'
+>
+  Edit
+</button>
 
             </div>
           </td>
@@ -266,6 +312,132 @@ function changePage(page) {
   currentPage = page;
 
   loadUsers();
+
+}
+
+async function openEditModal(user) {
+
+  const modal =
+    document.getElementById("editUserModal");
+
+  modal.classList.add("active");
+
+  // USER INFO
+  document.getElementById("editUserId").value =
+    user.user_id;
+
+  document.getElementById("editUsername").value =
+    user.username;
+
+  document.getElementById("editEmail").value =
+    user.user_email;
+
+  document.getElementById("editRole").value =
+    user.user_role;
+
+  // PROFILE
+  document.getElementById("editProfileName").innerText =
+    user.username;
+
+  document.getElementById("editAvatar").innerText =
+    user.username.substring(0,2).toUpperCase();
+
+  // =========================
+  // LOAD USER STATS
+  // =========================
+
+  try {
+
+    const response = await fetch(
+      `manage_user.php?action=stats&user_id=${user.user_id}`
+    );
+
+    const stats = await response.json();
+
+    document.getElementById("totalTrips").innerText =
+      stats.trips;
+
+    document.getElementById("totalReviews").innerText =
+      stats.reviews;
+
+  } catch(error) {
+
+    console.log(error);
+
+  }
+
+}
+
+async function saveUserChanges() {
+
+  const userId =
+    document.getElementById("editUserId").value;
+
+  const username =
+    document.getElementById("editUsername").value.trim();
+
+  const email =
+    document.getElementById("editEmail").value.trim();
+
+  const role =
+    document.getElementById("editRole").value;
+
+  // VALIDATION
+  if(
+    username === "" ||
+    email === "" ||
+    role === ""
+  ) {
+
+    alert("Please fill in all fields");
+
+    return;
+
+  }
+
+  try {
+
+    const response = await fetch(
+      "edit_user.php",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          user_id: userId,
+          username: username,
+          email: email,
+          role: role
+        })
+      }
+    );
+
+    const result = await response.json();
+
+    if(result.success) {
+
+      alert("User updated successfully");
+
+      // CLOSE MODAL
+      document
+        .getElementById("editUserModal")
+        .classList.remove("active");
+
+      // RELOAD TABLE
+      loadUsers();
+
+    } else {
+
+      alert(result.message);
+
+    }
+
+  } catch(error) {
+
+    console.log(error);
+
+  }
 
 }
 
