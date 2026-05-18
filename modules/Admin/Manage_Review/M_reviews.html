@@ -1,79 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Manage Reviews</title>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Reviews</title>
 
-        <link rel="stylesheet" href="../../../shared/css/variables.css">
-        <link rel="stylesheet" href="../../../shared/css/global.css">
-        <link rel="stylesheet" href="../../../shared/css/components.css">
-        <link rel="stylesheet" href="../../../shared/css/header-footer.css">
-        <link rel="stylesheet" href="M_reviews.css">
-    </head>
+  <link rel="stylesheet" href="../../../shared/css/variables.css">
+  <link rel="stylesheet" href="../../../shared/css/global.css">
+  <link rel="stylesheet" href="../../../shared/css/components.css">
+  <link rel="stylesheet" href="../../../shared/css/header-footer.css">
+  <link rel="stylesheet" href="M_reviews.css">
+</head>
 
-    <body data-page="manage-review">
+<body data-page="manage-review">
 
-        <div id="header"></div>
+  <div id="header"></div>
 
-        <main class="review-page">
-            <div class="review-header">
-                <div>
-                    <h2>Manage Reviews</h2>
-                    <p>View and delete user reviews submitted for
-                        attractions.</p>
-                </div>
-            </div>
+  <main class="review-page">
 
-            <div id="reviewGrid" class="review-grid"></div>
-        </main>
+    <div class="review-header">
+      <div>
+        <h2>Manage Reviews</h2>
+        <p>View, filter and delete user reviews submitted for attractions.</p>
+      </div>
+    </div>
 
-        <!-- VIEW REVIEW MODAL -->
-        <div class="modal" id="reviewModal">
-            <div class="modal-box">
-                <button class="close-btn" id="closeReviewModal">&times;</button>
+    <div class="filter-row">
+      <input type="text" id="searchInput" placeholder="Search user, attraction or comment...">
 
-                <div class="modal-user">
-                    <img id="modalUserImage" src="/Trev/assets/images/black.png"
-                        alt="User">
-                    <div>
-                        <h3 id="modalUser">User</h3>
-                        <div id="modalRating" class="stars"></div>
-                    </div>
-                </div>
+      <select id="countryFilter">
+        <option value="">All Countries</option>
+      </select>
 
-                <img id="modalImage" class="modal-image" src alt="Review Image">
+      <select id="cityFilter">
+        <option value="">All Cities</option>
+      </select>
 
-                <h3 id="modalAttractionName"></h3>
+      <select id="attractionFilter">
+        <option value="">All Attractions</option>
+      </select>
 
-                <p id="modalComment" class="modal-comment"></p>
+      <select id="ratingFilter">
+        <option value="">All Ratings</option>
+        <option value="5">5 Stars</option>
+        <option value="4">4 Stars</option>
+        <option value="3">3 Stars</option>
+        <option value="2">2 Stars</option>
+        <option value="1">1 Star</option>
+      </select>
+    </div>
 
-                <div class="modal-actions">
-                    <button class="close-modal-btn"
-                        id="closeReviewModalBottom">Close</button>
-                </div>
-            </div>
+    <p class="review-count" id="reviewCount">0 reviews found</p>
+
+    <div id="reviewGrid" class="review-grid"></div>
+
+  </main>
+
+  <!-- VIEW REVIEW MODAL -->
+  <div class="modal" id="reviewModal">
+    <div class="modal-box">
+      <button class="close-btn" id="closeReviewModal">&times;</button>
+
+      <div class="modal-user">
+        <img id="modalUserImage" src="/Trev/assets/images/black.png" alt="User">
+        <div>
+          <h3 id="modalUser">User</h3>
+          <p id="modalLocation"></p>
+          <div id="modalRating" class="stars"></div>
         </div>
+      </div>
 
-        <!-- DELETE CONFIRM MODAL -->
-        <div class="modal" id="deleteModal">
-            <div class="delete-box">
-                <h3>Delete Review?</h3>
-                <p>This action cannot be undone.</p>
+      <img id="modalImage" class="modal-image" src="" alt="Review Image">
 
-                <div class="delete-actions">
-                    <button class="cancel-delete-btn"
-                        id="cancelDeleteBtn">Cancel</button>
-                    <button class="confirm-delete-btn"
-                        id="confirmDeleteBtn">Delete</button>
-                </div>
-            </div>
-        </div>
+      <h3 id="modalAttractionName"></h3>
 
-        <div id="footer"></div>
+      <p id="modalDate" class="modal-date"></p>
 
-        <script src="../../../shared/js/admin_main.js"></script>
-        <script src="M_reviews.js"></script>
+      <p id="modalComment" class="modal-comment"></p>
 
-    </body>
+      <div class="modal-actions">
+        <button class="close-modal-btn" id="closeReviewModalBottom">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DELETE CONFIRM MODAL -->
+  <div class="modal" id="deleteModal">
+    <div class="delete-box">
+      <div class="delete-icon">🗑</div>
+      <h3>Delete Review?</h3>
+      <p>
+        Are you sure you want to delete the review for
+        <strong id="deleteReviewName"></strong>?
+      </p>
+
+      <div class="delete-actions">
+        <button class="cancel-delete-btn" id="cancelDeleteBtn">Cancel</button>
+        <button class="confirm-delete-btn" id="confirmDeleteBtn">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer"></div>
+
+  <script src="../../../shared/js/admin_main.js"></script>
+  <script src="M_reviews.js"></script>
+
+</body>
 </html>

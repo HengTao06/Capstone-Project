@@ -1,107 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trev</title>
-  <link rel="stylesheet" href="../../../shared/css/header-footer.css">
-  <link rel="stylesheet" href="profile.css">
-</head>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trev - Profile</title>
 
-<body>
-  <div id="header"></div>
-
-  <div class="breadcrumb">
-    <a href="../home/home.html">Home</a>
-    <a>›</a>
-    <a href="../Profile/profile.html">Profile</a>
-  </div>
+    <link rel="stylesheet" href="../../../shared/css/variables.css">
+    <link rel="stylesheet" href="../../../shared/css/global.css">
+    <link rel="stylesheet" href="../../../shared/css/header-footer.css">
+    <link rel="stylesheet" href="profile.css">
+  </head>
 
   <body data-page="profile">
 
-    
-  <div class="profile-section">
-    <div class="profile-pic-container">
-      <img src="../../../assets/images/black.png" alt="Profile Picture" class="profile-pic" id="profilePic" />
-      <label for="uploadPic" class="upload-btn">Change Photo 📷</label>
-      <input type="file" id="uploadPic" accept="image/*" hidden />
-    </div>
-    <p class="profile-name">Ng Heng Tao</p>
-  </div>
+    <div id="header"></div>
 
-  <div class="profile-form">
-    <div class="form-group">
-      <label>Username</label>
-      <input type="text" id="username" placeholder="Enter username" disabled />
+    <div class="breadcrumb">
+      <a href="../home/home.html">Home</a>
+      <span>›</span>
+      <a href="../Profile/profile.html">Profile</a>
     </div>
 
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" id="password" placeholder="Enter password" disabled />
-    </div>
+    <main class="profile-page">
 
-    <div class="form-group">
-      <label>Email</label>
-      <input type="email" id="email" placeholder="Enter email" disabled />
-    </div>
+      <section class="profile-card">
 
-    <div class="form-buttons">
-      <button class="edit-btn" id="editBtn">Edit Profile</button>
-      <button class="logout-btn">Logout</button>
-    </div>
-  </div>
+        <div class="profile-left">
+          <div class="profile-pic-container">
+            <img src="../../../assets/images/black.png" alt="Profile Picture"
+              class="profile-pic" id="profilePic">
 
-  <!-- LOGOUT MODAL -->
-  <div class="modal-overlay" id="logoutModal">
-    <div class="modal-box">
-      <div class="modal-icon">👋</div>
-      <h2>Logged Out!</h2>
-      <p>You have been successfully logged out. See you again soon!</p>
-      <button class="modal-btn" onclick="window.location.href='../login/login.html'">Go to
-        Login</button>
-    </div>
-  </div>
+            <label for="uploadPic" class="upload-btn">Change Photo</label>
+            <input type="file" id="uploadPic" accept="image/*" hidden>
+          </div>
 
-  <div class="trips-section">
-    <h2 class="trips-title">Trip Completed</h2>
-    <div class="trips-grid"></div>
-  </div>
-
-  <!-- TRIP DETAIL POPUP -->
-  <div class="popup-overlay" id="tripDetailOverlay">
-    <div class="detail-card">
-      <div class="detail-header">
-        <h3>Trip Details</h3>
-        <span class="detail-close" onclick="closeTripDetail()">✕</span>
-      </div>
-
-      <div class="detail-reviewer">
-        <div>
-          <div class="detail-name" id="tripDetailLocation"></div>
-          <div class="reviewer-attraction" id="tripDetailRating"></div>
-          <div class="review-date" id="tripDetailReviews"></div>
+          <p class="profile-name">Loading...</p>
+          <p class="profile-role">Traveler</p>
         </div>
+
+        <div class="profile-right">
+
+          <div class="form-group">
+            <label>Username</label>
+            <input type="text" id="username" placeholder="Username" disabled>
+          </div>
+
+          <div class="form-group">
+            <label>Password</label>
+
+            <div class="password-wrapper">
+
+              <input type="password"
+                id="password"
+                placeholder="Leave blank to keep current password"
+                disabled>
+
+              <span class="toggle-password" id="togglePassword">
+                👁
+              </span>
+
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="email" placeholder="Email" disabled>
+          </div>
+
+          <div class="form-buttons">
+            <button class="edit-btn" id="editBtn">Edit Profile</button>
+            <button class="logout-btn" type="button">Logout</button>
+          </div>
+
+        </div>
+
+      </section>
+
+      <section class="trips-section">
+        <h2 class="trips-title">Completed Trips</h2>
+        <div class="trips-grid"></div>
+      </section>
+
+    </main>
+
+    <div class="modal-overlay" id="logoutModal">
+      <div class="modal-box">
+        <div class="modal-icon">👋</div>
+        <h2>Logged Out!</h2>
+        <p>You have been successfully logged out. See you again soon!</p>
+        <button class="modal-btn">Go to Login</button>
       </div>
-
-      <img class="detail-photo" id="tripDetailPhoto" src="" alt="" />
-
-      <div class="detail-body">
-        <p class="detail-label">Description</p>
-        <p id="tripDetailDesc"></p>
-      </div>
-
-      <button class="detail-close-btn" onclick="closeTripDetail()">Close</button>
     </div>
-  </div>
 
+    <div class="popup-overlay" id="tripDetailOverlay">
+      <div class="detail-card">
 
-  <div id="footer"></div>
+        <div class="detail-header">
+          <h3>Trip Details</h3>
+          <span class="detail-close" onclick="closeTripDetail()">✕</span>
+        </div>
 
-  <script src="../../../shared/js/main.js"></script>
+        <img class="detail-photo" id="tripDetailPhoto" src alt="Trip Photo">
 
-  <script src="profile.js"></script>
+        <div class="detail-body">
+          <p class="detail-label">Location</p>
+          <p id="tripDetailLocation"></p>
 
-</body>
+          <p class="detail-label">Status</p>
+          <p id="tripDetailRating"></p>
 
-</html>
+          <p class="detail-label">Date</p>
+          <p id="tripDetailReviews"></p>
+
+          <p class="detail-label">Details</p>
+          <p id="tripDetailDesc"></p>
+        </div>
+
+        <button class="detail-close-btn"
+          onclick="closeTripDetail()">Close</button>
+
+      </div>
+    </div>
+
+    <div id="footer"></div>
+
+    <script src="../../../shared/js/main.js"></script>
+    <script src="profile.js"></script>
+
+  </body>
