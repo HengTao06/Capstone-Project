@@ -191,3 +191,21 @@ body {
 .chart-filter:hover, .chart-filter:focus {
     border-color: var(--orange, #F97316);
 }
+
+@media (max-width: 900px) {
+    .grid-2-col {
+        grid-template-columns: 1fr; 
+    }
+
+    .bar-container { 
+        height: 250px; 
+    }
+    
+    .line-container { 
+        height: 250px; 
+    }
+    
+    .pie-container { 
+        height: 280px;
+    }
+}
