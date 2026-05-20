@@ -149,8 +149,9 @@ async function loadUsers() {
     user.user_role.toLowerCase() === "user"
     ).length;
 
-document.getElementById("activeUsers").innerText =
-  normalUsers;
+    document.getElementById("activeUsers").innerText = normalUsers;
+    document.getElementById("totalUsers").innerText = filteredUsers.length;
+    document.getElementById("adminUsers").innerText = adminUsers;
 
     // PAGINATION
     const totalPages =
