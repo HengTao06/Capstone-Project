@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchInput =
   document.getElementById("searchInput");
 
-const roleFilter =
+  const roleFilter =
   document.getElementById("roleFilter");
 
   const addUserBtn =
@@ -20,62 +20,60 @@ const roleFilter =
   const editModal =
   document.getElementById("editUserModal");
 
-const closeEditBtn =
+  const closeEditBtn =
   document.getElementById("closeEditModal");
 
-const cancelEditBtn =
+  const cancelEditBtn =
   document.getElementById("cancelEditModal");
 
   const saveEditBtn =
   document.getElementById("saveEditBtn");
 
-saveEditBtn.addEventListener(
-  "click",
-  saveUserChanges
-);
+  saveEditBtn.addEventListener(
+    "click",
+    saveUserChanges
+  );
 
-function closeEditModal() {
+  function closeEditModal() {
 
-  editModal.classList.remove("active");
-
-}
-
-closeEditBtn.addEventListener(
-  "click",
-  closeEditModal
-);
-
-cancelEditBtn.addEventListener(
-  "click",
-  closeEditModal
-);
-
-editModal.addEventListener("click", (e) => {
-
-  if(e.target === editModal) {
-
-    closeEditModal();
+    editModal.classList.remove("active");
 
   }
 
-});
+  closeEditBtn.addEventListener(
+    "click",
+    closeEditModal
+  );
 
-addUserBtn.addEventListener("click", addUser);
+  cancelEditBtn.addEventListener(
+    "click",
+    closeEditModal
+  );
 
-      // LOAD USERS
-  loadUsers();
+  editModal.addEventListener("click", (e) => {
 
-// SEARCH EVENT
-searchInput.addEventListener("keyup", () => {
-  currentPage = 1;
-  loadUsers();
-});
+    if(e.target === editModal) {
 
-// FILTER EVENT
-roleFilter.addEventListener("change", () => {
-  currentPage = 1;
-  loadUsers();
-});
+      closeEditModal();
+
+    }
+
+  });
+
+  addUserBtn.addEventListener("click", addUser);
+      loadUsers();
+
+  // SEARCH EVENT
+  searchInput.addEventListener("keyup", () => {
+    currentPage = 1;
+    loadUsers();
+  });
+
+    // FILTER EVENT
+  roleFilter.addEventListener("change", () => {
+    currentPage = 1;
+    loadUsers();
+  });
 
   // OPEN MODAL
   openBtn.addEventListener("click", () => {
@@ -140,27 +138,21 @@ async function loadUsers() {
 
     });
 
-    // =========================
     // STATS CALCULATION
-    // =========================
-
     const totalUsers = filteredUsers.length;
 
     const adminUsers = filteredUsers.filter(user =>
       user.user_role.toLowerCase() === "admin"
     ).length;
 
-const normalUsers = filteredUsers.filter(user =>
-  user.user_role.toLowerCase() === "user"
-).length;
+    const normalUsers = filteredUsers.filter(user =>
+    user.user_role.toLowerCase() === "user"
+    ).length;
 
 document.getElementById("activeUsers").innerText =
   normalUsers;
 
-    // =========================
     // PAGINATION
-    // =========================
-
     const totalPages =
       Math.ceil(filteredUsers.length / usersPerPage);
 
@@ -173,10 +165,7 @@ document.getElementById("activeUsers").innerText =
     const paginatedUsers =
       filteredUsers.slice(startIndex, endIndex);
 
-    // =========================
     // DISPLAY USERS
-    // =========================
-
     paginatedUsers.forEach(user => {
 
       let badgeClass =
@@ -223,12 +212,9 @@ document.getElementById("activeUsers").innerText =
           <td>
             <div class="actions-cell">
 
-<button
-  class="action-link action-edit"
-  onclick='openEditModal(${JSON.stringify(user)})'
->
-  Edit
-</button>
+            <button class="action-link action-edit" onclick='openEditModal(${JSON.stringify(user)})'>
+              Edit
+            </button>
 
             </div>
           </td>
@@ -237,10 +223,7 @@ document.getElementById("activeUsers").innerText =
       `;
     });
 
-    // =========================
     // PAGINATION INFO
-    // =========================
-
     const showingStart =
       filteredUsers.length === 0
       ? 0
@@ -252,17 +235,13 @@ document.getElementById("activeUsers").innerText =
     document.querySelector(".pagination-info").innerText =
       `Showing ${showingStart} to ${showingEnd} of ${filteredUsers.length} users`;
 
-    // =========================
     // PAGINATION BUTTONS
-    // =========================
-
     const paginationControls =
       document.querySelector(".pagination-controls");
 
     paginationControls.innerHTML = "";
 
     // PREVIOUS BUTTON
-
     paginationControls.innerHTML += `
       <button
         class="page-btn prev-next"
@@ -274,7 +253,6 @@ document.getElementById("activeUsers").innerText =
     `;
 
     // PAGE BUTTONS
-
     for(let i = 1; i <= totalPages; i++) {
 
       paginationControls.innerHTML += `
@@ -288,7 +266,6 @@ document.getElementById("activeUsers").innerText =
     }
 
     // NEXT BUTTON
-
     paginationControls.innerHTML += `
       <button
         class="page-btn prev-next"
@@ -342,10 +319,7 @@ async function openEditModal(user) {
   document.getElementById("editAvatar").innerText =
     user.username.substring(0,2).toUpperCase();
 
-  // =========================
   // LOAD USER STATS
-  // =========================
-
   try {
 
     const response = await fetch(

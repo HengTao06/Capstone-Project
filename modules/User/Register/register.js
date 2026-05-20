@@ -47,7 +47,7 @@ fetch("register.php", {
     },
     body: `username=${encodeURIComponent(username)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
 })
-.then(res => res.text()) // 👈 change this
+.then(res => res.text())
 .then(data => {
     console.log("RAW RESPONSE:", data);
 
@@ -61,7 +61,6 @@ fetch("register.php", {
             alert(json.message);
         }
     } catch (e) {
-        // Show the raw response in an alert so you can read the actual PHP error
         alert("PHP returned: " + data.substring(0, 300));
     }
 })

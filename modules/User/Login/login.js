@@ -28,10 +28,8 @@ document.getElementById("loginForm").addEventListener("submit", function(e) {
     valid = false;
   }
 
-  // 🚫 Stop if validation fails
   if (!valid) return;
 
-  // ✅ Send to backend only if valid
 fetch("login.php", {
   method: "POST",
   headers: {
@@ -39,7 +37,7 @@ fetch("login.php", {
   },
   body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
 })
-.then(res => res.text()) // 👈 CHANGE THIS
+.then(res => res.text()) 
 .then(data => {
   console.log("RAW RESPONSE:", data);
 

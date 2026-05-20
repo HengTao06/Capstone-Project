@@ -4,7 +4,6 @@ require_once "../../../shared/php/db.php";
 
 header("Content-Type: application/json");
 
-// GET JSON DATA
 $data = json_decode(file_get_contents("php://input"), true);
 
 $username = trim($data["username"]);
@@ -12,7 +11,6 @@ $email = trim($data["email"]);
 $password = trim($data["password"]);
 $role = trim($data["role"]);
 
-// VALIDATION
 if(
     empty($username) ||
     empty($email) ||

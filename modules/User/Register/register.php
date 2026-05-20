@@ -5,7 +5,6 @@ ini_set('display_errors', 0);
 
 require_once "../../../shared/php/db.php";
 require_once "../../../shared/php/session.php";
-// ← session.php line deleted
 
 ob_clean();
 header('Content-Type: application/json');

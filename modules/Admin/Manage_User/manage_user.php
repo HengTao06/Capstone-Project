@@ -6,18 +6,12 @@ require_once "../../../shared/php/session.php";
 header('Content-Type: application/json');
 $action = $_GET["action"] ?? "";
 
-// =====================================
 // GET USER STATS
-// =====================================
-
 if($action === "stats") {
 
     $user_id = $_GET["user_id"];
 
-    // ======================
     // TOTAL TRIPS
-    // ======================
-
     $tripSql = "
     SELECT COUNT(*) AS total_trips
     FROM trip
@@ -41,9 +35,7 @@ if($action === "stats") {
     $tripData =
     mysqli_fetch_assoc($tripResult);
 
-    // ======================
     // TOTAL REVIEWS
-    // ======================
 
     $reviewSql = "
     SELECT COUNT(*) AS total_reviews

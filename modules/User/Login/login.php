@@ -22,7 +22,6 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     $user = $result->fetch_assoc();
 
-    // ⚠️ You are using plain text password (not secure, but works for now)
     if ($password === $user['user_password']) {
 
         // Save session

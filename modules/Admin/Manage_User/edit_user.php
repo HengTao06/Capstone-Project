@@ -4,7 +4,6 @@ require_once "../../../shared/php/db.php";
 
 header("Content-Type: application/json");
 
-// GET JSON DATA
 $data =
 json_decode(file_get_contents("php://input"), true);
 
