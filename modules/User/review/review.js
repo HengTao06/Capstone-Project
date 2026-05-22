@@ -420,7 +420,7 @@ function handleUpload(event) {
 
     if (!file) return;
 
-    const maxSize = 2 * 1024 * 1024; // 2MB
+    const maxSize = 20 * 1024 * 1024; // 20MB
 
     if (file.size > maxSize) {
         alert('Image is too large. Please upload an image below 2MB.');
