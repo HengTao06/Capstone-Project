@@ -99,11 +99,13 @@ function renderPieChart(labels, data) {
             labels: labels,
             datasets: [{
                 data: data,
-                backgroundColor: ['#f97316', '#eab308', '#22c55e', '#3b82f6', '#a855f7'],
+                backgroundColor: ['#f97316', '#eab308', '#22c55e',
+                 '#3b82f6', '#a855f7'],
                 borderWidth: 2, borderColor: '#ffffff'
             }]
         },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+        options: { responsive: true, maintainAspectRatio: false, 
+        plugins: { legend: { position: 'bottom' } } }
     });
 }
 
