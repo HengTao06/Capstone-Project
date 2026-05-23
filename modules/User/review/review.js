@@ -84,13 +84,13 @@ function renderReviews (list) {
         : 'UN'
 
       const avatarHTML = r.user_profile
-        ? `<img class="avatar-img" src="../../../assets/images/${r.user_profile}" alt="${r.username}">`
+        ? `<img class="avatar-img" src="../../../assets/images/profile/${r.user_profile}" alt="${r.username}">`
         : `<div class="avatar-circle">${initials}</div>`
 
       const photoHTML = r.photo
         ? `
         <img class="card-photo"
-             src="../../../assets/images/${r.photo}"
+             src="../../../assets/images/attraction/${r.photo}"
              alt="${r.attraction_name}"
              onerror="this.onerror=null; this.src='https://placehold.co/600x360?text=No+Photo';">
       `
@@ -391,13 +391,13 @@ function openDetail (index) {
     : 'UN'
 
   avatar.innerHTML = review.user_profile
-    ? `<img class="avatar-img" src="../../../assets/images/${review.user_profile}" alt="${review.username}">`
+    ? `<img class="avatar-img" src="../../../assets/images/profile/${review.user_profile}" alt="${review.username}">`
     : `<div class="avatar-circle">${initials}</div>`
 
   const photo = document.getElementById('detailPhoto')
 
   if (review.photo) {
-    photo.src = '../../../assets/images/' + review.photo
+    photo.src = '../../../assets/images/profile/' + review.photo
     photo.onerror = function () {
       this.onerror = null
       this.src = 'https://placehold.co/600x360?text=No+Photo'

@@ -260,7 +260,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         }
 
-        $upload_dir = '../../../assets/images/';
+        $upload_dir = '../../../assets/images/review/';
 
         $photo_name =
             'review_' .

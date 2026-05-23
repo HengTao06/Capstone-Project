@@ -25,7 +25,7 @@ async function loadProfile() {
 
         if (data.user.profile_photo) {
             document.getElementById('profilePic').src =
-                '../../../assets/images/' + data.user.profile_photo;
+                '../../../assets/images/profile/' + data.user.profile_photo;
         }
 
         renderCompletedTrips(data.trips);
@@ -53,8 +53,8 @@ function renderCompletedTrips(trips) {
 
     trips.forEach(trip => {
         const image = trip.trip_image
-            ? '../../../assets/images/' + trip.trip_image
-            : '../../../assets/images/italy.png';
+            ? '../../../assets/images/attraction/' + trip.trip_image
+            : '../../../assets/images/attraction/italy.png';
 
         grid.innerHTML += `
             <div class="trip-card">
@@ -94,8 +94,8 @@ async function openTripDetail(tripId) {
         const attractions = data.attractions;
 
         const image = trip.trip_image
-            ? '../../../assets/images/' + trip.trip_image
-            : '../../../assets/images/italy.png';
+            ? '../../../assets/images/attraction/' + trip.trip_image
+            : '../../../assets/images/attraction/italy.png';
 
         document.getElementById('tripDetailPhoto').src = image;
         document.getElementById('tripDetailLocation').textContent =

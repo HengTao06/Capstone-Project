@@ -230,7 +230,7 @@ if ($method === "GET" && isset($_GET['trip_id'])) {
             "id" => $row['attraction_id'],
             "name" => $row['attraction_name'],
             "category" => $row['attraction_category'],
-            "img" => "../../../assets/images/" . $row['attraction_image'],
+            "img" => "../../../assets/images/attraction/" . $row['attraction_image'],
             "day" => $day,
             "time" => "09:00"
         ];

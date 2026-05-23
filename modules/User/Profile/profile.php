@@ -281,7 +281,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'upload_photo') {
     }
 
     $file_name = 'profile_' . $user_id . '_' . time() . '.' . $file_ext;
-    $upload_path = '../../../assets/images/' . $file_name;
+    $upload_path = '../../../assets/images/profile/' . $file_name;
 
     if (move_uploaded_file($_FILES['photo']['tmp_name'], $upload_path)) {
 

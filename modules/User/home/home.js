@@ -48,7 +48,7 @@ function loadRecommended(list) {
         console.log("Recommended Item:", item);
 
         const image = item.attraction_image
-            ? `../../../assets/images/${item.attraction_image}`
+            ? `../../../assets/images/attraction/${item.attraction_image}`
             : 'https://placehold.co/400x250?text=No+Image';
 
         container.innerHTML += `
@@ -125,7 +125,7 @@ function loadPopularCombos(list) {
                 : shortComboName;
 
         const image = item.combo_image
-            ? `../../../assets/images/${item.combo_image}`
+            ? `../../../assets/images/attraction/${item.combo_image}`
             : 'https://placehold.co/400x250?text=No+Image';
 
         container.innerHTML += `
@@ -177,7 +177,7 @@ function loadTrending(list) {
     list.forEach(item => {
         container.innerHTML += `
       <a href="../discovers/discover.html?city_id=${item.city_id}" class="trend-card">
-        <img src="../../../assets/images/${item.attraction_image}">
+        <img src="../../../assets/images/attraction/${item.attraction_image}">
         <div class="trend-overlay"></div>
         <span class="trend-badge">Trending</span>
         <div class="trend-text">
