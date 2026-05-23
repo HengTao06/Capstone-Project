@@ -149,7 +149,7 @@ function displayDestinations(data) {
         console.log("Creating card for:", destination);
 
         const image = destination.attraction_image
-            ? `/Trev/assets/images/${destination.attraction_image}`
+            ? `/Trev/assets/images/attraction/${destination.attraction_image}`
             : "https://placehold.co/600x400?text=No+Image";
 
         const card = document.createElement("div");
@@ -233,7 +233,7 @@ function openInfoModal(destination) {
     }
 
     infoImage.src = destination.attraction_image
-        ? `/Trev/assets/images/${destination.attraction_image}`
+        ? `/Trev/assets/images/attraction/${destination.attraction_image}`
         : "https://placehold.co/600x400?text=No+Image";
 
     infoTitle.innerText = destination.attraction_name || "No Name";

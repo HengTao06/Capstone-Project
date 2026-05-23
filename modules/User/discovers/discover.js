@@ -266,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
     div.className = 'card';
 
     const img = a.attraction_image
-      ? `../../../assets/images/${a.attraction_image}`
+      ? `../../../assets/images/attraction/${a.attraction_image}`
       : 'https://placehold.co/400x190';
 
     div.innerHTML = `
@@ -294,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
     div.className = 'combo-card';
 
     const img = c.image
-      ? `../../../assets/images/${c.image}`
+      ? `../../../assets/images/attraction/${c.image}`
       : 'https://placehold.co/400x160';
 
     const names = (c.combo_name || '').split(' + ');

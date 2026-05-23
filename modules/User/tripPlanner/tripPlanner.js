@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
               description: 'This attraction is included in this popular combo.',
               price: '0',
               season: 'All Year',
-              img: `../../../assets/images/${images[index]}`,
+              img: `../../../assets/images/attraction/${images[index]}`,
               day: index + 1 <= Object.keys(itineraryData).length ? index + 1 : 1,
               time: index < 2 ? '09:00' : '14:00'
             };
@@ -409,7 +409,7 @@ document.addEventListener('DOMContentLoaded', function () {
             description: found.attraction_description || '',
             price: found.estimated_price || '0',
             season: found.best_season || 'All Year',
-            img: `../../../assets/images/${found.attraction_image}`
+            img: `../../../assets/images/attraction/${found.attraction_image}`
           };
 
           scheduleName.textContent = currentAttraction.name;
@@ -525,7 +525,7 @@ document.addEventListener('DOMContentLoaded', function () {
     list.forEach(item => {
       attractionList.innerHTML += `
           <div class="attraction-option">
-            <img src="../../../assets/images/${item.attraction_image}" alt="${item.attraction_name}">
+            <img src="../../../assets/images/attraction/${item.attraction_image}" alt="${item.attraction_name}">
             <div>
               <h3>${item.attraction_name}</h3>
               <p>${item.attraction_category} · ${item.city_name || ''}</p>
@@ -538,7 +538,7 @@ document.addEventListener('DOMContentLoaded', function () {
               data-description="${item.attraction_description || ''}"
               data-price="${item.estimated_price || '0'}"
               data-season="${item.best_season || 'All Year'}"
-              data-img="../../../assets/images/${item.attraction_image}">
+              data-img="../../../assets/images/attraction/${item.attraction_image}">
               + Add
             </button>
           </div>

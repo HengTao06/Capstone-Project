@@ -30,7 +30,7 @@ $dest_sql = "SELECT a.attraction_name, c.city_name, co.country_name, a.attractio
 $dest_result = $conn->query($dest_sql);
 if ($dest_result) {
     while ($row = $dest_result->fetch_assoc()) {
-        $image = !empty($row['attraction_image']) ? "../../../assets/images/" . $row['attraction_image'] : "https://images.unsplash.com/photo-1488085061387-422e29b40080?q=80&w=500&auto=format&fit=crop";
+        $image = !empty($row['attraction_image']) ? "../../../assets/images/attraction/" . $row['attraction_image'] : "https://images.unsplash.com/photo-1488085061387-422e29b40080?q=80&w=500&auto=format&fit=crop";
         
         $topDestinations[] = [
             "attraction_name" => $row['attraction_name'],
@@ -53,8 +53,8 @@ $rev_sql = "SELECT u.username, u.user_profile, a.attraction_name, r.rating, r.re
 $rev_result = $conn->query($rev_sql);
 if ($rev_result) {
     while ($row = $rev_result->fetch_assoc()) {
-        $user_img = !empty($row['user_profile']) ? "../../../assets/images/" . $row['user_profile'] : "https://ui-avatars.com/api/?name=" . urlencode($row['username']) . "&background=random";
-        $review_img = !empty($row['photo']) ? "../../../assets/images/" . $row['photo'] : "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=600&auto=format&fit=crop";
+        $user_img = !empty($row['user_profile']) ? "../../../assets/images/profile/" . $row['user_profile'] : "https://ui-avatars.com/api/?name=" . urlencode($row['username']) . "&background=random";
+        $review_img = !empty($row['photo']) ? "../../../assets/images/profile/" . $row['photo'] : "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=600&auto=format&fit=crop";
 
         $topReviews[] = [
             "user_name" => $row['username'],

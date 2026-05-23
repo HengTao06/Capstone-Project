@@ -1,223 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage User</title>
-    <link rel="stylesheet" href="../../../shared/css/variables.css">
-    <link rel="stylesheet" href="../../../shared/css/global.css">
-    <link rel="stylesheet" href="../../../shared/css/header-footer.css">
-    <link rel="stylesheet" href="manage_user.css">
-    <script src="../../../shared/js/admin_main.js"></script>
-    <script src="manage_user.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage User</title>
+  <link rel="stylesheet" href="../../../shared/css/variables.css">
+  <link rel="stylesheet" href="../../../shared/css/global.css">
+  <link rel="stylesheet" href="../../../shared/css/header-footer.css">
+  <link rel="stylesheet" href="manage_user.css">
+  <script src="../../../shared/js/admin_main.js"></script>
+  <script src="manage_user.js"></script>
 
 </head>
+
 <body data-page="manage-user">
-    <div id="header"></div>
- 
-<!-- MAIN -->
-<main> 
+  <div id="header"></div>
+
+  <!-- MAIN -->
+  <main>
     <h1>Manage User</h1>
     <p>View and manage all users in the system</p>
- 
-  <!-- Stats -->
+
+    <!-- Stats -->
     <div class="stats">
-        <div class="stat-card">
-            <div class="stat-value" id="totalUsers">8</div>
-            <div class="stat-label">Total Users</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-value" id="activeUsers">7</div>
-            <div class="stat-label">Users</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-value" id="adminUsers">2</div>
-            <div class="stat-label">Admin</div>
-        </div>
-    </div>
-
- 
-  <!-- Toolbar -->
-<div class="toolbar">
-  <div class="search-wrap">
-    <span class="icon">🔍</span>
-  <input type="text" id="searchInput" placeholder="Search by name or email..." />
-  </div>
-
-  <select class="filter-select" id="roleFilter">
-    <option>All Roles</option>
-    <option>User</option>
-    <option>Admin</option>
-  </select>
-
-  <button class="add-btn">Add New User</button>
-</div>
- 
-  <!-- Table -->
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>User</th>
-          <th>Email</th>
-          <th>Role</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-<tbody id="userTableBody">
-
-</tbody>
-    </table>
- 
-    <!-- Pagination -->
-    <div class="pagination-row">
-      <span class="pagination-info">Showing 1 to 6 of 8 users</span>
-      <div class="pagination-controls">
-        <button class="page-btn prev-next">← Previous</button>
-        <button class="page-btn active">1</button>
-        <button class="page-btn">2</button>
-        <button class="page-btn prev-next">Next →</button>
+      <div class="stat-card">
+        <div class="stat-value" id="totalUsers">0</div>
+        <div class="stat-label">Total Users</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="activeUsers">0</div>
+        <div class="stat-label">Users</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="adminUsers">0</div>
+        <div class="stat-label">Admin</div>
       </div>
     </div>
-  </div>
-</main>
- 
-    <!-- OVERLAY MODAL -->
-<div class="modal-overlay" id="userModal">
-  <div class="modal">
 
-    <!-- HEADER -->
-    <div class="modal-header">
-      <h3>Add New User</h3>
-      <button class="close-btn" id="closeModal">&times;</button>
-    </div>
 
-    <!-- BODY -->
-<div class="modal-body">
-
-  <label>Username</label>
-  <input type="text" id="addUsername" placeholder="Enter username">
-
-  <label>Email</label>
-  <input type="email" id="addEmail" placeholder="Enter email address">
-
-  <label>Password</label>
-  <input type="password" id="addPassword" placeholder="Enter password">
-
-  <label>Role</label>
-  <select id="addRole">
-    <option value="">Select role</option>
-    <option value="user">User</option>
-    <option value="admin">Admin</option>
-  </select>
-
-</div>
-
-    <!-- FOOTER -->
-    <div class="modal-footer">
-      <button class="btn-cancel" id="cancelModal">Cancel</button>
-      <button class="btn-add" id="addUserBtn">Add User</button>
-    </div>
-
-  </div>
-</div>
-
-<!-- EDIT USER MODAL -->
-<div class="modal-overlay" id="editUserModal">
-
-  <div class="modal">
-
-    <!-- HEADER -->
-    <div class="modal-header">
-      <h3>Edit User</h3>
-
-      <button class="close-btn" id="closeEditModal"> &times; </button>
-    </div>
-
-    <!-- PROFILE BOX -->
-    <div class="edit-profile-box">
-
-      <div class="edit-avatar" id="editAvatar">
-        SJ
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="search-wrap">
+        <span class="icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="Search by name or email..." />
       </div>
 
-      <div class="edit-profile-name" id="editProfileName">
-        Sarah Johnson
-      </div>
-
-    </div>
-
-    <!-- BODY -->
-    <div class="modal-body">
-
-      <label>User ID</label>
-      <input
-        type="text"
-        id="editUserId"
-        readonly
-      >
-
-      <label>Full Name</label>
-      <input
-        type="text"
-        id="editUsername"
-      >
-
-      <label>Email</label>
-      <input
-        type="email"
-        id="editEmail"
-      >
-
-      <label>Role</label>
-
-      <select id="editRole">
-        <option value="user">User</option>
-        <option value="admin">Admin</option>
+      <select class="filter-select" id="roleFilter">
+        <option>All Roles</option>
+        <option>User</option>
+        <option>Admin</option>
       </select>
 
+      <button class="add-btn">Add New User</button>
     </div>
 
-    <!-- STATS -->
-    <div class="edit-stats">
+    <!-- Table -->
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="userTableBody">
 
-      <div class="edit-stat">
-        <span class="edit-stat-number" id="totalTrips">8</span>
-        <span class="edit-stat-label">
-          Trips Created
-        </span>
+        </tbody>
+      </table>
+
+      <!-- Pagination -->
+      <div class="pagination-row">
+        <span class="pagination-info">Showing 1 to 6 of 8 users</span>
+        <div class="pagination-controls">
+          <button class="page-btn prev-next">← Previous</button>
+          <button class="page-btn active">1</button>
+          <button class="page-btn">2</button>
+          <button class="page-btn prev-next">Next →</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- OVERLAY MODAL -->
+  <div class="modal-overlay" id="userModal">
+    <div class="modal">
+
+      <!-- HEADER -->
+      <div class="modal-header">
+        <h3>Add New User</h3>
+        <button class="close-btn" id="closeModal">&times;</button>
       </div>
 
-      <div class="edit-stat">
-        <span class="edit-stat-number orange" id="totalReviews">
-          12
-        </span>
-        <span class="edit-stat-label">
-          Reviews
-        </span>
+      <!-- BODY -->
+      <div class="modal-body">
+
+        <label>Username</label>
+        <input type="text" id="addUsername" placeholder="Enter username">
+
+        <label>Email</label>
+        <input type="email" id="addEmail" placeholder="Enter email address">
+
+        <label>Password</label>
+        <input type="password" id="addPassword" placeholder="Enter password">
+
+        <label>Role</label>
+        <select id="addRole">
+          <option value="">Select role</option>
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+
+      </div>
+
+      <!-- FOOTER -->
+      <div class="modal-footer">
+        <button class="btn-cancel" id="cancelModal">Cancel</button>
+        <button class="btn-add" id="addUserBtn">Add User</button>
       </div>
 
     </div>
+  </div>
 
-    <!-- FOOTER -->
-    <div class="modal-footer">
+  <!-- EDIT USER MODAL -->
+  <div class="modal-overlay" id="editUserModal">
 
-      <button
-        class="btn-cancel"
-        id="cancelEditModal"
-      >
-        Cancel
-      </button>
+    <div class="modal">
 
-      <button class="btn-add" id="saveEditBtn">
-        Save Changes
-      </button>
+      <!-- HEADER -->
+      <div class="modal-header">
+        <h3>Edit User</h3>
+
+        <button class="close-btn" id="closeEditModal"> &times; </button>
+      </div>
+
+      <!-- PROFILE BOX -->
+      <div class="edit-profile-box">
+
+        <div class="edit-avatar" id="editAvatar">
+          SJ
+        </div>
+
+        <div class="edit-profile-name" id="editProfileName">
+          Sarah Johnson
+        </div>
+
+      </div>
+
+      <!-- BODY -->
+      <div class="modal-body">
+
+        <label>User ID</label>
+        <input type="text" id="editUserId" readonly>
+
+        <label>Full Name</label>
+        <input type="text" id="editUsername">
+
+        <label>Email</label>
+        <input type="email" id="editEmail">
+
+        <label>Role</label>
+
+        <select id="editRole">
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+
+      </div>
+
+      <!-- STATS -->
+      <div class="edit-stats">
+
+        <div class="edit-stat">
+          <span class="edit-stat-number" id="totalTrips">8</span>
+          <span class="edit-stat-label">
+            Trips Created
+          </span>
+        </div>
+
+        <div class="edit-stat">
+          <span class="edit-stat-number orange" id="totalReviews">
+            12
+          </span>
+          <span class="edit-stat-label">
+            Reviews
+          </span>
+        </div>
+
+      </div>
+
+      <!-- FOOTER -->
+      <div class="modal-footer">
+
+        <button class="btn-cancel" id="cancelEditModal">
+          Cancel
+        </button>
+
+        <button class="btn-add" id="saveEditBtn">
+          Save Changes
+        </button>
+
+      </div>
 
     </div>
 
   </div>
 
-</div>
-    
 </body>
+
 </html>

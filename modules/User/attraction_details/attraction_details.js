@@ -33,7 +33,7 @@ function renderStars(rating) {
 function render(data) {
   console.log("FULL DETAIL DATA:", data);
   document.getElementById('hero-img').src = data.image
-    ? `../../../assets/images/${data.image}`
+    ? `../../../assets/images/attraction/${data.image}`
     : 'https://placehold.co/800x300'
 
   document.getElementById('title').innerText = data.name
@@ -65,7 +65,7 @@ function render(data) {
     <div class="review">
       <div class="review-avatar">
         ${r.profile_picture
-        ? `<img src="../../../assets/images/${r.profile_picture}" alt="${r.username}">`
+        ? `<img src="../../../assets/images/profile/${r.profile_picture}" alt="${r.username}">`
         : `${r.username ? r.username.charAt(0).toUpperCase() : 'U'}`
       }
       </div>

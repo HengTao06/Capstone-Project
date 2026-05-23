@@ -147,34 +147,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 =========================== */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    echo json_encode([
-        'status' => 'error',
-        'message' => 'Uploaded file is too large. Please upload a smaller image.'
-    ]);
-    exit();
-
     $attraction_id = intval($_POST['attraction_id'] ?? 0);
     $rating = intval($_POST['rating'] ?? 0);
     $comment = trim($_POST['comment'] ?? '');
     $photo_name = null;
 
+    /* VALIDATION */
     if ($attraction_id <= 0 || $rating <= 0 || $comment === '') {
+
         echo json_encode([
             'status' => 'error',
             'message' => 'All required fields must be completed'
         ]);
+
         exit();
     }
 
     if ($rating < 1 || $rating > 5) {
+
         echo json_encode([
             'status' => 'error',
             'message' => 'Invalid rating value'
         ]);
+
         exit();
     }
 
-    /* VERIFY USER REALLY COMPLETED THIS ATTRACTION */
+    /* VERIFY USER COMPLETED THIS ATTRACTION */
     $verify = $conn->prepare("
         SELECT td.attraction_id
         FROM trip_details td
@@ -188,13 +187,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $verify->bind_param("ii", $attraction_id, $user_id);
     $verify->execute();
+
     $verify_result = $verify->get_result();
 
     if ($verify_result->num_rows === 0) {
+
         echo json_encode([
             'status' => 'error',
             'message' => 'You can only review attractions from completed trips'
         ]);
+
         exit();
     }
 
@@ -211,13 +213,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $check->bind_param("ii", $user_id, $attraction_id);
     $check->execute();
+
     $check_result = $check->get_result();
 
     if ($check_result->num_rows > 0) {
+
         echo json_encode([
             'status' => 'error',
             'message' => 'You have already reviewed this attraction'
         ]);
+
         exit();
     }
 
@@ -225,34 +230,74 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     /* PHOTO UPLOAD */
     if (isset($_FILES['photo']) && $_FILES['photo']['error'] === 0) {
+
         $allowed_ext = ['jpg', 'jpeg', 'png', 'webp'];
-        $file_ext = strtolower(pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION));
+
+        $file_ext = strtolower(
+            pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION)
+        );
 
         if (!in_array($file_ext, $allowed_ext)) {
+
             echo json_encode([
                 'status' => 'error',
-                'message' => 'Only JPG, JPEG, PNG and WEBP files are allowed'
+                'message' => 'Only JPG, JPEG, PNG and WEBP images are allowed'
             ]);
+
             exit();
         }
 
-        $upload_dir = '../../../assets/images/';
-        $photo_name = 'review_' . $user_id . '_' . time() . '.' . $file_ext;
+        /* FILE SIZE VALIDATION */
+        $maxSize = 20 * 1024 * 1024;
+
+        if ($_FILES['photo']['size'] > $maxSize) {
+
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Image size must not exceed 20MB'
+            ]);
+
+            exit();
+        }
+
+        $upload_dir = '../../../assets/images/review/';
+
+        $photo_name =
+            'review_' .
+            $user_id .
+            '_' .
+            time() .
+            '.' .
+            $file_ext;
+
         $upload_path = $upload_dir . $photo_name;
 
-        if (!move_uploaded_file($_FILES['photo']['tmp_name'], $upload_path)) {
+        if (!move_uploaded_file(
+            $_FILES['photo']['tmp_name'],
+            $upload_path
+        )) {
+
             echo json_encode([
                 'status' => 'error',
                 'message' => 'Failed to upload photo'
             ]);
+
             exit();
         }
     }
 
+    /* INSERT REVIEW */
     $stmt = $conn->prepare("
-        INSERT INTO review 
-            (user_id, attraction_id, rating, comment, photo, review_date)
-        VALUES 
+        INSERT INTO review
+            (
+                user_id,
+                attraction_id,
+                rating,
+                comment,
+                photo,
+                review_date
+            )
+        VALUES
             (?, ?, ?, ?, ?, CURDATE())
     ");
 
@@ -266,11 +311,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     );
 
     if ($stmt->execute()) {
+
         echo json_encode([
             'status' => 'success',
             'message' => 'Review submitted successfully'
         ]);
+
     } else {
+
         echo json_encode([
             'status' => 'error',
             'message' => 'Failed to submit review'
@@ -278,11 +326,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $stmt->close();
+
     exit();
 }
-
-echo json_encode([
-    'status' => 'error',
-    'message' => 'Invalid request'
-]);
 ?>

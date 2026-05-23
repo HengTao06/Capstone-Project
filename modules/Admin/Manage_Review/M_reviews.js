@@ -159,12 +159,12 @@ function renderReviews(reviews) {
 
     reviews.forEach(review => {
         const reviewImage = review.photo
-            ? `/Trev/assets/images/${review.photo}`
-            : `/Trev/assets/images/${review.attraction_image || "default.jpg"}`;
+            ? `/Trev/assets/images/review/${review.photo}`
+            : `/Trev/assets/images/attraction/${review.attraction_image || "default.jpg"}`;
 
         const userImage = review.user_profile
-            ? `/Trev/assets/images/${review.user_profile}`
-            : `/Trev/assets/images/black.png`;
+            ? `/Trev/assets/images/profile/${review.user_profile}`
+            : `/Trev/assets/images/profile/black.png`;
 
         const card = document.createElement("div");
         card.className = "review-card";
@@ -178,7 +178,7 @@ function renderReviews(reviews) {
             <div class="review-content">
                 <div class="review-user">
                     <img src="${userImage}"
-                         onerror="this.src='/Trev/assets/images/black.png'"
+                         onerror="this.src='/Trev/assets/images/profile/black.png'"
                          alt="${escapeHTML(review.username || "User")}">
 
                     <div>
@@ -242,12 +242,12 @@ function bindReviewButtons() {
 
 function openReviewModal(review) {
     const reviewImage = review.photo
-        ? `/Trev/assets/images/${review.photo}`
-        : `/Trev/assets/images/${review.attraction_image || "default.jpg"}`;
+        ? `/Trev/assets/images/review/${review.photo}`
+        : `/Trev/assets/images/attraction/${review.attraction_image || "default.jpg"}`;
 
     const userImage = review.user_profile
-        ? `/Trev/assets/images/${review.user_profile}`
-        : `/Trev/assets/images/black.png`;
+        ? `/Trev/assets/images/profile${review.user_profile}`
+        : `/Trev/assets/images/profile/black.png`;
 
     document.getElementById("modalUser").innerText = review.username || "User";
     document.getElementById("modalLocation").innerText =
@@ -265,7 +265,7 @@ function openReviewModal(review) {
 
     document.getElementById("modalUserImage").src = userImage;
     document.getElementById("modalUserImage").onerror = function () {
-        this.src = "/Trev/assets/images/black.png";
+        this.src = "/Trev/assets/images/profile/black.png";
     };
 
     document.getElementById("reviewModal").classList.add("active");

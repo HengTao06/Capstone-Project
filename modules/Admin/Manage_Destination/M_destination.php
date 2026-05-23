@@ -7,7 +7,7 @@ $action = $_GET["action"] ?? $_POST["action"] ?? "list";
 
 function uploadImage($oldImage = "") {
     if (isset($_FILES["attraction_image_file"]) && $_FILES["attraction_image_file"]["error"] === 0) {
-        $upload_dir = "../../../assets/images/";
+        $upload_dir = "../../../assets/images/attraction/";
         $ext = strtolower(pathinfo($_FILES["attraction_image_file"]["name"], PATHINFO_EXTENSION));
 
         $allowed = ["jpg", "jpeg", "png", "webp"];

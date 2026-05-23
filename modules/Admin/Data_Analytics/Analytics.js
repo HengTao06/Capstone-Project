@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function fixBrokenLogos() {
     const logos = document.querySelectorAll('img[alt="Trev Logo"]');
-    logos.forEach(logo => { logo.src = "../../../assets/images/trev.png"; });
+    logos.forEach(logo => { logo.src = "../../../assets/images/home_logo/trev.png"; });
 }
 
 async function loadAnalyticsData() {
