@@ -54,7 +54,7 @@ $rev_result = $conn->query($rev_sql);
 if ($rev_result) {
     while ($row = $rev_result->fetch_assoc()) {
         $user_img = !empty($row['user_profile']) ? "../../../assets/images/profile/" . $row['user_profile'] : "https://ui-avatars.com/api/?name=" . urlencode($row['username']) . "&background=random";
-        $review_img = !empty($row['photo']) ? "../../../assets/images/profile/" . $row['photo'] : "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=600&auto=format&fit=crop";
+        $review_img = !empty($row['photo']) ? "../../../assets/images/review/" . $row['photo'] : "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=600&auto=format&fit=crop";
 
         $topReviews[] = [
             "user_name" => $row['username'],
