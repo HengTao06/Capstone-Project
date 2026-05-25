@@ -90,7 +90,7 @@ function renderReviews (list) {
       const photoHTML = r.photo
         ? `
         <img class="card-photo"
-             src="../../../assets/images/attraction/${r.photo}"
+             src="../../../assets/images/review/${r.photo}"
              alt="${r.attraction_name}"
              onerror="this.onerror=null; this.src='https://placehold.co/600x360?text=No+Photo';">
       `
@@ -397,7 +397,7 @@ function openDetail (index) {
   const photo = document.getElementById('detailPhoto')
 
   if (review.photo) {
-    photo.src = '../../../assets/images/profile/' + review.photo
+    photo.src = '../../../assets/images/review/' + review.photo
     photo.onerror = function () {
       this.onerror = null
       this.src = 'https://placehold.co/600x360?text=No+Photo'

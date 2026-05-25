@@ -33,13 +33,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 u.user_profile,
                 a.attraction_name
             FROM review r
-            INNER JOIN users u 
-                ON r.user_id = u.user_id
-            INNER JOIN attraction a 
-                ON r.attraction_id = a.attraction_id
-            ORDER BY r.review_date DESC, r.review_id DESC
+            JOIN users u ON r.user_id = u.user_id
+            JOIN attraction a ON r.attraction_id = a.attraction_id
+            WHERE r.user_id = ?
+            ORDER BY r.review_date DESC
         ");
-
+        
+        $stmt->bind_param("i", $user_id);
         $stmt->execute();
         $result = $stmt->get_result();
 

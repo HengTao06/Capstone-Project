@@ -173,6 +173,7 @@ if ($type === "combo") {
             "rating" => $r["rating"],
             "comment" => $r["comment"],
             "review_date" => $r["review_date"],
+            "profile_picture" => $r["user_profile"] ?? "",
             "attraction_name" => $r["attraction_name"]
         ];
     }

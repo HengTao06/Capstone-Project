@@ -132,7 +132,6 @@ if ($action === "get_recommended") {
 
     $sql .= "
         ORDER BY avg_rating DESC, review_count DESC, a.attraction_name ASC
-        LIMIT 30
     ";
 
     $result = $conn->query($sql);
